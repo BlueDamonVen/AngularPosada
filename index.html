@@ -1,0 +1,903 @@
+
+
+<!DOCTYPE html>
+<html ng-app="bearpms3App">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+<title ng-bind="title + ' | BHP'">BHP - Nuevah</title>
+
+<!-- bootstrap -->
+<link rel="stylesheet" type="text/css"
+  href="css/bootstrap/bootstrap.css" />
+
+<!-- RTL support - for demo only -->
+<script src="js/demo-rtl.js"></script>
+<!-- 
+  If you need RTL support just include here RTL CSS file <link rel="stylesheet" type="text/css" href="css/libs/bootstrap-rtl.min.css" />
+  And add "rtl" class to <body> element - e.g. <body class="rtl"> 
+  -->
+
+<!-- libraries -->
+<link rel="stylesheet" type="text/css" href="css/libs/font-awesome.css" />
+<!-- <link rel="stylesheet" type="text/css" href="css/libs/nanoscroller.css" /> -->
+<link rel="stylesheet" type="text/css" href="css/angular.css" />
+<link rel="stylesheet" type="text/css" href="css/loading-bar.css" />
+<link rel="stylesheet" type="text/css" href="css/isteven-multi-select.css" />
+
+<!-- global styles -->
+<link rel="stylesheet" type="text/css"
+  href="css/compiled/theme_styles.css" />
+
+<!-- css for libs -->
+<!-- select2 -->
+<link rel="stylesheet" type="text/css" href="css/libs/select2.css" />
+<link rel="stylesheet" type="text/css" href="css/select.min.css" />
+
+<!-- x-editable -->
+<link rel="stylesheet" type="text/css"
+  href="css/libs/bootstrap-editable.css" />
+
+<!-- datepicker -->
+<link rel="stylesheet" type="text/css" href="css/libs/datepicker.css" />
+
+<!-- date range picker -->
+<link rel="stylesheet" type="text/css"
+  href="css/libs/daterangepicker.css" />
+
+<!--  WYSIWYG -->
+<link rel="stylesheet" href="css/libs/ng-wig.css">  
+
+<!-- nouslider -->
+<!-- <link rel="stylesheet" type="text/css" -->
+<!--  href="css/libs/jquery.nouislider.css" /> -->
+
+<!-- full calendar -->
+<link rel="stylesheet" type="text/css"
+  href="css/libs/fullcalendar.css" />
+<link rel="stylesheet" type="text/css"
+  href="css/libs/fullcalendar.print.css" media="print" />
+<link rel="stylesheet" type="text/css"
+  href="css/compiled/calendar.css" media="screen" />
+
+<!-- morris charts -->
+<link rel="stylesheet" type="text/css" href="css/libs/morris.css" />
+ 
+
+<!-- timeline -->
+<link rel="stylesheet" type="text/css" href="css/libs/timeline.css" />
+
+<!-- dataTables -->
+ 
+<link rel="stylesheet" type="text/css"
+  href="css/libs/dataTables.fixedHeader.css" />
+<link rel="stylesheet" type="text/css"
+  href="css/libs/dataTables.tableTools.css" />
+ 
+<!-- footables -->
+  <link rel="stylesheet" type="text/css" href="css/libs/footable.core.css" />
+
+
+<!-- notifications - all types -->
+<link rel="stylesheet" type="text/css" href="css/libs/ns-default.css" />
+<link rel="stylesheet" type="text/css" href="css/libs/ns-style-growl.css" />
+
+
+<link rel="stylesheet" type="text/css" href="css/libs/ns-style-bar.css" />
+<link rel="stylesheet" type="text/css" href="css/libs/ns-style-attached.css" />
+<link rel="stylesheet" type="text/css" href="css/libs/ns-style-other.css" />
+<link rel="stylesheet" type="text/css" href="css/libs/ns-style-theme.css" />
+
+
+<!-- nifty modal windows -->
+<link rel="stylesheet" type="text/css" href="css/libs/nifty-component.css" />
+
+<!-- hopscotch - tour plugin -->
+<!-- <link rel="stylesheet" type="text/css" href="css/libs/hopscotch.css" /> -->
+
+<!-- xcharts -->
+<link rel="stylesheet" type="text/css" href="css/libs/xcharts.css" />
+
+<!-- dropzone -->
+<link rel="stylesheet" type="text/css" href="css/libs/dropzone.css" />
+
+<!-- gallery -->
+<!-- <link rel="stylesheet" type="text/css" -->
+<!--  href="css/libs/gallery-component.css" /> -->
+ <link rel="stylesheet" href="/js/nanoscroller/bin/css/nanoscroller.css" />
+
+<link rel="stylesheet" href="js/ngDialog/css/ngDialog.min.css" />
+<link rel="stylesheet" href="js/ngDialog/css/ngDialog-theme-default.min.css" />  
+<!-- wizard -->
+<!-- <link rel="stylesheet" type="text/css" href="css/compiled/wizard.css" /> -->
+<!-- <link rel="stylesheet" type="text/css" -->
+<!--  href="css/libs/bootstrap-wizard.css" /> -->
+ 
+
+<!-- Favicon -->
+<link type="image/x-icon" href="favicon.ico" rel="shortcut icon" />
+
+<!-- <link rel="stylesheet" type="text/css" href="/css/angular-tooltips.min.css" /> -->
+
+<!-- google font libraries -->
+<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300|Titillium+Web:200,300,400" rel="stylesheet" type="text/css">
+
+  
+  <link href="/css/xeditable.css" rel="stylesheet">
+  <link href="/css/custom.css" rel="stylesheet">
+  
+</head>
+<body id= "body" ng-controller="HomeCtrl">
+  <div id="theme-wrapper">
+    <header class="navbar" id="header-navbar">
+<div class="container">
+        <a href="#/dasboard" id="logo" class="navbar-brand"> <img
+          src="images/logo_white.png" alt="" class="normal-logo logo-white" /> <img
+          src="images/logo_black.png" alt="" class="normal-logo logo-black" /> <img
+          src="images/logo_white.png" alt=""
+          class="small-logo hidden-xs hidden-sm hidden" />
+        </a>
+
+        <div class="clearfix">
+          <button class="navbar-toggle" data-target=".navbar-ex1-collapse"
+            data-toggle="collapse" type="button">
+            <span class="sr-only">Toggle navigation</span> <span
+              class="fa fa-bars"></span>
+          </button>
+          
+          <div
+            class="nav-no-collapse navbar-left pull-left">
+            <ul class="nav navbar-nav pull-left" ng-click="toggleSideBar()">
+              <li><a class="btn hidden-sm hidden-xs" id="make-small-nav"> <i
+                  class="fa fa-bars"></i>
+              </a></li>
+
+
+              <li class="dropdown" ng-controller="propertyCtrl">
+              <a class="btn dropdown-toggle" data-toggle="dropdown"><span ng-bind="mainProperty.name"></span> <i ng-show="properties.length>1" class="fa fa-caret-down"></i>
+              </a>
+                <ul class="dropdown-menu" ng-show="properties.length>1">
+                  <li class="item" ng-show="store.id!=mainProperty.id" data-ng-repeat="store in properties">
+                  <a ng-click="getProperties(store.id)"> <i class="fa fa-home"></i>
+                      {{store.name }}
+                  </a></li>
+                </ul></li>
+
+
+            </ul>
+          </div>
+
+          <div class="nav-no-collapse pull-right" id="header-nav">
+            <ul class="nav navbar-nav pull-right">
+              <li   class="mobile-search hidden-sm hidden-xs"><a class="btn"> <i
+                  class="fa fa-search"></i>
+              </a>
+
+                <div class="drowdown-search">
+                  <form role="search">
+                    <div class="form-group">
+                      <input ng-model="searchTerm" type="text" class="form-control"
+                        placeholder="Search..." ng-keydown="updateCall(item, $event)"> <i
+                        class="fa fa-search nav-search-icon"></i>
+                    </div>
+                  </form>
+                </div></li>
+
+              
+
+              <li id="usercontrol" class="dropdown profile-dropdown" ng-controller="userCtrl"><a
+                class="dropdown-toggle" data-toggle="dropdown"> <img ng-src="{{avatarlink}}" alt="" onerror="this.src='img/nuevah-logo-bear-black-c-50x50.png'" /> <span class="hidden-xs" ng-bind="currentUser.name">
+                </span> <b class="caret"></b>
+              </a>
+                <ul class="dropdown-menu dropdown-menu-right">
+                  <!-- 
+                  <li><a href="#/pages/user-profile"><i class="fa fa-user"></i>Profile</a></li>
+                  <li><a href=""><i class="fa fa-cog"></i>Settings</a></li>
+                  <li><a href=""><i class="fa fa-envelope-o"></i>Messages</a></li>
+                   -->
+                  <li ><a data-ng-controller="signoutCtrl" ng-click="signout()"><i class="fa fa-power-off"></i><span translate="INDEX_LOGOUT">Logout</span></a></li>
+                </ul></li>
+
+              <li class="visible-lg">
+              <a id="request" toggle-fullscreen="toggle-fullscreen">
+                      <em class="fa fa-expand"></em>
+                    </a>
+                    </li>
+
+              <li class="dropdown hidden-xs"><a
+                class="btn dropdown-toggle" data-toggle="dropdown"> <i
+                  class="fa fa-cog"></i>
+              </a>
+                <ul id="config-tool" class="dropdown-menu dropdown-menu-right"
+                  style="text-align: center;">
+
+
+                  <li>
+
+
+
+
+                    <div id="config-tool-options">
+                      <h4 translate="INDEX_LAYOUT_OPTIONS">Layout Options</h4>
+                      <ul>
+                        <li>
+                          <div class="checkbox-nice">
+                            <input type="checkbox" id="config-fixed-header" /> <label
+                              for="config-fixed-header" trasnlate="INDEX_FIXED_HEADER"> Fixed Header </label>
+                          </div>
+                        </li>
+                        <li>
+                          <div class="checkbox-nice">
+                            <input type="checkbox" id="config-fixed-sidebar" /> <label
+                              for="config-fixed-sidebar" translate="INDEX_SETTING_MENU_FIXED_LEFT_MENU"> Fixed Left Menu </label>
+                          </div>
+                        </li>
+                        <li>
+                          <div class="checkbox-nice">
+                            <input type="checkbox" id="config-fixed-footer" /> <label
+                              for="config-fixed-footer" translate="INDEX_SETTING_MENU_FIXED_FOOTER"> Fixed Footer </label>
+                          </div>
+                        </li>
+                        <li>
+                          <div class="checkbox-nice">
+                            <input type="checkbox" id="config-boxed-layout" /> <label
+                              for="config-boxed-layout" translate="INDEX_SETTING_MENU_BOXED_LAYOUT"> Boxed Layout </label>
+                          </div>
+                        </li>
+                        <li>
+                          <div class="checkbox-nice">
+                            <input type="checkbox" id="config-rtl-layout" /> <label
+                              for="config-rtl-layout" translate="INDEX_SETTING_MENU_RIGHT-TO-LEFT"> Right-to-Left </label>
+                          </div>
+                        </li>
+                      </ul>
+                      <br />
+                      <h4 trasnlate="INDEX_SETTING_MENU_SKIN_COLOR">Skin Color</h4>
+                      <ul id="skin-colors" class="clearfix">
+                        <li><a class="skin-changer" data-skin=""
+                          data-toggle="tooltip" title="{{'INDEX_SETTING_MENU_DEFAULT' | translate}}"
+                          style="background-color: #34495e;"> </a></li>
+                        <li><a class="skin-changer" data-skin="theme-white"
+                          data-toggle="tooltip" title="{{'INDEX_SETTING_MENU_WHITE/GREEN' | translate}}"
+                          style="background-color: #2ecc71;"> </a></li>
+                        <li><a class="skin-changer blue-gradient"
+                          data-skin="theme-blue-gradient" data-toggle="tooltip"
+                          title="{{'INDEX_SETTING_MENU_GRADIENT' | translate}}"> </a></li>
+                        <li><a class="skin-changer" data-skin="theme-turquoise"
+                          data-toggle="tooltip" title="{{'INDEX_SETTING_MENU_GREEN_SEA' | translate}}"
+                          style="background-color: #1abc9c;"> </a></li>
+                        <li><a class="skin-changer" data-skin="theme-amethyst"
+                          data-toggle="tooltip" title="{{'INDEX_SETTING_MENU_AMETHYST' | translate}}"
+                          style="background-color: #9b59b6;"> </a></li>
+                        <li><a class="skin-changer" data-skin="theme-blue"
+                          data-toggle="tooltip" title="{{'INDEX_SETTING_MENU_BLUE' | translate}}"
+                          style="background-color: #2980b9;"> </a></li>
+                        <li><a class="skin-changer" data-skin="theme-red"
+                          data-toggle="tooltip" title="{{'INDEX_SETTING_MENU_RED' | translate}}"
+                          style="background-color: #e74c3c;"> </a></li>
+                        <li><a class="skin-changer" data-skin="theme-whbl"
+                          data-toggle="tooltip" title="{{'INDEX_SETTING_MENU_WHITE/BLUE' | translate}}"
+                          style="background-color: #3498db;"> </a></li>
+                      </ul>
+                    </div>
+                  </li>
+                </ul></li>
+
+             <!-- <li class="dropdown hidden-xs" ng-app="bearpms3App"
+                ng-controller="translationCtrl"><a
+                class="btn dropdown-toggle" data-toggle="dropdown"><span ng-bind="selectedLanguage.toUpperCase()"></span>&nbsp;<i class="fa fa-caret-down"></i>
+              </a>
+                <ul class="dropdown-menu dropdown-menu-right language"
+                  style="padding: 0px; text-align: center; min-width: 50px;">
+
+                  <li data-ng-show="selectedLanguage !== 'en' " class="ng-hide"><a
+                    ng-click="translatelabels('en')" style="padding-left:0; padding: 3px 3px;">EN</a></li>
+                  <li data-ng-show="selectedLanguage !== 'es' " class=""><a
+                    ng-click="translatelabels('es')" style="padding-left:0; padding: 3px 3px;">ES</a></li>
+                  <li data-ng-show="selectedLanguage !== 'pl' " class=""><a
+                    ng-click="translatelabels('pl')" style="padding-left:0; padding: 3px 3px;">PL</a></li>
+                  <li data-ng-show="selectedLanguage !== 'fr' " class=""><a
+                    ng-click="translatelabels('fr')" style="padding-left:0; padding: 3px 3px;">FR</a></li>
+
+
+                </ul></li>-->
+                 <li class="dropdown hidden-xs" ng-app="bearpms3App"
+                ng-controller="translationCtrl"><a
+                class="btn dropdown-toggle" data-toggle="dropdown"><span ng-bind="selectedLanguage.toUpperCase()"></span>&nbsp;<i class="fa fa-caret-down"></i>
+              </a>
+                <ul class="dropdown-menu dropdown-menu-right language"
+                  style="padding: 0px; text-align: center; min-width: 50px;">
+
+                <!--  <li data-ng-show="selectedLanguage !== 'en' " class="ng-hide"><a
+                    ng-click="translatelabels('en')" style="padding-left:0; padding: 3px 3px;">EN</a></li>
+                  <li data-ng-show="selectedLanguage !== 'es' " class=""><a
+                    ng-click="translatelabels('es')" style="padding-left:0; padding: 3px 3px;">ES</a></li>
+                  <li data-ng-show="selectedLanguage !== 'pl' " class=""><a
+                    ng-click="translatelabels('pl')" style="padding-left:0; padding: 3px 3px;">PL</a></li>
+                  <li data-ng-show="selectedLanguage !== 'fr' " class=""><a
+                    ng-click="translatelabels('fr')" style="padding-left:0; padding: 3px 3px;">FR</a></li>-->
+                    <div ng-repeat= "lan in languageArray">
+                          <span style="cursor:pointer"  data-ng-show="selectedLanguage !== lan" ng-click="translatelabels(lan)">{{lan}}</span>
+                    </div>
+                </ul></li>
+
+            </ul>
+          </div>
+        </div>
+      </div>
+      </header>
+    
+    
+    <div id="page-wrapper" class="container">
+      <div class="row">
+        <div id="nav-col">
+        <section id="col-left" class="col-left-nano">
+            <div id="col-left-inner" class="col-left-nano-content">
+              <div class="collapse navbar-collapse navbar-ex1-collapse"
+                id="sidebar-nav" bs-navbar>
+                <ul class="nav nav-pills nav-stacked">
+                  <li class="nav-header nav-header-first hidden-sm hidden-xs" translate="INDEX_NAVIGATION">
+                    Navigation</li>
+                  <li data-match-route="/dasboard" data-toggle="tooltip" data-placement="right" data-original-title="{{isCollapsed ? ('INDEX_DASHBOARD' | translate) : ''}}"><a href="#/dasboard">
+                      <i class="fa fa-home"></i> <span translate="INDEX_DASHBOARD">Dashboard</span>
+                  </a></li>
+                  <li ng-hide="rightBooking" data-match-route="/bookings*"><a href="" class="dropdown-toggle"> <i
+                      class="fa fa-calendar"></i> <span translate="INDEX_BOOKINGS">Bookings</span>
+                      <i class="fa fa-angle-right drop-icon"></i>
+                  </a>
+                    <ul class="submenu">
+                      <li><a data-match-route="/bookings/booking_list" href="#/bookings/booking_list"><span
+                           translate="INDEX_BOOKING_LIST">Booking List</span></a></li>
+                      <li><a data-match-route="/bookings/create_booking" href="#/bookings/create_booking"><span
+                          translate="INDEX_CREATE_BOOKING">Create booking</span></a></li>
+                    </ul></li>
+                  <li data-match-route="/reporting" data-toggle="tooltip" data-placement="right" data-original-title="{{isCollapsed ? ('INDEX_REPORTING' | translate) : ''}}"><a href="#/reporting"> <i
+                      class="fa fa-bar-chart-o"></i> <span translate="INDEX_REPORTING"> Reporting </span>
+                  </a></li>
+                  <li ng-hide="rightFolio" data-toggle="tooltip" data-placement="right" data-original-title="{{isCollapsed ? ('INDEX_INVOICES'  | translate) : ''}}" data-match-route="/invoices"><a href="#/invoices"> <i class="fa fa-file-text-o"></i>
+                      <span  translate="INDEX_INVOICES"> Invoices </span>
+                  </a></li>
+                  <li ng-hide="rightCustomer" data-toggle="tooltip" data-placement="right" data-original-title="{{isCollapsed ? ('INDEX_CUSTOMERS'  | translate) : ''}}" data-match-route="/customers"><a href="#/customers"> <i class="fa fa-user"></i>
+                      <span translate="INDEX_CUSTOMERS">Customers</span>
+                  </a></li>
+              
+
+
+                  <li class="nav-header hidden-sm hidden-xs" translate="INDEX_CONFIGURATION">
+                  Configuration
+                  </li>
+
+                  <li data-match-route="/settings*"><a href="" class="dropdown-toggle"> <i class="fa fa-cog"></i> <span translate="INDEX_SETTINGS" > Settings </span><i class="fa fa-angle-right drop-icon"></i></a>
+                  <ul class="submenu">
+  
+                      <li ng-hide="rightCompany && rightUser"  data-match-route="/settings/company*">
+                      	<a href="" class="dropdown-toggle">
+                      		<span translate="INDEX_COMPANY">Company</span>
+                      	</a>
+                      	<ul class="submenu">
+                              <li ng-hide="rightCompany">
+                                <a data-match-route="/settings/company_details" href="#/settings/company_details">
+                                <span translate="INDEX_DETAILS">Details</span></a>
+                              </li>
+                              <li ng-hide="rightUser">
+                                <a data-match-route="/settings/company_users" href="#/settings/company_users">
+                                <span translate="INDEX_USERS">Users</span></a>
+                              </li>
+                      	</ul>
+                      </li>
+                      <li data-match-route="/settings/properties*">
+                          <a href="" class="dropdown-toggle">
+                              <span translate="INDEX_PROPERTY">Property</span></a>
+                          </a>
+                            <ul class="submenu">
+                              <li>
+                                <a ng-hide="rightProperty" data-match-route="/settings/properties_details" href="#/settings/properties_details">
+                                <span translate="INDEX_PROPERTY_DETAILS">Details</span></a>
+                              </li>
+                              <li>
+                                <a ng-hide="rightProperty" data-match-route="/settings/properties_notifications" href="#/settings/properties_notifications">
+                                <span translate="INDEX_PROPERTY_NOTIFICATIONS">Notifications</span></a>
+                              </li>
+                              <li>
+                                <a ng-hide="rightRoomType" data-match-route="/settings/properties_rooms" href="#/settings/properties_rooms">
+                                <span translate="INDEX_PROPERTY_ROOMS">Rooms</span></a>
+                              </li>
+                              <li>
+                                <a ng-hide="rightRatePolicy" data-match-route="/settings/properties_rateplans" href="#/settings/properties_rateplans">
+                                <span translate="INDEX_PROPERTY_RATE_PLANS">Rate Plans</span></a>
+                              </li>
+                              <li>
+                                <a data-match-route="/settings/properties_products" href="#/settings/properties_products">
+                                <span translate="INDEX_PROPERTY_PRODUCTS">Products</span></a>
+                              </li>
+                            </ul>
+ 
+                      </li>
+                      <li><a data-match-route="/settings/ibe" href="#/settings/ibe">
+                      <span  translate="INDEX_IBE"> IBE </span></a>
+                      </li>
+                      <li><a data-match-route="/settings/wizard" href="#/settings/wizard">
+                      <span  translate="INDEX_WIZARD"> WIZARD </span></a>
+                      </li>
+                    </ul>
+                  </li>
+                  <!--<li data-match-route="/support"><a ng-attr-data-toggle="{{{true:'none', false:'tooltip'}[isCollapsed]}}" data-placement="right" data-original-title="{{support | translate}}" href="#/support"> <i class="fa fa-support"></i>
+                      <span  translate> Support </span>
+                  </a></li>-->
+                  <li data-match-route="/support" data-toggle="tooltip" data-placement="right" data-original-title="{{isCollapsed ? ('INDEX_SUPPORT' | translate) : ''}}"><a href="#/support">
+                      <i class="fa fa-support"></i> <span translate="INDEX_SUPPORT">Support</span>
+                  </a></li>
+                  <li data-match-route="/about"><a ng-attr-data-toggle="{{{true:'none', false:'tooltip'}[isCollapsed]}}" data-placement="right" data-original-title="{{isCollapsed ? ('INDEX_ABOUT' | translate) : ''}}" href="#/about"> <i class="fa fa-user"></i> <span
+                      translate="INDEX_ABOUT"> About </span>
+                  </a></li>
+                </ul>
+              </div>
+            </div>
+            
+          </section>
+        </div>
+        <div id="content-wrapper">
+          <div class="row">
+            <div class="col-lg-12">
+
+              <div class="slide-main-container">
+                <div ng-view autoscroll="true" class="slide-main-animation"></div>
+              </div>
+
+            </div>
+          </div>
+
+          <div ng-include='"views/common/footer.html"'></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- global scripts -->
+  <script src="js/demo-skin-changer.js"></script>
+  <!-- only for demo -->
+
+  <script src="bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+  <script src="bower_components/bootstrap/js/popover.js"></script>
+ 
+ 
+  <script src="js/demo.js"></script>
+  <!-- only for demo -->
+ 
+  <!-- select2 -->
+  <script src="js/select2.min.js"></script>
+
+  <!-- moment js -->
+  <script src="js/moment.min.js"></script>
+<script src="bower_components/moment-timezone/builds/moment-timezone-with-data.min.js"></script>
+
+    <script src="bower_components/moment-range/dist/moment-range.min.js"></script>
+
+  <!-- slim scroll -->
+  <script src="js/jquery.slimscroll.min.js"></script>
+ 
+
+  <!-- masked form input -->
+  <script src="js/jquery.maskedinput.min.js"></script>
+
+  <!-- datepicker -->
+  <script src="js/bootstrap-datepicker.js"></script>
+
+  <!-- daterange picker -->
+  <script src="js/daterangepicker.js"></script>
+
+  <!-- type ahead autocomplete -->
+  <script src="js/typeahead.min.js"></script>
+
+ 
+
+  <!-- nouislider -->
+ <!--  // <script src="js/jquery.nouislider.js"></script> -->
+
+  <!-- jquery ui -->
+  <script src="js/jquery-ui.custom.min.js"></script>
+
+  <!-- full calendar -->
+<!-- <script src='js/fullcalendar/lib/moment.min.js'></script> -->
+ <!--<script src='js/fullcalendar/lib/jquery-ui.custom.min.js'></script> -->
+  <!-- <script src="js/fullcalendar.js"></script> -->
+ <!--<script src="js/fullcalendar/lang/es.js"></script>-->
+<!--<script src='js/fullcalendar/lang-all.js'></script>-->
+ 
+
+  <!-- modernirz -->
+  <script src="js/modernizr.min.js"></script>
+
+  <!-- timeline -->
+  <script src="js/timeline.js"></script>
+  <script src="js/jquery.grid-a-licious.min.js"></script>
+
+  <!-- data tables -->
+ 
+ 
+  <script src="bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
+    
+ 
+ 
+  <script src="js/dataTables.tableTools.min.js"></script>
+  <script src="js/jquery.dataTables.bootstrap.js"></script> 
+ 
+  <script src="js/footable.js"></script>
+  <script src="js/footable.sort.js"></script>
+  <script src="js/footable.paginate.js"></script>
+  <script src="js/footable.filter.js"></script>
+ 
+
+  <!-- xcharts, morris, dygraphs + other chart libs -->
+  <script src="js/d3.min.js"></script>
+  <script src="js/xcharts.js"></script>
+  <script src="js/rainbow.min.js"></script>
+  <script src="js/jquery.knob.js"></script>
+  <script src="js/raphael-min.js"></script>
+  <script src="js/morris.min.js"></script>
+  <script src="js/dygraph-data.js"></script>
+  <script src="js/dygraph.min.js"></script>
+  <script src="js/dygraph-interaction.js"></script>
+ 
+
+  <!-- flot charts -->
+  <script src="js/flot/jquery.flot.min.js"></script>
+  <script src="js/flot/jquery.flot.resize.min.js"></script>
+  <script src="js/flot/jquery.flot.time.min.js"></script>
+  <script src="js/flot/jquery.flot.threshold.js"></script>
+  <script src="js/flot/jquery.flot.axislabels.js"></script>
+
+  <script src="js/flot/jquery.flot.pie.min.js"></script>
+  <script src="js/flot/jquery.flot.stack.min.js"></script>
+  <script src="js/flot/jquery.flot.orderBars.js"></script>
+ 
+  <script src="bower_components/angular/angular.js"></script> 
+  
+  <script src="bower_components/angular-route/angular-route.min.js"></script>
+  <script src="bower_components/angular-animate/angular-animate.min.js"></script>
+
+  <script src="js/loading-bar.js"></script>
+  <script src="js/eazypiechart/angular.easypiechart.min.js"></script>
+  
+  <script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+  <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+
+  <!-- <script src="js/ui-bootstrap.js"></script>
+  <script src="js/ui-bootstrap-tpl.js"></script> -->
+  
+    <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+  
+  <script src="bower_components/angular-resource/angular-resource.min.js"></script>
+  
+    <!--<script src="js/angular-morris-chart.min.js"></script>-->
+    <script src="js/angular-knob.js"></script>
+    <script src="bower_components/angular-moment/angular-moment.min.js"></script>
+    <!-- <script src="js/lodash.min.js"></script> -->
+    <script src="js/angularjs-dropdown-multiselect.min.js"></script>
+    <script src="js/select.min.js"></script>
+    
+    <script src="js/flot/jquery.flot.js"></script>
+    <script src="js/flot/jquery.flot.orderBars.js"></script>
+    <script src="js/flot/jquery.flot.pie.js"></script>
+    <script src="js/flot/jquery.flot.resize.js"></script>
+    <script src="js/flang.js"></script>
+
+  <script src="js/modernizr.custom.js"></script>
+  <script src="js/snap.svg-min.js"></script> <!-- For Corner Expand and Loading circle effect only -->
+  <script src="js/classie.js"></script>
+  <script src="js/notificationFx.js"></script>
+ 
+ 
+  <script src="js/angular-datatables/angular-datatables.js"></script>
+  <script src="js/angular-datatables/plugins/fixedheader/angular-datatables.fixedheader.min.js"></script>
+  <script src="js/angular-datatables/plugins/tabletools/angular-datatables.tabletools.min.js"></script>
+  <script src="js/angular-datatables/plugins/bootstrap/angular-datatables.bootstrap.min.js"></script>
+  <script src="js/angular-datatables/plugins/Responsive-1.0.7/js/dataTables.responsive.min.js"></script>
+ 
+   
+  <script src="js/calendar.js"></script>
+  <script src="js/dropzone.js"></script>
+    
+    <script src="js/ng-table.js"></script>
+    <script src="js/ng-file-upload-all.js"></script>
+
+ <script src="/js/nanoscroller/bin/javascripts/jquery.nanoscroller.js" type="text/javascript"></script>
+    <script src="/js/angular-nanoscroller/scrollable.js" type="text/javascript"></script>
+
+ <script src="js/ngDialog/js/ngDialog.js"></script> 
+
+ 
+  <!-- angular scripts -->
+  <script src="scripts/app.js"></script>  
+    <script src="scripts/services/booking-service.js"></script>
+    <script src="scripts/services/reporting-service.js"></script>
+    <script src="scripts/services/company-service.js"></script>
+    <script src="scripts/services/product-service.js"></script>
+    <script src="scripts/services/invoice-service.js"></script>
+    <script src="scripts/services/todo-service.js"></script>
+    <script src="scripts/services/langtransservice.js"></script>
+    <script src="scripts/services/webconstants.js"></script>
+    <script src="scripts/services/searchservice.js"></script>
+    <script src="scripts/services/rateplan-service.js"></script>
+    <script src="scripts/services/ratepolicyconditionstype-service.js"></script>
+    <script src="scripts/services/lang-services.js"></script>
+
+  <script src="scripts/directives/directives.js"></script>
+  
+  <script src="bower_components/angular-cookies/angular-cookies.min.js"></script>
+
+
+  <script src="/js/screenfull.js" async=""></script>
+
+  <!-- theme scripts -->
+  <script src="/js/scripts.js"></script>
+  <script src="bower_components/ngWig/dist/ng-wig.js"></script>
+  
+  <script src="bower_components/angular-xeditable/dist/js/xeditable.min.js"></script>
+  <script src="bower_components/checklist-model/checklist-model.js"></script>
+  <script src="bower_components/angular-filter/dist/angular-filter.min.js"></script>
+ 
+  <script src="bower_components/angular-translate/angular-translate.min.js"></script>
+  <script src="bower_components/angular-translate-storage-cookie/angular-translate-storage-cookie.min.js"></script>
+  <script src="bower_components/angular-translate-storage-local/angular-translate-storage-local.min.js"></script>
+  <script src="bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js"></script>
+  
+ <!-- test -->
+ <link rel="stylesheet" href="bower_components/nvd3/nv.d3.css"/> 
+  <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
+  <script src="bower_components/nvd3/nv.d3.js"></script>
+  <script src="bower_components/ng-nvd3/dist/ng-nvd3.js"></script>
+
+<script src="bower_components/angular-tablesort/js/angular-tablesort.js"></script>
+
+<script src="js/fullcalendar.js"></script>
+
+<!--controllers start..............................-->
+  <script src="scripts/controllers/main.js"></script>
+  <script src="scripts/controllers/email.js"></script>
+  <script src="scripts/controllers/dashboardflot.js"></script>
+  <script src="scripts/controllers/translation.js"></script>   
+  <script src="scripts/controllers/bookinglisttable.js"></script>
+  <script src="scripts/controllers/modaluserrights.js"></script>
+  <script src="scripts/controllers/companyroles.js"></script>
+  <script src="scripts/controllers/calendar.js"></script>
+  <script src="scripts/controllers/propertydetails.js"></script>
+  <script src="scripts/controllers/company.js"></script>
+  <script src="scripts/controllers/companyuser.js"></script>
+  <script src="scripts/controllers/editbookingmodal.js"></script>
+  <script src="scripts/controllers/bookingmodal.js"></script>
+  <script src="scripts/controllers/createbooking.js"></script>
+  <script src="scripts/controllers/modalinstance.js"></script>
+  <script src="scripts/controllers/reporting.js"></script>
+  <script src="scripts/controllers/invoices.js"></script>
+  <script src="scripts/controllers/customers.js"></script>
+  <script src="scripts/controllers/easychart.js"></script>
+  <script src="scripts/controllers/signin.js"></script>
+  <script src="scripts/controllers/home.js"></script>
+  <script src="scripts/controllers/controllers.js"></script>
+  <script src="scripts/controllers/settingsPropertyImageController.js"></script>
+  <script src="scripts/controllers/settingsPropertyRatePlanController.js"></script>
+  <script src="scripts/controllers/settingsPropertyRoomListController.js"></script>
+  <script src="scripts/controllers/settingsPropertyRoomTypeController.js"></script>
+  <script src="scripts/controllers/settingsPropertyProductController.js"></script>
+  <script src="scripts/controllers/settingsPropertyNotificationController.js"></script>
+  <script src="scripts/controllers/settingsWizard.js"></script>
+  <script src="scripts/controllers/rateplanconditionsmodal.js"></script>
+
+  <script src="scripts/controllers/RatePlanService.js"></script>
+  <script src="scripts/controllers/RoomService.js"></script>
+ 
+ 
+  <!--<script src="scripts/controllers/printinvoicepdf.js"></script>-->
+
+<!--controllers end..............................-->
+
+<!--services start.............................-->
+
+<script src="scripts/services/createbooking.js"></script>
+
+<!--services end..............................-->
+
+
+<!--filters start..............................-->
+
+<script src="scripts/filters/selectfilter.js"></script>
+
+<!--filters end..............................-->
+
+<!--directives start..............................-->
+<script src="scripts/directives/nbdatepicker.js"></script>
+<script src="scripts/directives/popover.js"></script>
+<!--<script src="scripts/directives/mypdfviewertoolbar.js"></script>-->
+<!--directives end..............................-->
+
+<!-- angular google maps -->
+<script src="bower_components/lodash/lodash.min.js"></script>
+<script src="bower_components/angular-simple-logger/dist/angular-simple-logger.min.js"></script>
+
+<script src="bower_components/angular-google-maps/dist/angular-google-maps.min.js"></script>
+<script src='//maps.googleapis.com/maps/api/js?sensor=false&libraries=places'></script>
+
+<!-- Angular Multi Step Form Wizard -->
+<script src="bower_components/angular-multi-step-form/dist/angular-multi-step-form.min.js"></script>   
+
+<script>
+    $(function () {
+      
+      $('#request').click(function () {
+        screenfull.request($('#container')[0]);
+        // does not require jQuery, can be used like this too:
+        // screenfull.request(document.getElementById('container'));
+      });
+    
+    });
+    </script>
+    
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="border:none">
+                    Confirm
+                </div>
+                <div class="modal-body" style="padding:15px">
+                    Check in this guest?
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" id="ok" data-dismiss="modal">OK</button>
+                    <button class="btn btn-warning" data-dismiss="modal" id="cancel">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+     <div class="modal fade" id="myModalOut" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="border:none">
+                    Confirm
+                </div>
+                <div class="modal-body" style="padding:15px">
+                    Check out this guest?
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" id="ok" data-dismiss="modal">OK</button>
+                    <button class="btn btn-warning" data-dismiss="modal" id="cancel">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+     <div class="modal fade" id="myModalDraft" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="border:none">
+                    Save as draft
+                </div>
+                <div class="modal-body" style="padding:15px">
+                    Are you sure you want to save this reservation as draft?
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" id="ok" data-dismiss="modal">YES</button>
+                    <button class="btn btn-warning" data-dismiss="modal" id="cancel">NO</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="deletePopup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="border:none">
+                    Delete confirmation
+                </div>
+                <div class="modal-body" style="padding:15px">
+                    Are you sure you want to delete this line?
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" id="ok" data-dismiss="modal">YES</button>
+                    <button class="btn btn-warning" data-dismiss="modal" id="cancel">CANCEL</button>
+                </div>
+            </div>
+        </div>
+    </div>
+     <div class="modal fade" id="noShowPopup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="border:none">
+                    No Show
+                </div>
+                <div class="modal-body" style="padding:15px">
+                   Are you sure this Reservation is a No Show?
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" id="ok" data-dismiss="modal">YES</button>
+                    <button class="btn btn-warning" data-dismiss="modal" id="cancel">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="cancelReservvation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="border:none">
+                    Cancel Reservation
+                </div>
+                <div class="modal-body" style="padding:15px">
+                   Are you sure you want to cancel this reservation?
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" id="ok" data-dismiss="modal">YES</button>
+                    <button class="btn btn-warning" data-dismiss="modal" id="cancel">NO</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="checkoutGuest" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="border:none">
+                    Checkout Guest
+                </div>
+                <div class="modal-body" style="padding:15px">
+                     Would you like to check out this guest?
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" id="ok" data-dismiss="modal">YES</button>
+                    <button class="btn btn-warning" data-dismiss="modal" id="cancel">NO</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="checkoutGuestBalanceNotZero" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="border:none">
+                    Checkout Guest
+                </div>
+                <div class="modal-body" style="padding:15px">
+                     Balance is not 0. Would you like to check out this guest anyway?
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" id="ok" data-dismiss="modal">YES</button>
+                    <button class="btn btn-warning" data-dismiss="modal" id="cancel">NO</button>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+
+   <!--Start of Tawk.to Script-->
+  
+  <script type="text/javascript">
+//   var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    
+//   (function(){
+//   var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+//   s1.async=true;
+//   s1.src='https://embed.tawk.to/5636388d058f638305223830/default';
+//   s1.charset='UTF-8';
+//   s1.setAttribute('crossorigin','*');
+//   s0.parentNode.insertBefore(s1,s0);
+//   })();
+
+
+// // Tawk_API.onBeforeLoad = function(){
+// //   //place your code here
+
+//   //var scope = angular.element($("#usercontrol")).scope();
+//   //var uname= scope.currentUser.name;
+
+//   Tawk_API.visitor = {
+//       name  : "LUIS",
+//       email : "EMAIL@EMAIL.COM"
+//     };
+
+// };
+
+  </script> 
+
+  <!--End of Tawk.to Script-->
+
+</body>
+</html>

@@ -1,0 +1,90 @@
+<div class="main-box clearfix">
+<div class="main-box-body clearfix" data-ng-controller="CompanyUserCtrl as showCase">
+
+							  
+							  <accordion close-others="oneAtATime">
+
+							    <accordion-group is-open="status.openusers">
+							        <accordion-heading >
+							           <span ng-click="tr()" style="color:#fff;">User Details <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.openusers, 'glyphicon-chevron-right': !status.openusers}"></i></span>
+							        </accordion-heading>
+							        
+
+
+
+									<div class="col-lg-12">
+									<div class="main-box clearfix">
+										<div class="main-box-body clearfix">
+											
+												<table id="luist" datatable="ng" class="table user-list table-hover" dt-options="showCase.dtOptions" dt-column-defs="showCase.dtColumnDefs">
+												<thead>
+													<tr>
+														<th>ID</th>
+														<th></th>
+														<th>Name</th>
+														<th>Roles / Rights</th>
+														<th>Phone</th>
+														<th>Email</th>
+														<th></th>
+														<th></th>
+													</tr>
+												</thead>
+													<tbody>
+														<tr data-ng-repeat="store in showCase.users">
+															<td>
+																{{store.ID}}
+															</td>
+															<td>
+																<img src="images/samples/scarlet-159.png" alt=""/>
+															</td>
+															<td>
+																<input class="text-like custom-editable editable-click" ng-change="store.edited=true" editable-custom ng-model="store.Name"/>
+															</td>
+															<td>
+																 
+																<ul class="fa-ul">
+																<li ng-repeat="rights in store.Rights">
+																	<i class="fa-li fa fa-lock"></i>{{rights.Description}} - {{rights.propertyName.substring(0,20)}}
+																</li>
+																</ul>
+																 
+															</td>
+															
+															<td class="text-center">
+																<input class="text-like custom-editable editable-click" ng-change="store.edited=true" editable-custom ng-model="store.Phone"/>
+															</td>
+															<td>
+																<input class="text-like custom-editable editable-click" ng-change="store.edited=true" editable-custom ng-model="store.Email"/>
+															</td>
+															<td style="width: 10%;">
+																<button ng-disabled="!store.edited" ng-click="updatedata(store.ID, store)" class="btn btn-primary btn-sm from-control" disabled="disabled"><i class="glyphicon glyphicon-ok"></i></button>
+																<!-- <button ng-click="remove($index)" title="Cancel" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>
+																 -->
+															</td>
+															<td> <!-- ng-switch on="store.Active" -->
+																<!-- 
+																<span class="label label-primary" ng-switch-when="true">Active</span>
+								                            	<span class="label label-danger" ng-switch-when="false">Inactive</span>
+								                            	 -->
+								                            	 <div class="pull-right">
+																<div class="onoffswitch">
+																	<input ng-click="remove($index)" ng-checked="store.Active" type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch{{store.ID}}" checked="">
+																	<label class="onoffswitch-label" for="myonoffswitch{{store.ID}}">
+																		<div class="onoffswitch-inner"></div>
+																		<div class="onoffswitch-switch"></div>
+																	</label>
+																</div>
+																</div>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											
+										</div>
+									</div>
+								</div>
+								</accordion-group>
+								</accordion>
+								
+								</div>
+								</div>

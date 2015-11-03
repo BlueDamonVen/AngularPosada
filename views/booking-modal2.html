@@ -1,0 +1,211 @@
+<div class="md-content">
+
+							<div class="modal-body full">
+							<form name="bmform">
+								<button class="md-close close" ng-click="cancel()">×</button>
+								
+									<uib-tabset justified="true" class="main">
+										<uib-tab heading="{{'BOOKING_MODAL_BOOKING_INFORMATION' | translate}}">
+											<div class="panel-body">
+
+													<div class="pull-right" ng-if="!newbooking" ng-switch on="booking.FK_BookingStatus" style="padding-bottom: 10px;">
+														<span class="label label-primary">{{booking.BookingCode}}</span>
+														<span class="label label-primary" ng-switch-default="1" translate="BOOKING_LIST_CONFIRMED">Confirmed</span>
+						                            	<span class="label label-success" ng-switch-when="2" translate="BOOKING_LIST_CHECKED_IN">Checked In</span>
+						                            	<span class="label label-warning" ng-switch-when="3" translate="BOOKING_LIST_CHECKED_OUT">Checked Out</span>
+						                            	<span class="label label-danger" ng-switch-when="4" translate="BOOKING_LIST_CANCELED">Canceled</span>
+						                            	<span class="label label-default" ng-switch-when="5" translate="BOOKING_LIST_NO_SHOW">No Show</span>
+													</div>
+													
+													<div class="form-group col-lg-12 col-sm-12 col-xs-12" style="padding-right: 0px;padding-left: 0px;">
+													<div ng-if="booking.FK_BookingStatus==1" id="reportrangeBookingModal" class="pull-left daterange-filter col-lg-12 col-sm-12 col-xs-12" where="right" cs-reportrange noranges="true" callback="checkavailability">
+													<i class="icon-calendar"></i>
+													<span></span><div class="pull-right"><b class="caret"></b></div>
+													</div>
+													<div ng-disabled="true" ng-if="booking.FK_BookingStatus!=1" class="pull-left daterange-filter col-lg-12 col-sm-12 col-xs-12">
+													<i class="icon-calendar"></i>
+													<span>{{ dateFrom.format("MMMM D, YYYY") }} - {{dateTo.format("MMMM D, YYYY")}}</span>
+													</div>
+													</div>
+
+													<div class="form-group col-lg-6" style="padding-left: 0px;">
+													
+													<select class="form-control" ng-model="booking.Occupancy" ng-change="checkavailability()" convert-to-number>
+													<option value="" disabled selected translate="BOOKING_MODAL_ADULTS">Adults</option>
+													<option value="1" translate="BOOKING_MODAL_ADULTS_1">1 Adult</option>
+													<option value="2" translate="BOOKING_MODAL_ADULTS_2">2 Adults</option>
+													<option value="3" translate="BOOKING_MODAL_ADULTS_3">3 Adults</option>
+													<option value="4" translate="BOOKING_MODAL_ADULTS_4">4 Adults</option>
+													<option value="5" translate="BOOKING_MODAL_ADULTS_5">5 Adults</option>
+													</select>
+													</div>
+
+													<div class="form-group col-lg-6" style="padding-right: 0px;">
+													
+													<select class="form-control" ng-model="booking.Children" ng-change="checkavailability()" convert-to-number>
+													<!-- <option value="" disabled selected>Please Select</option> -->
+													<option value="0" selected translate="BOOKING_MODAL_CHILDREN_0">0 Children</option>
+													<option value="1" translate="BOOKING_MODAL_CHILDREN_1">1 Child</option>
+													<option value="2" translate="BOOKING_MODAL_CHILDREN_2">2 Children</option>
+													<option value="3" translate="BOOKING_MODAL_CHILDREN_3">3 Children</option>
+													<option value="4" translate="BOOKING_MODAL_CHILDREN_4">4 Children</option>
+													<option value="5" translate="BOOKING_MODAL_CHILDREN_5">5 Children</option>
+													</select>
+													</div>
+
+													<div class="form-group">
+													<select class="form-control" ng-disabled="booking.FK_BookingStatus!=1" ng-model="selectedRoomType" ng-options="roomtype.RoomTypeShortDescription for roomtype in availability track by roomtype.FK_RoomType">
+													<option value="" disabled translate="BOOKING_MODAL_ROOM_TYPE"></option>
+													</select>
+													</div>
+
+													<div class="form-group">
+													<select class="form-control" ng-disabled="booking.FK_BookingStatus!=1" ng-model="selectedRatePlan" ng-options="rateplan.RatePolicyDescription for rateplan in selectedRoomType.RatePolicies track by rateplan.FK_RatePolicy" ng-change="updateselectedRatePlan(selectedRatePlan);">
+													<option value="" disabled selected translate="BOOKING_MODAL_RATE_PLAN"></option>
+													</select>
+													</div>
+													
+													<div class="form-group">
+													<select class="form-control" ng-model="selectedRoom" ng-options="sroom.Number for sroom in Rooms track by sroom.ID">
+													<option value="" disabled selected translate="BOOKING_MODAL_ROOM_NUMBER_NAME"></option>
+													</select>
+													</div>
+
+													<div class="col-lg-6 col-sm-6 col-xs-12">
+													<div class="main-box infographic-box colored yellow-bg">
+													<span class="headline" translate="BOOKING_MODAL_PRICE_PER_NIGHT"></span>
+													<span class="value">{{selectedRatePlan.FK_Currency}} {{PriceNight}}</span>
+													</div>
+													</div>
+													<div class="col-lg-6 col-sm-6 col-xs-12">
+													<div class="main-box infographic-box colored emerald-bg">
+													<span class="headline"><span translate="BOOKING_MODAL_TOTAL"></span> {{selectedDays}} <span translate="BOOKING_MODAL_DAYS"></span></span>
+													<span class="value">{{selectedRatePlan.FK_Currency}} {{PriceTotal}}</span>
+													</div>
+													</div>
+
+													<div class="form-group">
+													<input type="text" class="form-control" required ng-model="BookingCustomer.LastName" required name="surname" placeholder="{{'BOOKING_MODAL_SURNAME' | translate}}">
+													</div>
+													<div class="form-group">
+													<input type="text" class="form-control" required ng-model="BookingCustomer.FirstName" required name="firstname" placeholder="{{'BOOKING_MODAL_FIRST_NAME' | translate}}">
+													</div>
+													<div class="form-group">
+													<input type="text" class="form-control" required ng-model="BookingCustomer.Phone" required name="phone" placeholder="{{'BOOKING_MODAL_TELEPHONE' | translate}}">
+													</div>
+													<div class="form-group">
+													<input type="email" class="form-control" required ng-model="BookingCustomer.Email" name="email" required placeholder="{{'BOOKING_MODAL_EMAIL' | translate}}">
+													</div>
+													
+													<div class="checkbox-nice">
+													<input type="checkbox" id="checkbox-1" ng-model="moredetails" ng-true-value="1" ng-false-value="0">
+													<label for="checkbox-1">
+													<span translate="BOOKING_MODAL_MORE_DETAILS"></span>
+													</label>
+													</div>
+
+													<div ng-if="moredetails==1">
+															<div class="form-group">
+																<input ng-disabled="rightValue" class="form-control" placeholder="{{'BOOKING_MODAL_ADDRESS' | translate}}" ng-model="BookingCustomer.Address1" />
+															</div>
+															<div class="form-group col-lg-6 col-sm-6 col-xs-12" style="padding-left: 0px;">
+																<input ng-disabled="rightValue" type="text" class="form-control" ng-model="BookingCustomer.City" placeholder="{{'BOOKING_MODAL_CITY' | translate}}">
+															</div>
+															<div class="form-group col-lg-6 col-sm-6 col-xs-12" style="padding-right: 0px;">
+																<input ng-disabled="rightValue" type="text" class="form-control" ng-model="BookingCustomer.PostalCode" placeholder="{{'BOOKING_MODAL_POSTAL_CODE' | translate}}">
+															</div>
+															
+															<div class="form-group col-lg-6 col-sm-6 col-xs-12" style="padding-left: 0px;">
+																<input ng-disabled="rightValue" type="text" class="form-control" ng-model="BookingCustomer.ProvinceState" placeholder="{{'BOOKING_MODAL_PROVINCE/STATE' | translate}}">
+															</div>
+															<div class="form-group col-lg-6 col-sm-6 col-xs-12" style="padding-right: 0px;">
+																<select ng-disabled="rightValue" class="form-control" ng-model="BookingCustomer.Country" ng-change="store.edited=true" ng-options="item.ISO2 as item.Name for item in countries">
+																<option value="" disabled selected translate="BOOKING_MODAL_COUNTRY"></option>
+																</select>
+															</div>
+													</div>
+
+												
+												</div>
+
+												
+
+												
+										</uib-tab>
+										<uib-tab heading="{{'BOOKING_MODAL_PAYMENT_INFORMATION' | translate}}">
+											<div class="panel-body">
+												
+												<div class="form-group">
+													<input type="text" class="form-control" placeholder="{{'BOOKING_MODAL_CREDIT_CARD_NO' | translate}}" ng-model="booking.CC">
+												</div>
+												<div class="form-group">
+													<input type="text" class="form-control" placeholder="{{'BOOKING_MODAL_CARDHOLDER_NAME' | translate}}" ng-model="booking.CCName" />
+												</div>
+												<div class="form-group col-lg-4 col-sm-4 col-xs-4" style="padding-left: 0px;">
+													<select class="form-control" ng-model="booking.CCExp1" ng-options="item.v as item.name for item in Exp1"> 
+														<option value="" disabled selected>Month</option>
+													</select>
+												</div>
+												<div class="form-group col-lg-4 col-sm-4 col-xs-4" style="padding-right: 0px;">
+													<select class="form-control" ng-model="booking.CCExp2" ng-options="item.v as item.name for item in Exp2">
+														<option value="" disabled selected>Year</option>
+													</select>	
+												</div>
+												
+												<div class="form-group col-lg-4 col-sm-4 col-xs-4">
+													<input type="text" class="form-control" name="userVerificationCode" ng-model="booking.CCCW" placeholder="{{'BOOKING_MODAL_VERIFICATION_CODE' | translate}}"/>
+												</div>
+											</div>
+										</uib-tab>
+									</uib-tabset>
+
+
+
+									<div class="modal-footer">
+									
+										<button type="reset" class="btn btn-danger" ng-click="cancel()" translate="BOOKING_MODAL_CANCEL">Cancel</button>
+										<button type="submit" ng-disabled="
+													bmform.surname.$invalid ||  
+													bmform.phone.$invalid ||
+													bmform.firstname.$invalid ||
+													bmform.email.$invalid || !bmform.$dirty"
+												class="btn btn-primary" 
+												ng-click="reserve()">
+												<span ng-switch="newbooking">
+												<span ng-switch-default translate="BOOKING_MODAL_RESERVE">Reserve</span>
+												<span ng-switch-when="false" translate="BOOKING_MODAL_SAVE">Save</span>
+												</span>
+										</button>
+										<button 
+											type="submit"
+											ng-if="newbooking && !booking.IsDraft"
+											ng-disabled="
+													bmform.surname.$invalid ||  
+													bmform.phone.$invalid ||
+													bmform.firstname.$invalid ||
+													bmform.email.$invalid || !bmform.$dirty
+													" class="btn btn-primary" ng-click="saveAsDraft()" translate="BOOKING_MODAL_SAVE_AS_DRAFT"></button>
+                                        
+                                  <!--           <span ng-hide="booking.modalMode" >
+		                                           
+													<span ng-disabled="rightValue" ng-show="reservedAndCheckedInIn" id="checkOutR" class="btn btn-primary btn-bearGray pull-left" ng-click="reservedCheckedIn('CKche')" translate="BOOKING_MODAL_CHECKED_IN">checked in</span> 
+											</span>
+											  -->
+												<button ng-disabled="rightValue" ng-if="showCheckIn(booking)" id="checkInIn" class="btn btn-primary pull-left" ng-click="checkIn(booking.ID)" translate="BOOKING_MODAL_CHECK_IN">Check In</button>
+												<button ng-disabled="rightValue" ng-if="showCheckOut(booking)" id="checkOutOut" class="btn btn-primary pull-left" ng-click="checkOut(booking.ID)" translate="BOOKING_MODAL_CHECK_OUT">Check Out</button> 
+												<button ng-disabled="rightValue ||
+													bmform.surname.$invalid ||  
+													bmform.phone.$invalid ||
+													bmform.firstname.$invalid ||
+													bmform.email.$invalid" ng-if="newbooking && dateFrom.isSame(moment(), 'day')" id="checkInR" class="btn btn-primary pull-left" ng-click="reserveAndCheckIn()" translate="BOOKING_MODAL_RESERVE_&_CHECK_IN">Reserve & Check In</button>
+											 <div ng-if="errorMessageShow" class="alert alert-danger text-center col-lg-12 col-sm-12 col-xs-12" style="margin-top: 10px;margin-bottom: 0px;">  
+											 <i class="fa fa-times-circle fa-fw fa-lg"> </i> 
+											  <span ng-if="errorMessageShow==7001" translate="BOOKING_MODAL_NO_AVAILABILITY_FOR_THE_SELECTED_CRITERIA"></span>
+											 </div>
+                                        	 
+									</div>
+								</form>
+							</div>
+						</div>
+
+

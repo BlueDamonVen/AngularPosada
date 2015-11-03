@@ -1,0 +1,744 @@
+<style>
+  .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+    .panel-group .panel {
+      overflow: visible;
+    }
+
+.col-xs-1 .pull-right .onoffswitch{
+	margin-right: 0px;
+}
+
+.item-wrapper a{
+    display: inline !important;     
+}
+
+.item-wrapper{
+    display: inline;
+    position: relative;
+}
+
+    .item-wrapper form {
+        position: absolute;
+        top: -53px;
+        background: #FFF;
+        border: 1px solid #AAA;
+        border-radius: 5px;
+        padding: 7px;
+        width: 220px;
+        display: inline-block;
+        left: 50%;
+        margin-left: -110px;
+        z-index: 101;
+    }
+
+    .item-wrapper form:before{
+        content:"";
+        width: 0; 
+        height: 0; 
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;	
+        border-top: 10px solid #AAA;
+        position:absolute;
+        bottom:-10px;
+        left:100px;
+    }
+
+    .item-wrapper form:after{
+        content:"";
+        width:0;
+        height:0;
+        border-left: 9px solid transparent;
+        border-right: 9px solid transparent;	
+        border-top: 9px solid #FFF;
+        position:absolute;
+        bottom:-9px;
+        left:101px;
+    }
+
+.editable-input{
+     width:114px !important;   
+}
+
+
+.item-wrapper form.editable-checklist{
+   top: -180px; !important;
+}
+
+.item-wrapper form.editable-range{
+   width: 255px; !important;
+}
+
+.item-wrapper form.editable-date{
+   width: 280px; !important;
+}
+
+form.editable-date > div > input {
+	width: 170px !important;
+}
+
+select.editable-input{
+ width: 114px; 
+}
+
+
+</style>
+
+<div class="row">
+	<div class="col-lg-12">
+		<ol class="breadcrumb">
+			<li><a href="#" translate="PROPERTY_RATEPLAN_DASHBOARD">Dashboard</a></li>
+			<li><a href="" translate="PROPERTY_RATEPLAN_SETTINGS"> Settings</a></li>
+			<li class="active"><span translate="PROPERTY_RATEPLAN_PROPERTY">Property</span></li>
+		</ol>
+		<h1 translate="PROPERTY_RATEPLAN_RATE_PLANS">Rate Plans</h1>
+	</div>
+</div>
+<div class="row">
+	<div class="col-lg-12">
+		<div class="main-box clearfix" style="min-height: 640px;" data-ng-controller="settingsPropertyRatePlanCtrl">
+			<header class="main-box-header clearfix"></header>
+			<div class="main-box-body clearfix">
+				<!-- Add Rate Plan -->
+				<button ng-disabled="rightValue" type="button" class="btn btn-primary" ng-click="addRatePolicy()" style="margin-bottom: 10px;">
+					<span class="fa fa-plus"></span>
+					<span translate="PROPERTY_RATEPLAN_ADD_RATE_PLAN"></span>
+				</button>
+				<!-- Add Rate Plan End -->
+				<!-- Accordion Plans -->
+				<uib-accordion close-others="false">
+					<div class="row" ng-repeat="rp in RatePolicy" style="padding-bottom: 4px;">
+						<div class="col-xs-10" style="padding-right=0px;">
+							<uib-accordion-group is-open="openrateplans[$index]">
+								<uib-accordion-heading class="accordion-toggle">
+									<span ng-bind="rp.SD || '_'"></span>
+									<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': openrateplans[$index], 'glyphicon-chevron-right': !openrateplans[$index]}"></i>
+								</uib-accordion-heading>
+								<div class="col-lg-12">
+									<div class="tabs-wrapper tabs-no-header">
+										<ul ng-disabled="rightValue" class="nav nav-tabs">
+											<li class="active"><a showtab="" href="#tab-descriptions{{$index}}" data-toggle="tab" translate="PROPERTY_RATEPLAN_NAME">Name</a></li>
+											<li><a showtab="" href="#tab-options{{$index}}" data-toggle="tab" translate="PROPERTY_RATEPLAN_OPTIONS">OPTIONS</a></li>			
+											<li><a showtab="" href="#tab-conditions{{$index}}" data-toggle="tab" translate="PROPERTY_RATEPLAN_CONDITIONS">Conditions</a></li>
+											<li><a showtab="" href="#tab-rates{{$index}}" data-toggle="tab" translate="PROPERTY_RATEPLAN_RATES">Rates</a></li>
+											<li><a showtab="" href="#tab-taxes{{$index}}" data-toggle="tab" translate="PROPERTY_RATEPLAN_TAXES">Taxes</a></li>
+										</ul>
+										<div class="tab-content">
+											<!-- Name Tab -->
+											<div class="tab-pane fade in active" id="tab-descriptions{{$index}}">
+												<div class="btn-group open">
+														<button ng-disabled="rightValue" ng-hide="rp.RatePolicyDesc.length" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"> 
+														<span translate="PROPERTY_RATEPLAN_ADD_DESCRIPTION"></span> <span class="caret"></span> 
+													</button> 
+													<ul class="dropdown-menu" role="menu"> 
+														<li ng-repeat="storel in languages"> 
+															<a ng-click="addDesc(storel.Code,rp.ID)" ng-bind="storel.Name"></a>
+														</li> 
+													</ul>
+												</div> 
+													<uib-accordion close-others="false"> 
+						 								<ul class="row" ng-repeat="d in rp.RatePolicyDesc"> 
+															<div class="col-xs-11" style="padding-right=0px;"> 
+												    			<uib-accordion-group> 
+												        			<uib-accordion-heading> 
+												            			{{d.LangCode}}
+												        			</uib-accordion-heading> 
+											        			<form> 
+												        				<div class="row"> 
+												      						<label><span translate="PROPERTY_RATEPLAN_DESCRIPTION"></span></label>
+												        					<input ng-disabled="rightValue" type="text" class="form-control" ng-model="d.Description" /> 
+				  								      						<label><span translate="PROPERTY_RATEPLAN_PROMOTION_DESCRIPTION"></span></label> 
+											        						<input ng-disabled="rightValue" type="text" class="form-control" ng-model="d.PromotionDescription" /> 
+												        				</div> 
+												        				<div class="row" style="padding-top:10px;"> 
+												        					<div class="pull-right">									             
+												            					<button ng-disabled="rightValue" type="submit" ng-click="saveRatePolicyDesc(d, $index, rp.ID)" title="Save" class="btn btn-primary btn-sm" translate="PROPERTY_RATEPLAN_SAVE">Save</button> 
+												        					</div> 
+												        				</div> 
+												        			</form> 
+												    			</uib-accordion-group> 
+														</div> 
+												    		<div class="col-xs-1" style="padding-left: 0px; padding-right: 0px;"> 
+																<div class="pull-left"> 
+																	<button ng-disabled="rightValue" ng-hide="!$last" type="button" class="btn btn-link btn-lg dropdown-toggle" data-toggle="dropdown" style="padding-right: 4px; padding-left: 0px;"> 
+																		<span class="fa fa-plus"></span> 
+																	</button> 
+																	<ul ng-disabled="rightValue" class="dropdown-menu" role="menu"> 
+																		<li ng-repeat="storel in languages"> 
+																			<a  ng-click="addDesc(storel.Code,rp.ID)" ng-bind="storel.Name"></a>
+																		</li> 
+																	</ul> 
+																<button ng-disabled="rightValue || rightValue2" ng-hide="d.LangCode=='ENG'" ng-click="deleteRatePolicyDesc(d.ID,$index,rp.ID)" type="button" class="btn btn-link btn-lg" style="padding-right: 0px; padding-left: 4px;"> 
+																		<span class="fa fa-trash-o"></span> 
+																	</button> 
+																</div> 
+												    		</div> 
+													</ul> 
+												</uib-accordion>
+											</div> 
+											<!-- END Name Tab -->
+											<!-- Option Tab -->
+											<div class="tab-pane fade options" id="tab-options{{$index}}">
+								        		<div class="main-box">
+													<header class="main-box-header clearfix">
+														<div class="col-sm-12">
+															<h2 translate="PROPERTY_RATEPLAN_OPTIONS">Options</h2>
+														</div>
+													</header>
+													<div class="main-box-body clearfix">
+														<div class="col-sm-12">
+									  						<div class="table-responsive" style="overflow: visible;">
+																<table class="table table-products table-hover">
+																	<thead>
+																		<tr>
+																			<th translate="PROPERTY_RATEPLAN_OPTIONS_TYPE">Type</th>
+																			<th class="text-center" translate="PROPERTY_RATEPLAN_OPTIONS">Condition</th>
+																		</tr>
+																	</thead>
+																	<tbody>
+																		<tr>
+																			<td translate="PROPERTY_RATEPLAN_MEALS">Meals</td>
+																			<td>
+																				<div class="form-group clear-fix row"  ng-repeat="type in rp.options | filter:{ Group:'MEALS'}">
+																					<div class="col-sm-5 col-sm-offset-3">
+																						<div class="checkbox-nice">
+																							<input type="checkbox" ng-model="type.check" ng-change="changeOptions(rp.ID,type.ID,type.check)" id="checkbox-meals-{{rp.ID}}-{{$index}}">
+																							<label for="checkbox-meals-{{rp.ID}}-{{$index}}">
+																								{{type.Description}}
+																							</label>
+																						</div>
+																					</div>
+																					<div class="col-sm-1">
+																						<button type="button" class="btn btn-link btn-lg" ng-click="editRatePolicyCondition(type)" style="padding-right: 0px; padding-left: 4px;"> 
+																							<span class="fa fa-pencil-square-o"></span> 
+																						</button>
+																					</div>
+																					<div class="col-sm-1">
+																						<button ng-click="deleteRatePolicyDescriptionsType(rp,type)" ng-if="!$first" type="button" class="btn btn-link btn-lg">
+																							<span class="fa fa-trash-o"></span>
+																						</button>
+																					</div>
+																					<div class="col-sm-1"> 																						
+																						<button ng-if="$last" type="button" ng-click="addRatePolicyConditions(rp,'MEALS')" class="btn btn-link btn-lg" style="padding-right: 0px; padding-left: 4px;"> 
+																							<span class="fa fa-plus"></span> 
+																						</button>
+																					</div>
+																				</div>	
+																			</td>
+																		</tr>
+																		<tr>
+																			<td translate="PROPERTY_RATEPLAN_PAYMENT">Payment</td>
+																			<td>
+																				<div class="form-group clear-fix row"  ng-repeat="type in rp.options | filter:{ Group:'PAYMENTS'}">
+																					<div class="col-sm-5 col-sm-offset-3">
+																						<div class="checkbox-nice">
+																							<input type="checkbox" ng-model="type.check" ng-change="changeOptions(rp.ID,type.ID,type.check)" id="checkbox-payments-{{rp.ID}}-{{$index}}">
+																							<label for="checkbox-payments-{{rp.ID}}-{{$index}}">
+																								{{type.Description}}
+																							</label>
+																						</div>
+																					</div>
+																					<div class="col-sm-1">
+																						<button type="button" class="btn btn-link btn-lg" ng-click="editRatePolicyCondition(type)" style="padding-right: 0px; padding-left: 4px;"> 
+																							<span class="fa fa-pencil-square-o"></span> 
+																						</button>
+																					</div>
+																					<div class="col-sm-1">
+																						<button ng-click="deleteRatePolicyDescriptionsType(rp,type)" ng-if="!$first" type="button" class="btn btn-link btn-lg">
+																							<span class="fa fa-trash-o"></span>
+																						</button>
+																					</div>
+																					<div class="col-sm-1"> 																						
+																						<button ng-if="$last" type="button" ng-click="addRatePolicyConditions(rp,'PAYMENTS')" class="btn btn-link btn-lg" style="padding-right: 0px; padding-left: 4px;"> 
+																							<span class="fa fa-plus"></span> 
+																						</button>
+																					</div>
+																				</div>
+																			</td>
+																		</tr>
+																		<tr>
+																			<td translate="PROPERTY_RATEPLAN_CANCELATIONS">Cancelations</td>
+																			<td>
+																				<div class="form-group clear-fix row"  ng-repeat="type in rp.options | filter:{ Group:'CANCELATIONS'}">
+																					<div class="col-sm-5 col-sm-offset-3">
+																						<div class="checkbox-nice">
+																							<input type="checkbox" ng-model="type.check" ng-change="changeOptions(rp.ID,type.ID,type.check)" id="checkbox-cancelations-{{rp.ID}}-{{$index}}">
+																							<label for="checkbox-cancelations-{{rp.ID}}-{{$index}}">
+																								{{type.Description}}
+																							</label>
+																						</div>
+																					</div>
+																					<div class="col-sm-1">
+																						<button type="button" class="btn btn-link btn-lg" ng-click="editRatePolicyCondition(type)" style="padding-right: 0px; padding-left: 4px;"> 
+																							<span class="fa fa-pencil-square-o"></span> 
+																						</button>
+																					</div>
+																					<div class="col-sm-1">
+																						<button ng-click="deleteRatePolicyDescriptionsType(rp,type)" ng-if="!$first" type="button" class="btn btn-link btn-lg">
+																							<span class="fa fa-trash-o"></span>
+																						</button>
+																					</div>
+																					<div class="col-sm-1"> 																						
+																						<button ng-if="$last" type="button" ng-click="addRatePolicyConditions(rp,'CANCELATIONS')" class="btn btn-link btn-lg" style="padding-right: 0px; padding-left: 4px;"> 
+																							<span class="fa fa-plus"></span> 
+																						</button>
+																					</div>
+																				</div>
+																			</td>
+																		</tr>
+																		<tr>
+																			<td translate="PROPERTY_RATEPLAN_EXTRAS">Extras</td>
+																			<td>
+																				<div class="form-group clear-fix row"  ng-repeat="type in rp.options | filter:{ Group:'EXTRAS'}">
+																					<div class="col-sm-5 col-sm-offset-3">
+																						<div class="checkbox-nice">
+																							<input type="checkbox" ng-model="type.check" ng-change="changeOptions(rp.ID,type.ID,type.check)" id="checkbox-extras-{{rp.ID}}-{{$index}}">
+																							<label for="checkbox-extras-{{rp.ID}}-{{$index}}">
+																								{{type.Description}}
+																							</label>
+																						</div>
+																					</div>
+																					<div class="col-sm-1">
+																						<button type="button" class="btn btn-link btn-lg" ng-click="editRatePolicyCondition(type)" style="padding-right: 0px; padding-left: 4px;"> 
+																							<span class="fa fa-pencil-square-o"></span> 
+																						</button>
+																					</div>
+																					<div class="col-sm-1">
+																						<button ng-click="deleteRatePolicyDescriptionsType(rp,type)" ng-if="!$first" type="button" class="btn btn-link btn-lg">
+																							<span class="fa fa-trash-o"></span>
+																						</button>
+																					</div>
+																					<div class="col-sm-1"> 																						
+																						<button ng-if="$last" type="button" ng-click="addRatePolicyConditions(rp,'EXTRAS')" class="btn btn-link btn-lg" style="padding-right: 0px; padding-left: 4px;"> 
+																							<span class="fa fa-plus"></span> 
+																						</button>
+																					</div>
+																				</div>
+																			</td>
+																		</tr>																															
+																	</tbody>
+																</table>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<!-- End Option Tab --> 											
+											<!-- Conditions Tab -->												
+											<div class="tab-pane fade conditions" id="tab-conditions{{$index}}">
+								        		<div class="main-box">
+													<header class="main-box-header clearfix">
+														<div class="col-sm-12">
+															<h2 translate="PROPERTY_RATEPLAN_RATEPLANCONDITIONS">Rate Plan Conditions</h2>
+														</div>
+													</header>
+													<div class="main-box-body clearfix">
+														<div class="col-sm-12">
+
+
+									  						<div class="table-responsive" style="overflow: visible;">
+																<table class="table table-products table-hover">
+																	<thead>
+																		<tr>
+																			<!-- <th class="text-center" translate="PROPERTY_RATEPLAN_ACTIVATE">Activate</th> -->
+																			<th class="text-left" translate="PROPERTY_RATEPLAN_CONDITIONS">Condition</th>
+																			<th class="text-center" translate="PROPERTY_RATEPLAN_VALUE">Value</th>
+																			<th class="text-left" translate="PROPERTY_RATEPLAN_CONDITIONS_DESCRIPTION">Description</th>
+																		</tr>
+																	</thead>
+																	<tbody>
+																		<tr>
+																																						
+																			<td>
+																				<span>
+																					<label class="control-label" translate="PROPERTY_RATEPLAN_PRICE_PER_PERSON"></label>
+																				</span>
+																			</td>
+																			<td class="text-center">
+																				<div class="item-wrapper">
+																					<a ng-if="!rightValue" href="#" onaftersave="saveRatePolicy(rp,$index)" editable-select="rp.PricePerPerson" e-ng-options="s.value as s.text for s in ppp">{{ showppp(rp.PricePerPerson) | translate}}</a>
+																					<a ng-if="rightValue" >{{ showppp(rp.PricePerPerson) | translate }}</a>
+																				</div>
+																			</td>
+																			<td>
+																				<span translate="PROPERTY_RATEPLAN_EXPLANATION_PRICEPERPERSON"></span>
+																			</td>
+																		</tr>																	
+<!-- 																		<tr>
+																			<td>
+																				<div class="checkbox-nice">
+																					<input type="checkbox" id="checkbox-currencyCheck-{{$index}}" ng-model="rp.currencyCheck" ng-change="saveRatePolicy(rp,$index)">
+																					<label for="checkbox-currencyCheck-{{$index}}"></label>
+																				</div>
+																			</td>																		
+																			<td><span><label class="control-label" translate="PROPERTY_RATEPLAN_CURRENCY">Currency</label></span></td>
+																			<td>
+																				<div class="item-wrapper">
+																					<a ng-if="rp.currencyCheck && !rightValue" href="#" editable-select="rp.FK_Currency" onaftersave="saveRatePolicy(rp,$index)" onshow="getCurrencies()" e-ng-options="s.Code as s.Description for s in Currencies">{{ rp.FK_Currency || ('GENERAL_NOT_SET' | translate) }}</a>
+																					<a ng-if="rightValue" >{{ rp.FK_Currency || ('GENERAL_NOT_SET' | translate) }}</a>
+																				</div>
+																			</td>
+																			<td><span translate="PROPERTY_RATEPLAN_EXPLANATION_CURRENCY"></span></td>
+																		</tr> -->
+																		<tr>
+																			<td>
+																			
+																				<div class="checkbox-nice">
+																					<input ng-disabled="rightValue" type="checkbox" id="checkbox-taxes-{{$index}}" ng-checked="rp.Taxes_Included==1" ng-model="rp.Taxes_Included"  ng-true-value="1" ng-false-value="0" ng-change="saveRatePolicy(rp,$index)">
+																					<label for="checkbox-taxes-{{$index}}" translate="PROPERTY_RATEPLAN_TAXES_INCLUDED"></label>
+																				</div>
+																			
+																			</td>
+																			<!-- <td><span><label class="control-label" translate="PROPERTY_RATEPLAN_TAXES_INCLUDED"></label><span></td> -->
+																			<td></td>
+																			<td><span translate="PROPERTY_RATEPLAN_EXPLANATION_TAXESINCLUDED"></span></td>
+																		</tr>
+<!-- 																		<tr>
+																			<td>
+																				<div class="checkbox-nice">
+																					<input type="checkbox" id="checkbox-maxOccupancy-{{$index}}" ng-model="rp.MaxOccupancyCheck" ng-change="saveRatePolicy(rp,$index)">
+																					<label for="checkbox-maxOccupancy-{{$index}}"></label>
+																				</div>
+																			</td>																			
+																			<td><span><label class="control-label"  >{{'Max Occupancy' | translate}}</label></span></td>
+																			<td>
+																				<div class="item-wrapper">
+																					<a ng-if="rp.MaxOccupancyCheck && !rightValue" href="#" editable-range="rp.MaxOccupancy" e-step="1" e-min="0" e-max="4" onaftersave="saveRatePolicy(rp,$index)">{{ rp.MaxOccupancy || ('GENERAL_NOT_SET' | translate) }}</a>
+																					<a ng-if="rightValue" >{{ rp.MaxOccupancy || ('GENERAL_NOT_SET' | translate) }}</a>
+																				</div>
+																			</td>
+																			<td><span translate="PROPERTY_RATEPLAN_EXPLANATION_MAXOCCUPANCY"></span></td>
+																		</tr> -->
+																		<tr>
+																			<td>
+																				<div class="checkbox-nice">
+																					<input type="checkbox" id="checkbox-arrivalDay-{{$index}}" ng-model="rp.arrivalDayCheck" ng-change="saveRatePolicy(rp,$index)">
+																					<label for="checkbox-arrivalDay-{{$index}}" translate="PROPERTY_RATEPLAN_ARRIVAL_DAY_OF_WEEK"></label>
+																				</div>
+																			</td>																			
+																			<!-- <td>
+																				<span>
+																					<label class="control-label" translate="PROPERTY_RATEPLAN_ARRIVAL_DAY_OF_WEEK"></label>
+																				</span>
+																			</td> -->
+																			<td class="text-center">
+																				<div class="item-wrapper">
+																					<a ng-if="rp.arrivalDayCheck && !rightValue" href="#" editable-checklist="rp.CheckInDOW" onaftersave="saveRatePolicy(rp,$index)" e-ng-options="s.value as s.text for s in DOW">{{ showDOW(rp.CheckInDOW) | translate }}</a>
+																					<a ng-if="rightValue">{{ showDOW(rp.CheckInDOW) | translate}}</a>
+																				</div>
+																			</td>
+																			<td>
+																				<span translate="PROPERTY_RATEPLAN_EXPLANATION_CHECKINDOW"></span>
+																			</td>
+																		</tr>
+																		<tr>
+																			<td>
+																				<div class="checkbox-nice">
+																					<input type="checkbox" id="checkbox-departureDay-{{$index}}" ng-model="rp.departurelDayCheck" ng-change="saveRatePolicy(rp,$index)">
+																					<label for="checkbox-departureDay-{{$index}}" translate="PROPERTY_RATEPLAN_DEPARTURE_DAY_OF_WEEK"></label>
+																				</div>
+																			</td>																			
+																			<!-- <td>
+																				<span>
+																					<label class="control-label" translate="PROPERTY_RATEPLAN_DEPARTURE_DAY_OF_WEEK"></label>
+																				</span>
+																			</td> -->
+																			<td class="text-center">
+																				<div class="item-wrapper">
+																					<a ng-if="rp.departurelDayCheck && !rightValue" href="#" editable-checklist="rp.CheckOutDOW" onaftersave="saveRatePolicy(rp,$index)" e-ng-options="s.value as s.text for s in DOW">{{ showDOW(rp.CheckOutDOW) | translate }}</a>
+																					<a ng-if="rightValue" >{{ showDOW(rp.CheckOutDOW) | translate }}</a>
+																				</div>
+																			</td>
+																			<td>
+																				<span translate="PROPERTY_RATEPLAN_EXPLANATION_CHECKOUTDOW"></span>
+																			</td>
+																		</tr>
+																		<tr>
+																			<td>
+																				<div class="checkbox-nice">
+																					<input type="checkbox" id="checkbox-bookingPriorCheck-{{$index}}" ng-model="rp.bookingPriorCheck" ng-change="saveRatePolicy(rp,$index)">
+																					<label for="checkbox-bookingPriorCheck-{{$index}}" translate="PROPERTY_RATEPLAN_DAYS_PRIOR"></label>
+																				</div>
+																			</td>																			
+																			<!-- <td>
+																				<span>
+																					<label class="control-label" translate="PROPERTY_RATEPLAN_DAYS_PRIOR"></label>
+																				</span>
+																			</td> -->
+																			<td class="text-center">
+																				<div class="item-wrapper">
+																					<a ng-if="rp.bookingPriorCheck && !rightValue" href="#" onaftersave="saveRatePolicy(rp,$index)" editable-number="rp.BookingPrior" e-max="100" e-min="0" e-step="1">{{ rp.BookingPrior }}</a>
+																					<a ng-if="rightValue" >{{ rp.BookingPrior }}</a>
+																				</div>
+																			</td>
+																			<td>
+																				<span translate="PROPERTY_RATEPLAN_EXPLANATION_DAYSPRIOR"></span>
+																			</td>
+																		</tr>
+																		<tr>
+																			<td>
+																				<div class="checkbox-nice">
+																					<input type="checkbox" id="checkbox-bookingDateFromCheck-{{$index}}" ng-model="rp.bookingDateFromCheck" ng-change="saveRatePolicy(rp,$index)">
+																					<label for="checkbox-bookingDateFromCheck-{{$index}}" translate="PROPERTY_RATEPLAN_BOOKING_DATE_FROM"></label>
+																				</div>
+																			</td>																			
+																			<!-- <td>
+																				<span>
+																					<label class="control-label" translate="PROPERTY_RATEPLAN_BOOKING_DATE_FROM"></label>
+																				</span>
+																			</td> -->
+																			<td class="text-center">
+																				<div class="item-wrapper">
+																					<a ng-if="rp.bookingDateFromCheck && !rightValue" href="#" onaftersave="saveRatePolicy(rp,$index)" editable-date="rp.BookingDateFrom">{{ rp.BookingDateFrom | replaceNull | translate }}</a>
+																					<a ng-if="rightValue" >{{ rp.BookingDateFrom | replaceNull | translate }}</a>
+																				</div>
+																			</td>
+																			<td>
+																				<span translate="PROPERTY_RATEPLAN_EXPLANATION_BOOKINGDATEFROM"></span>
+																			</td>
+																		</tr>
+																		<tr>
+																			<td>
+																				<div class="checkbox-nice">
+																					<input type="checkbox" id="checkbox-bookingDateToCheck-{{$index}}" ng-model="rp.bookingDateToCheck" ng-change="saveRatePolicy(rp,$index)">
+																					<label for="checkbox-bookingDateToCheck-{{$index}}" translate="PROPERTY_RATEPLAN_BOOKING_DATE_TO"></label>
+																				</div>
+																			</td>																			
+																			<!-- <td>
+																				<span>
+																					<label class="control-label" translate="PROPERTY_RATEPLAN_BOOKING_DATE_TO"></label>
+																				</span>
+																			</td> -->
+																			<td class="text-center">
+																				<div class="item-wrapper">
+																					<a  ng-if="rp.bookingDateToCheck && !rightValue"href="#" onaftersave="saveRatePolicy(rp,$index)" editable-date="rp.BookingDateTo">{{ rp.BookingDateTo | replaceNull | translate }}</a>
+																					<a  ng-if="rightValue" >{{ rp.BookingDateTo | replaceNull | translate }}</a>
+																				</div>
+																			</td>
+																			<td>
+																				<span translate="PROPERTY_RATEPLAN_EXPLANATION_BOOKINGDATETO"></span>
+																			</td>
+																		</tr>
+																		<tr>
+																			<td>
+																				<div class="checkbox-nice">
+																					<input type="checkbox" id="checkbox-validCheckInCheck-{{$index}}" ng-model="rp.validCheckInCheck" ng-change="saveRatePolicy(rp,$index)">
+																					<label for="checkbox-validCheckInCheck-{{$index}}" translate="PROPERTY_RATEPLAN_ARRIVAL_FROM"></label>
+																				</div>
+																			</td>																			
+																			<!-- <td>
+																				<span>
+																					<label class="control-label" translate="PROPERTY_RATEPLAN_ARRIVAL_FROM"></label>
+																				</span>
+																			</td> -->
+																			<td class="text-center">
+																				<div class="item-wrapper">
+																					<a ng-if="rp.validCheckInCheck && !rightValue" href="#" onaftersave="saveRatePolicy(rp,$index)" editable-date="rp.ValidCheckIn">{{ rp.ValidCheckIn | replaceNull | translate }}</a>
+																					<a ng-if="rightValue"  >{{ rp.ValidCheckIn | replaceNull | translate }}</a>
+																				</div>
+																			</td>
+																			<td>
+																				<span translate="PROPERTY_RATEPLAN_EXPLANATION_CHECKINDATEFROM"></span>
+																			</td>
+																		</tr>
+																		<tr>
+																			<td>
+																				<div class="checkbox-nice">
+																					<input type="checkbox" id="checkbox-validCheckOutCheck-{{$index}}" ng-model="rp.validCheckOutCheck" ng-change="saveRatePolicy(rp,$index)">
+																					<label for="checkbox-validCheckOutCheck-{{$index}}" translate="PROPERTY_RATEPLAN_DEPARTURE_TO"></label>
+																				</div>
+																			</td>																			
+																			<!-- <td>
+																				<span>
+																					<label class="control-label" translate="PROPERTY_RATEPLAN_DEPARTURE_TO"></label>
+																				</span>
+																			</td> -->
+																			<td class="text-center">
+																				<div class="item-wrapper">
+																					<a ng-if="rp.validCheckOutCheck && !rightValue" href="#" onaftersave="saveRatePolicy(rp,$index)" editable-date="rp.ValidCheckOut">{{ rp.ValidCheckOut | replaceNull | translate }}</a>
+																					<a ng-if="rightValue"  >{{ rp.ValidCheckOut | replaceNull | translate }}</a>
+																				</div>
+																			</td>
+																			<td>
+																				<span translate="PROPERTY_RATEPLAN_EXPLANATION_CHECKOUTDATETO"></span>
+																			</td>
+																		</tr>
+																	</tbody>
+																</table>
+															</div>
+														</div>
+														<!-- Add Conditions -->
+<!-- 														<div class="col-sm-4"> 
+															<ui-select multiple ng-model="rp.RatePolicyConditions" on-select="saveRatePolicyConditions(rp,$item)" on-remove="deleteRatePolicyConditions(rp,$item)" ng-disabled="disabled" theme="select2" style="width: 100%;" >
+																<ui-select-match placeholder="Select...">{{$item.Description}}</ui-select-match>
+																    <ui-select-choices repeat="rpd in RatePolicyDescription | filter:$select.search">
+      																	<div ng-bind-html="rpd.Description | highlight: $select.search"></div>
+    																</ui-select-choices>
+															</ui-select>										
+														</div> -->
+														<!-- Add conditions -->	
+													</div>
+												</div>
+											</div>
+											<!-- END Name Tab -->
+											<!-- Start Rates Tab -->
+											<div class="tab-pane fade" id="tab-rates{{$index}}">
+												<div class="main-box-body clearfix">
+														<div  class="table-responsive" style="overflow: visible;">
+														<table datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="table table-hover" >
+															<div class="pull-left">
+																<button ng-disabled="rightValue" ng-disabled="rp.RatePolicyRates.length>=RoomTypes.length" type="button" class="btn btn-primary" ng-click="addRatePolicyRate(rp.ID)" style="margin-top: 10px;">
+																	<span class="fa fa-plus"></span>
+																	<span translate="PROPERTY_RATEPLAN_ADD_RATE"></span> 
+ 																</button>
+																</div>
+															<thead>
+																<tr>
+																	<th translate="PROPERTY_RATEPLAN_ROOM_TYPE"></th>
+																	<th class="text-center" translate="PROPERTY_RATEPLAN_RATE"></th>
+																	<th class="text-center" translate="PROPERTY_RATEPLAN_RATE_ADDITIONAL_PERSON"></th>
+																	<th class="text-center" translate="PROPERTY_RATEPLAN_RATE_CHILDREN"></th>
+																	<th class="text-center" translate="PROPERTY_RATEPLAN_OPTIONS"></th>
+																</tr>
+															</thead>
+															<tbody>
+																<tr ng-repeat="rate in rp.RatePolicyRates">
+																	<td>
+																		<div class="item-wrapper">
+																			<a ng-if="!rightValue" href="#" editable-select="rate.FK_RoomType" onbeforesave="RatePlanRatesAvailableRoomType(rp.ID,$data)" onaftersave="saveRatePolicyRates(rate,$index)" onshow="getRoomTypes()" e-ng-options="s.ID as s.ShortDescription for s in RoomTypes">{{ getRoomTypeName(rate.FK_RoomType) || ('GENERAL_NOT_SET' | translate) }}</a>
+																			<a ng-if="rightValue"  >{{ getRoomTypeName(rate.FK_RoomType) || ('GENERAL_NOT_SET' | translate) }}</a>
+																		</div>
+																	</td>
+																	<td class="text-center">
+																		<div class="item-wrapper">
+																			<a ng-if="!rightValue" href="#" onbeforesave="checkNumber($data)" onaftersave="saveRatePolicyRates(rate,$index)" editable-number="rate.Rate" e-min="0" e-step="0.01">{{ rate.Rate || ('GENERAL_NOT_SET' | translate)}}</a>
+																			<a ng-if="rightValue" >{{ rate.Rate | number: 2 || ('GENERAL_NOT_SET' | translate) }}</a>
+																		</div>
+																	</td>
+																	<td class="text-center">
+																		<div class="item-wrapper">
+																			<a ng-if="!rightValue" href="#" onaftersave="saveRatePolicyRates(rate,$index)" editable-number="rate.RateAdditionalPerson" e-min="0" e-step="0.01">{{ rate.RateAdditionalPerson || ('GENERAL_NOT_SET' | translate)}}</a>
+																			<a ng-if="rightValue"  >{{ rate.RateAdditionalPerson | number: 2 || ('GENERAL_NOT_SET' | translate)}}</a>
+																		</div>
+																	</td>
+																	<td class="text-center">
+																		<div class="item-wrapper">
+																			<a ng-if="!rightValue" href="#" onaftersave="saveRatePolicyRates(rate,$index)" editable-number="rate.RateChildren" e-min="0" e-step="0.01">{{ rate.RateChildren || ('GENERAL_NOT_SET' | translate)}}</a>
+																			<a ng-if="rightValue" >{{ rate.RateChildren | number: 2 || ('GENERAL_NOT_SET' | translate)}}</a>
+																		</div>
+																	</td>
+																	<td class="text-center">
+																		<button ng-disabled="rightValue || rightValue2" ng-click="deleteRatePolicyRates(rate,$index)" title="Delete" class="btn btn-link btn-lg"><i class="fa fa-trash-o"></i></button>
+																	</td>
+																</tr>
+															</tbody>
+														</table>
+													</div>
+												</div>										
+											</div>
+											<!-- End Rates Tab -->
+											<!-- Start Taxes Tab -->
+											<div class="tab-pane fade" id="tab-taxes{{$index}}">
+												<div class="main-box-body clearfix">
+														<div class="table-responsive" style="overflow: visible;">
+														<table datatable="ng" dt-options="dtOptionsTaxes" class="table table-hover">
+															<div class="pull-left">
+																<button ng-disabled="rightValue" type="button" class="btn btn-primary" ng-click="addRatePolicyTax(rp.ID)" style="margin-top: 10px;">
+																	<span class="fa fa-plus"></span>
+																	<span translate="PROPERTY_RATEPLAN_ADD_TAX"></span> 
+																	</button>
+																</div> 
+															<thead>
+																<tr>
+																	<th translate="PROPERTY_RATEPLAN_DESCRIPTION"></th>
+																	<th class="text-center" translate="PROPERTY_RATEPLAN_TYPE">Type</th>
+																	<th class="text-center" translate="PROPERTY_RATEPLAN_PERCENTAGE">Percentage</th>
+																	<th class="text-center" translate="PROPERTY_RATEPLAN_AMOUNT">Amount</th>
+																	<th class="text-center" translate="PROPERTY_RATEPLAN_OPTIONS">Options</th>
+																</tr>
+															</thead>
+															<tbody>
+																<tr ng-repeat="tax in rp.RatePolicyTaxes">
+																	<td ng-disabled="rightValue">
+																		<div class="item-wrapper">
+																			<a ng-if="!rightValue" href="#" editable-text="tax.Description" onaftersave="saveRatePolicyTaxes(tax,$index)">{{ tax.Description || ('GENERAL_NOT_SET' | translate) }}</a>
+																			<a ng-if="rightValue"  >{{ tax.Description || ('GENERAL_NOT_SET' | translate) }}</a>
+																		</div>
+																	</td>
+																	<td class="text-center" ng-disabled="rightValue">
+																		<div class="item-wrapper">
+																			<a ng-if="!rightValue" href="#" editable-select="tax.Type" onaftersave="saveRatePolicyTaxes(tax,$index)" e-ng-options="s.value as s.text for s in taxtypes">{{ showTaxes(tax.Type) }}</a>
+															  				<a ng-if="rightValue" >{{ showTaxes(tax.Type) }}</a>
+																		</div>
+																	</td>
+																	<td class="text-center" ng-disabled="rightValue">
+<!-- 																		<div class="item-wrapper"> -->
+		<!-- 																	<a ng-if="!rightValue" href="#" onaftersave="saveRatePolicyTaxes(tax,$index)" editable-radiolist="tax.Percentage" e-ng-options="s.value as s.text for s in taxpercentage">{{ showTaxPercentage(tax.Percentage) }}</a>
+																			<a ng-if="rightValue" >{{ showTaxPercentage(tax.Percentage) }}</a> -->
+														                        <span ng-if="!rightValue">
+                           
+													                                <a href="#" 
+													                                   editable-number="tax.Percentage"
+													                                   e-step="any"
+													                                   onaftersave="saveRatePolicyTaxes(tax,$index)">
+													                                    
+													                                 <!--   <span ng-if="rp.TaxPercentage === 1">{{rp.TaxPercentage}}</span>
+													                                    
+													                                    <span ng-if="rp.TaxPercentage === 0">{{rp.TaxPercentage}}</span>-->
+													                                </a>
+													                                <a href="#" 
+													                                    editable-select="tax.Percentage"  
+													                                    e-ng-options="s.value as s.text for s in taxpercentage"
+													                                    onaftersave="saveRatePolicyTaxes(tax,$index)">
+													                                    {{ getPercentageTypeLabel(tax.Percentage) }}
+													                                </a>
+													                            
+													                        </span>
+													                        <!--fsadfas -->
+													                         <a ng-if="rightValue" >{{ tax.Percentage || ('GENERAL_NOT_SET' | translate) }}																			
+<!-- 																		</div>
+ -->																	</td>
+																	<td class="text-center">
+																		<div class="item-wrapper">
+																			<a href="#" onaftersave="saveRatePolicyTaxes(tax,$index)" editable-number="tax.Amount" e-min="0" e-step="0.01">{{ tax.Amount || ('GENERAL_NOT_SET' | translate)}}</a>
+																		</div>
+																	</td>
+																	<td class="text-center">
+																		<button ng-disabled="rightValue || rightValue2" ng-click="deleteRatePolicyTaxes(tax,$index)" title="Delete" class="btn btn-link btn-lg">
+																			<i class="fa fa-trash-o"></i>
+																		</button>
+																	</td>
+																</tr>
+															</tbody>  
+														</table>
+											 			<ul class="pagination pull-right hide-if-no-paging"></ul> 
+													</div>
+												</div>	
+											</div> <!-- End Taxes Tab -->
+										</div>
+									</div>
+								</div>
+								<!-- TABLE WITH RATES -->										        
+							</uib-accordion-group>
+						</div>
+						<div class="col-xs-1" style="padding-left:0px; padding-right:0px;">
+							<div class="pull-right">
+								<div class="onoffswitch">
+									<input ng-disabled="rightValue" type="checkbox" ng-checked="rp.Active" ng-model="rp.Active" ng-change="saveRatePolicy(rp,$index)" name="onoffswitch" class="onoffswitch-checkbox" id="RatePolicyonoffswitch{{$index}}" ng-true-value="1" ng-true-false="0">
+										<label class="onoffswitch-label" for="RatePolicyonoffswitch{{$index}}">
+											<div class="onoffswitch-inner"></div>
+											<div class="onoffswitch-switch"></div>
+										</label>
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-1" style="padding-left:0px;">
+							<button ng-disabled="rightValue || rightValue2" ng-click="deleteRatePolicy(rp,$index)" title="Delete" class="btn btn-link btn-lg">
+								<i class="fa fa-trash-o"></i>
+							</button>
+						</div>
+					</div>
+				</uib-accordion>		
+			</div>
+		</div>
+	</div>
+</div>

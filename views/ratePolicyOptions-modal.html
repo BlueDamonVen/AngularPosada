@@ -1,0 +1,53 @@
+<div class="modal-header">
+    <h3 class="modal-title" style="border:none" translate="PROPERTY_RATEPLAN_MODAL_TITLE">Rate Plan Options</h3>
+</div>
+<div class="modal-body" style="padding:15px">
+    <div class="main-box-body clearfix">
+        <div class="col-sm-12">
+            <div class="table-responsive" style="overflow: visible;">
+                <table class="table table-products table-hover">
+                    <thead>
+                        <tr>
+                            <th class="text-left" translate="PROPERTY_RATEPLAN_MODAL_CONDITIONS_NAME">Name</th>
+                            <th class="text-center" translate="PROPERTY_RATEPLAN_MODAL_CONDITIONS_LANGUAGE">Language</th>
+                            <th style="width: 100px;"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="option in vm.descriptions">
+                            <td class="text-left">
+                                <div class="item-wrapper">
+                                    <a href="#" editable-text="option.Description" onaftersave="vm.saveDescription(option)">{{ option.Description || ('GENERAL_NOT_SET' | translate) }}</a>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="item-wrapper">
+                                    <a href="#" onaftersave="vm.saveDescription(option)" editable-select="option.LangCode" e-ng-options="lang as lang for lang in vm.langs">{{option.LangCode}}</a>
+                                </div>                                
+                            </td>
+                            <td>
+                                <button ng-if="$last" type="button" class="btn btn-link btn-lg dropdown-toggle" data-toggle="dropdown" style="padding-right: 0px; padding-left: 4px;"> 
+                                    <span class="fa fa-plus"></span> 
+                                </button>
+                                <button ng-click="vm.deleteDescription(option)" ng-if="!$first" type="button" class="btn btn-link btn-lg">
+                                    <span class="fa fa-trash-o"></span>
+                                </button> 
+                                <ul ng-disabled="rightValue" class="dropdown-menu" role="menu"> 
+                                    <li ng-show="!vm.langs.length">
+                                        <a>No languages Available</a>
+                                    </li>
+                                    <li ng-repeat="lang in vm.langs"> 
+                                        <a  ng-click="vm.addDescription(lang)" ng-bind="lang"></a>
+                                    </li> 
+                                </ul>                                 
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="vm.ok()">OK</button>
+</div>

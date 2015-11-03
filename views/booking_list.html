@@ -1,0 +1,116 @@
+<div class="row">
+	<div class="col-lg-12">
+		<ol class="breadcrumb">
+			<li><a href="#" translate="BOOKING_LIST_DASHBOARD"></a></li>
+			<li><a href="" translate="BOOKING_LIST_BOOKINGS"></a></li>
+			<li class="active"><span translate="BOOKING_LIST_BOOKING_LIST">Booking List</span></li>
+		</ol>
+		
+		<h1 translate="BOOKING_LIST_BOOKING_LIST">Booking List</h1>
+	</div>
+</div>
+
+<div class="row" data-ng-controller="bookingListTableCtrl">
+	<div class="col-lg-12">
+		<div class="main-box clearfix">
+			
+			<div class="main-box-body clearfix">
+			
+				<table datatable="ng" id="table-bookinglist" class="table table-hover" dt-options="dtOptions" dt-column-defs="dtColumnDefs">
+				
+					<div id="reportrangeBlist" class="pull-left daterange-filter" where="right" cs-reportrange  style="margin-top: 10px;">
+					<i class="icon-calendar"></i>
+					<span></span><b class="caret"></b>
+					</div>
+					
+					<thead>
+						<tr>
+							<th class="text-left col-lg-1" translate="BOOKING_LIST_NAME">Name</th>
+							<th class="text-left" translate="BOOKING_LIST_BOOKING_NO">Booking No.</th>
+							<th class="text-center" translate="BOOKING_LIST_ROOM">Room</th>
+							<th class="text-center" translate="BOOKING_LIST_FROM">From</th>
+							<th class="text-center" translate="BOOKING_LIST_TO">To</th>
+							<th class="text-center" translate="BOOKING_LIST_STATUS">Status</th>
+							<th class="text-center" translate="BOOKING_LIST_CREATED_ON">Created On</th>
+							<th class="text-center" translate="BOOKING_LIST_LAST_MODIFIED">Last Modified</th>
+							<th class="text-center" translate="BOOKING_LIST_SOURCE">Source</th>
+							<th class="text-right" data-sort-ignore="true" translate="BOOKING_LIST_OPTIONS">Options</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr data-ng-repeat="store in bookingList" >
+							<td class="text-left">
+								{{store.Holder.FirstName + ' ' + store.Holder.LastName}}
+							</td>
+							<td class="text-left">
+								#{{store.BookingCode}}
+							</td>
+							<td class="text-center">
+								{{store.FK_Room_Number}}
+							</td>
+							<td class="text-center">
+								{{store.DateFrom.format("DD/MM/YYYY")}}
+							</td>
+							<td class="text-center">
+								{{store.DateTo.format("DD/MM/YYYY")}}
+							</td>
+							<td class="text-center" ng-switch on="store.FK_BookingStatus">
+								<span class="label label-success" ng-switch-when="1" translate="BOOKING_LIST_CONFIRMED">Confirmed</span>
+															<span class="label label-primary" ng-switch-when="2" translate="BOOKING_LIST_CHECKED_IN">Checked In</span>
+															<span class="label label-default" ng-switch-when="3" translate="BOOKING_LIST_CHECKED_OUT">Checked Out</span>
+                            	<span class="label label-danger" ng-switch-when="4" translate="BOOKING_LIST_CANCELED">Canceled</span>
+                            	<span class="label label-warning" ng-switch-when="5" translate="BOOKING_LIST_NO_SHOW">No Show</span>
+							</td>
+							<td class="text-center">
+							<span popover-placement="top" uib-popover="{{store.CreatedByName !== 'null' ? store.CreatedByName : 'Not available'}}">{{store.CreatedON | amDateFormat: 'DD/MM/YYYY HH:mm'}}</span>
+							</td>
+							<td class="text-center">
+								<span popover-placement="top" uib-popover="{{store.LastModifiedByName !== 'null' ? store.LastModifiedByName : 'Not available'}}">{{store.lasttimestamp | amDateFormat: 'DD/MM/YYYY HH:mm'}}</span>
+								
+							</td>
+							<td class="text-center">
+								{{store.FK_BookingSource}}
+							</td>
+							<td class="text-right">
+								<div ng-show="store.FK_BookingStatus==1 || store.FK_BookingStatus==2">
+								<button ng-disabled="rightValue" ng-click="checkIn(store.ID)" 
+                                        title="{{'BOOKING_LIST_CHECK_IN' | translate}}" 
+                                        ng-show="showCheckIn(store.FK_BookingStatus,store.DateFrom,store.DateTo)" 
+                                        class="btn btn-primary btn-sm from-control" translate="BOOKING_LIST_CHECK_IN">
+                                    Check in
+                                </button>
+								<button ng-disabled="rightValue" ng-click="checkOut(store.ID)" 
+                                        title="{{'BOOKING_LIST_CHECK_OUT' | translate}}" 
+                                        ng-show="showCheckOut(store.FK_BookingStatus, store.DateTo)" 
+                                        class="btn btn-primary btn-sm from-control" translate="BOOKING_LIST_CHECK_OUT">
+                                    Check out
+                                </button>
+                <button ng-disabled="rightValue" ng-click="noShow(store.ID)" 
+                                        title="{{'BOOKING_LIST_NO_SHOW' | translate}}" 
+                                        ng-show="showNoShow(store.FK_BookingStatus, store.DateFrom)"
+                                        confirm="{{'BOOKING_LIST_NO_SHOW_CONFIRMATION' | translate}}"
+                                        class="btn btn-primary btn-sm from-control">
+                                    <i class="fa fa-thumbs-down"></i> 
+                                </button>
+								<button ng-disabled="rightValue" ng-click="openModal(store.ID)" title="{{'BOOKING_LIST_EDIT' | translate}}" class="btn btn-primary btn-sm from-control"><i class="fa fa-pencil-square-o"></i></button>
+								<button ng-disabled="rightValue || rightValue2" ng-show="store.FK_BookingStatus==1" ng-click="cancel(store.ID)" title="{{'BOOKING_LIST_CANCEL' | translate}}" class="btn btn-danger btn-sm from-control"><i class="fa fa-trash-o"></i></button>
+
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				
+				<!--<ul class="pagination pull-right hide-if-no-paging"></ul>-->
+
+			</div>
+			
+		</div>
+	</div>
+
+
+<!-- this page specific inline scripts -->
+
+
+
+</div>

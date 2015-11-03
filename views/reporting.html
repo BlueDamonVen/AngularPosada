@@ -1,0 +1,572 @@
+
+<div class="row">
+	<div class="col-lg-9">
+		<ol class="breadcrumb">
+			<li>
+                <a href="#" translate="REPORTING_DASHBOARD">Dashboard</a>
+            </li>
+			<li class="active">
+                <span translate="REPORTING_REPORTING">Reporting</span>
+            </li>
+		</ol>
+		<h1 translate="REPORTING_REPORTING_HEADLINE">Reporting</h1>
+	</div>
+</div>
+	
+<div class="row">
+	<div class="col-lg-12">
+        
+        <!-- Start: Hotel at a glance -->
+		<div class="main-box clearfix">
+            
+            <!-- Start: Header -->
+			<header class="main-box-header clearfix">
+				<h2 class="pull-left" translate="REPORTING_HOTEL_AT_A_GLANCE">Hotel at a Glance</h2>
+				<div id="reportrange1" 
+                     cs-reportrange 
+                     callback="loadGlanceReports" 
+                     where="left" 
+                     class="pull-right daterange-filter" 
+                     style="margin-top: 10px;">
+					<i class="icon-calendar"></i>
+					<span></span>
+                    <b class="caret"></b>
+				</div>
+			</header>
+            <!-- End: Header -->
+            
+            <!-- Start: Body -->
+			<div class="main-box-body clearfix">
+                
+                <!-- Start: 1st Row (ADR/ALOS/Total Revenue) -->
+                <div class="row">
+                    
+                    <!-- Start: ADR -->
+                    <div class="col-lg-4 col-sm-4  col-md-4 col-xs-12">
+                        <div class="main-box infographic-box">
+                            <i class="fa fa-money red-bg"></i>
+                            <span class="headline" translate="REPORTING_AVG_DAILY_RATE">Average Daily Rate</span>
+                            <span class="value">
+                                <span class="timer" data-from="120" data-to="2562" data-speed="1000" data-refresh-interval="50">    
+                                    {{adr}}
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- End: ADR -->
+                    
+                    <!-- Start: ALOS -->
+                    <div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
+                        <div class="main-box infographic-box">
+                            <i class="fa fa-suitcase emerald-bg"></i>
+                            <span class="headline" translate="REPORTING_AVG_LOS">Average Length of Stay</span>
+                            <span class="value">
+                                <span class="timer" data-from="30" data-to="658" data-speed="800" data-refresh-interval="30">
+                                    {{alos}}
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- End: ALOS -->
+                    
+                    <!-- Start: Total Revenue -->
+                    <div class="col-lg-4 col-sm-4  col-md-4 col-xs-12">
+                        <div class="main-box infographic-box">
+                            <i class="fa fa-usd green-bg"></i>
+                            <span class="headline" translate="REPORTING_TOTAL_REVENUE">Total Revenue</span>
+                            <span class="value">
+                                $<span class="timer" data-from="83" data-to="8400" data-speed="900" data-refresh-interval="60">
+                                    {{totalRevenue}}
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- End: Total Revenue -->
+                    
+                </div>
+                <!-- End: 1st Row -->
+                
+                <!-- Start: 2nd Row (Reservations/Cancelations/No Shows) -->
+                <div class="row">
+                    <div class="col-lg-4 col-sm-4 col-xs-12">
+                        <div class="main-box infographic-box colored emerald-bg">
+                            <i class="fa fa-calendar-o"></i>
+                            <span class="headline" translate="REPORTING_NO_OF_RESERVATIONS">No. of Reservations</span>
+                            <span class="value">{{totalReservations}}</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-4 col-xs-12">
+                        <div class="main-box infographic-box colored red-bg">
+                            <i class="fa fa-ban"></i>
+                            <span class="headline" translate="REPORTING_NO_OF_CANCELATIONS">No. of Cancelations</span>
+                            <span class="value">{{cancelledReservations}}</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-4 col-xs-12">
+                        <div class="main-box infographic-box colored yellow-bg">
+                            <i class="fa fa-eye-slash"></i>
+                            <span class="headline" translate="REPORTING_NO_OF_NO_SHOWS">No. of No Shows</span>
+                            <span class="value">{{noShowReservations}}</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- End: 2nd Row -->
+                
+            </div>
+            <!-- End: Body -->
+            
+        </div>
+        <!-- End: Hotel at a glance -->
+    </div>
+</div>
+
+
+<!-- Start: Graphics tabs -->
+<style>
+    .nh-graph {
+        max-height: 350px !important;
+    }
+</style>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="main-box clearfix">
+            <div class="tabs-wrapper tabs-no-header">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a class="graphs" showtab="" href="#tab-occupancy" data-toggle="tab" translate="REPORTING_OCCUPANCY"></a></li>
+                    <li><a class="graphs" showtab="" href="#tab-payment-methods" data-toggle="tab" translate="REPORTING_PAYMENT_METHODS"></a></li>
+                    <li><a class="graphs" showtab="" href="#tab-booking-channels" data-toggle="tab" translate="REPORTING_BOOKING_CHANNELS"></a></li>
+                </ul>
+                <div class="tab-content">                    
+                    <div class="tab-pane fade in active" id="tab-occupancy">
+                        <div class="row">
+                            <header class="main-box-header clearfix">
+                                <h2 class="pull-left" translate="REPORTING_OCCUPANCY">Occupancy</h2>
+                                <div class="filter-block pull-right">   
+                                    <div id="reportrange5" 
+                                        cs-reportrange 
+                                        callback="loadOccupancyPerDayReport" 
+                                        where="left" 
+                                        class="pull-right daterange-filter" 
+                                        style="margin-top: 10px;">
+                                       <i class="icon-calendar"></i>
+                                       <span></span>
+                                        <b class="caret"></b>
+                                    </div>
+                                </div>
+                            </header>
+                            <div class="main-box-body clearfix">
+                                <div class="row">
+                                    <span translate="REPORTING_OCCUPANCY_EXPLANATION"></span>
+                                    <div class="nh-graph"
+                                        area-chart
+                                        area-data='occupancyData'
+                                        area-xkey='y'
+                                        area-ykeys='["a"]'
+                                        area-labels='["Occupancy"]'
+                                        ng-if="occupancyData.length">
+                                    </div>
+                                </div>                                
+                            </div>
+                        </div>
+                        <div class="row">
+                            <header class="main-box-header clearfix">
+                                <h2 class="pull-left" translate="REPORTING_OCCUPANCY_PER_ROOM_TYPE">Occupancy per Room Type</h2>
+                                <div class="filter-block pull-right">   
+                                    <div id="reportrange6" 
+                                        cs-reportrange 
+                                        callback="loadOccupancyPerRoomTypeReport" 
+                                        where="left" 
+                                        class="pull-right daterange-filter" 
+                                        style="margin-top: 10px;">
+                                        <i class="icon-calendar"></i>
+                                        <span></span>
+                                        <b class="caret"></b>
+                                    </div>
+                                    <br/>
+                                    <div ng-dropdown-multiselect 
+                                         options="roomTypes" 
+                                         selected-model="selectedRoomTypes11" 
+                                         extra-settings="multiSettings"
+                                         events="multiEvents11"
+                                         class="pull-right">
+                                    </div>
+                                </div>
+                            </header>
+                            <div class="main-box-body clearfix">
+                                <div class="row">
+                                    <span translate="REPORTING_OCCUPANCY_ROOMTYPE_EXPLANATION"></span>
+                                    <div ng-repeat="occupancy in occupancyData2"
+                                         class="col-lg-4 col-sm-4 col-md-4 col-xs-12"
+                                         ng-if="occupancyData2.lenght">
+                                        <label class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+                                            {{occupancy.label}}
+                                        </label>
+                                        <knob class="nh-graph"
+                                            knob-data="occupancy.value"
+                                            knob-options="occupancy.options"
+                                            class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+                                        </knob>
+                                    </div>
+                                </div>                                
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="tab-payment-methods">
+                        <div class="row">
+                            <header class="main-box-header clearfix">
+                                <h2 class="pull-left" translate="REPORTING_PAYMENT_METHODS">Payment Methods</h2>
+                                <div class="filter-block pull-right">   
+                                    <div id="reportrange8" 
+                                        cs-reportrange 
+                                        callback="loadPaymentReport" 
+                                        where="left" 
+                                        class="pull-right daterange-filter" 
+                                        style="margin-top: 10px;">
+                                        <i class="icon-calendar"></i>
+                                        <span></span>
+                                        <b class="caret"></b>
+                                    </div>
+                                </div>                                
+                            </header>
+                            <div class="main-box-body clearfix">
+                                <div class="row">
+                                    <span translate="REPORTING_PAYMENT_METHODS_EXPLANATION"></span>
+                                    <div class="nh-graph"
+                                        bar-chart 
+                                        bar-data='paymentData'
+                                        bar-x='y' 
+                                        bar-y='["a"]'
+                                        bar-horizontal="true"
+                                        bar-labels='["Bookings"]'
+                                        ng-if="paymentData.length">
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div> 
+
+                    <div class="tab-pane fade" id="tab-booking-channels">
+                        <div class="row">
+                            <header class="main-box-header clearfix">
+                                <h2 class="pull-left" translate="REPORTING_NO_OF_RESERVATIONS_VS_REVENUE_BY_BOOKING_CHANNEL">No. of Reservations and Revenue by Booking Channel</h2>
+                                <div class="filter-block pull-right">   
+                                    <div id="reportrange11" 
+                                        cs-reportrange 
+                                        callback="loadBookingsAndRevenueBySourceReport" 
+                                        where="left" 
+                                        class="pull-right daterange-filter" 
+                                        style="margin-top: 10px;">
+                                        <i class="icon-calendar"></i>
+                                        <span></span>
+                                        <b class="caret"></b>
+                                    </div>
+                                    <br/>
+                                    <select ng-model="sort16" ng-change="sortReport16(sort16)" class="pull-right daterange-filter">
+                                        <option value="" translate="REPORTING_SORT_BY">Sort by</option>
+                                        <option value="a" translate="REPORTING_SORTBY_NO_OF_RESERVATIONS"># of Reservations</option>
+                                        <option value="b" translate="REPORTING_SORTBY_REVENUE">Revenue</option>
+                                    </select>
+                                </div>
+                            </header>
+                            <div class="main-box-body clearfix">
+                                <div class="row">
+                                    <span translate="REPORTING_BOOKING_CHANNELS_EXPLANATION"></span>
+                                    <div class="nh-graph"
+                                        bar-chart 
+                                        bar-data='bookingBarData'
+                                        bar-x='y' 
+                                        bar-y='["a", "b"]'
+                                        bar-horizontal="false"
+                                        bar-labels='["No. of Reservations", "Revenue"]'
+                                        ng-if="bookingBarData.length">
+                                    </div>
+                                </div>                                
+                            </div>
+                        </div>
+                    </div>                   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End: Graphics tabs -->
+
+
+<!-- <div class="row">
+    <div class="col-lg-12"> -->
+
+        <!-- Start: No. of Reservations -->
+        <!-- <div class="main-box clearfix"> -->
+            
+            <!-- Start: Header -->
+			<!-- <header class="main-box-header clearfix">
+				<h2 class="pull-left" translate="REPORTING_NO_OF_RESERVATIONS_VS_AVG_REVENUE">No. of Reservations/Avg. Revenue</h2>
+				<div class="filter-block pull-right">	
+                    <div id="reportrange2" 
+                        cs-reportrange 
+                        callback="loadBookingsAndRevenueReport" 
+                        where="left" 
+                        class="pull-right daterange-filter" 
+                        style="margin-top: 10px;">
+					   <i class="icon-calendar"></i>
+					   <span></span>
+                        <b class="caret"></b>
+				    </div>
+                    <br/> -->
+                   <!-- <select ng-model="sort7" ng-change="sortReport7(sort7)" class="pull-right daterange-filter">
+                        <option value="" translate>-- Sort by --</option>
+                        <option value="b" translate># of Reservations</option>
+                        <option value="a" translate>$ per Reservation</option>
+                    </select>-->
+                    <!-- <br/>
+				</div>
+			</header> -->
+            <!-- End: Header -->
+            
+            <!-- Start: Body -->
+            <!-- <div class="main-box-body clearfix">
+                <div class="row"> -->
+                    <!--<div bar-chart 
+                         bar-data='barData'
+                         bar-x='y' 
+                         bar-y='["a","b"]'
+                         bar-2y='["b"]'
+                         bar-horizontal="false"
+                         bar-labels='["Avg. Income", "No. of Reservations"]'>
+                    </div>-->
+                  <!-- <nvd3-line-plus-bar-graph  
+                        chartId='12'  
+                        data='barData'  
+                        responsive='true'  
+                        xformat='y'
+                        xlabel='y' 
+                        y1format='a'
+                        y2format='b'
+                        y1label='yfa'
+                        y2label='kjj'
+                    ></nvd3-line-plus-bar-graph> -->
+                   <!--<style> 
+                        #chart svg {
+                          height: 400px;
+                        } 
+                    </style>
+
+                    <div id="chart">
+                      <svg></svg>
+                    </div>
+                </div>
+            </div>-->
+            <!-- End: Body -->
+            
+        <!-- </div> -->
+        <!-- End: No. of Reservations -->
+        
+        <!-- Start: Total Revenue per Room Type -->
+        <!-- <div class="main-box clearfix"> -->
+            
+            <!-- Start: Header -->
+			<!-- <header class="main-box-header clearfix">
+				<h2 class="pull-left" translate="REPORTING_TOTAL_REVENUE_PER_ROOM_TYPE">Total Revenue per Room Type</h2>
+				<div class="filter-block pull-right">	
+                    <div id="reportrange3" 
+                        cs-reportrange 
+                        callback="loadTotalRevenueReport" 
+                        where="left" 
+                        class="pull-right daterange-filter" 
+                        style="margin-top: 10px;">
+					   <i class="icon-calendar"></i>
+					   <span></span>
+                        <b class="caret"></b>
+				    </div>
+                    <br/>
+                    <div ng-dropdown-multiselect 
+                         options="roomTypes" 
+                         selected-model="selectedRoomTypes8" 
+                         extra-settings="multiSettings"
+                         events="multiEvents8"
+                         class="pull-right">
+                    </div>
+				</div>
+			</header> -->
+            <!-- End: Header -->
+            
+            <!-- Start: Body -->
+            <!-- <div class="main-box-body clearfix">
+                <div class="row">
+                    <div line-chart 
+                         line-data='lineData'
+                         line-xkey='y' 
+                         line-ykeys='{{keys}}', 
+                         line-labels='{{keyNames}}'>
+                    </div>
+                </div>
+            </div> -->
+            <!-- End: Body -->
+            
+        <!-- </div> -->
+        <!-- End: Total Revenue per Room Type -->
+        
+        <!-- Start: Avg. Length of Stay -->
+        <!-- <div class="main-box clearfix"> -->
+            
+            <!-- Start: Header -->
+			<!-- <header class="main-box-header clearfix">
+				<h2 class="pull-left" translate="REPORTING_AVG_LENGTH_OF_STAY_VS_AVG_LEAD_TIME">Avg. Length of Stay/ Avg. Lead Time</h2>
+				<div class="filter-block pull-right">	
+                    <div id="reportrange4" 
+                        cs-reportrange 
+                        callback="loadLOSReport" 
+                        where="left" 
+                        class="pull-right daterange-filter" 
+                        style="margin-top: 10px;">
+                       <i class="icon-calendar"></i>
+                       <span></span>
+                        <b class="caret"></b>
+				    </div>
+                    <br/> -->
+                   <!-- <select ng-model="sort9" ng-change="sortReport9(sort9)" class="pull-right daterange-filter">
+                        <option value="" translate>-- Sort by --</option>
+                        <option value="a" translate>Avg. Length of Stay</option>
+                        <option value="b" translate>Avg. Lead Time</option>
+                    </select>-->
+				<!-- </div>
+			</header> -->
+            <!-- End: Header -->
+            
+            <!-- Start: Body -->
+            <!-- <div class="main-box-body clearfix">
+                <div class="row"> -->
+                <!--
+                    <div bar-chart 
+                         bar-data='barData2'
+                         bar-x='y' 
+                         bar-y='["a", "b"]'
+                         bar-horizontal="false"
+                         bar-labels='["Avg. Length of Stay", "Avg. Lead Time"]'>
+                    </div>-->
+                    <!--<style> 
+                        #chart1 svg {
+                          height: 400px;
+                        } 
+                    </style>
+
+                    <div id="chart1">
+                      <svg></svg>
+                    </div>
+                </div>
+            </div>-->
+            <!-- End: Body -->
+            
+        <!-- </div> -->
+        <!-- End: Avg. Length of Stay -->        
+        
+        <!-- Start: Weekly Check Ins/Outs -->
+        <!-- <div class="main-box clearfix"> -->
+            
+            <!-- Start: Header -->
+			<!-- <header class="main-box-header clearfix">
+				<h2 class="pull-left" translate="REPORTING_WEEKLY_CHECK_INS_VS_CHECK_OUTS">Weekly Check Ins/Check Outs</h2>
+				<div class="filter-block pull-right">	
+                    <div id="reportrange7" 
+                        cs-reportrange 
+                        callback="loadWeeklyCheckInOutReport" 
+                        where="left" 
+                        class="pull-right daterange-filter" 
+                        style="margin-top: 10px;">
+                        <i class="icon-calendar"></i>
+                        <span></span>
+                        <b class="caret"></b>
+				    </div>
+				</div>
+			</header> -->
+            <!-- End: Header -->
+            
+            <!-- Start: Body -->
+            <!-- <div class="main-box-body clearfix">
+                <div class="row"> -->
+                    <!-- <div bar-chart 
+                         bar-data='weeklyCheckInOuts'
+                         bar-x='y' 
+                         bar-y='["a", "b"]'
+                         bar-horizontal="false"
+                         bar-labels='["Check ins", "Check outs"]'>
+                    </div> -->
+                <!-- </div>
+            </div> -->
+            <!-- End: Body -->
+            
+        <!-- </div> -->
+        <!-- End: Weekly Check Ins/Outs -->            
+          
+        <!-- <div class="row">
+        <div class="col-lg-6"> -->
+
+        <!-- Start: Direct/Indirect -->
+        <!-- <div class="main-box clearfix" style="height: 427px">             -->
+            <!-- Start: Header -->
+			<!-- <header class="main-box-header clearfix">
+                <h2 class="pull-left" translate="REPORTING_DIRECT_VS_INDIRECT_BOOKINGS">Direct vs Indirect Bookings</h2>
+				<div class="filter-block pull-right">	
+                    <div id="reportrange9" 
+                        cs-reportrange 
+                        callback="loadDirectIndirectBookingsReport" 
+                        where="left" 
+                        class="pull-right daterange-filter" 
+                        style="margin-top: 10px;">
+                        <i class="icon-calendar"></i>
+                        <span></span>
+                        <b class="caret"></b>
+                    </div>
+				</div>
+			</header> -->
+            <!-- End: Header -->
+            
+            <!-- Start: Body -->
+            <!-- <div class="main-box-body clearfix">
+                <div class="row">
+                    <flot-chart chart-height="300" chart-type="pie" ng-model="channelDonut"></flot-chart>
+                </div>
+            </div> -->
+            <!-- End: Body -->            
+        <!-- </div>
+        </div> -->
+        <!-- End: Direct/Indirect -->
+        
+        <!-- <div class="col-lg-6"> -->
+        <!-- Start: Booking % by Source -->
+        <!-- <div class="main-box clearfix" style="height: 427px">             -->
+            <!-- Start: Header -->
+			<!-- <header class="main-box-header clearfix">
+				<h2 class="pull-left" translate="REPORTING_RESERVATION_BY_BOOKING_CHANNEL">Reservation % by Booking Channel</h2>
+				<div class="filter-block pull-right">	
+                    <div id="reportrange10" 
+                        cs-reportrange 
+                        callback="loadPercentBookingsBySourceReport" 
+                        where="left" 
+                        class="pull-right daterange-filter" 
+                        style="margin-top: 10px;">
+                        <i class="icon-calendar"></i>
+                        <span></span>
+                        <b class="caret"></b>
+                    </div>
+				</div>
+			</header> -->
+            <!-- End: Header -->
+            
+            <!-- Start: Body -->
+            <!-- <div class="main-box-body clearfix">
+                <div class="row">
+                    <flot-chart chart-height="300" chart-type="pie" ng-model="bookingDonut"></flot-chart>
+                </div>
+            </div> -->
+            <!-- End: Body -->            
+        <!-- </div>
+        </div> -->
+        <!-- End: Booking % by Source -->
+        <!-- </div>
+        
+    </div>
+</div> -->
+

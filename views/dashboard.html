@@ -1,0 +1,463 @@
+<div  class="row" data-ng-controller="calendarCtrl">
+    
+    <div class="col-md-12">
+        <div class="main-box">
+          <div class="main-box-body clearfix" style="position:relative">
+              <div id="calender" ui-calendar="uiConfig.calendar" ng-model="eventSources"></div>
+              <ul class="list-unstyled dropdown-menu-custom" style="position:absolute;display:none;left:0;top:0;z-index:999">
+                    <li>
+                        <a id="calendar-menu">
+                            <span class="glyphicon glyphicon-user icon" aria-hidden="true"></span><span translate="DASHBOARD_ADD_RESERVATION">Add Reservation</span>
+                        </a>
+                  </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+</div>
+    
+<div class="row">
+    
+    <!-- Start: Arrival/Departures -->
+    <div class="col-md-4" id="arrivalDeparture">
+        <div class="main-box clearfix">
+            <header class="main-box-header clearfix">
+                <div>
+				    <h2 class="pull-left" translate="DASHBOARD_ARRIVALS/DEPARTURES">Arrivals/Departures</h2>
+                </div>
+			</header>
+            <div class="panel-body" style="height:387px">
+            
+                <div class="widget-container">
+                
+                    <div class="divider"></div>
+                    <uib-tabset justified="true" class="ui-tab">
+
+                        <uib-tab heading="{{'DASHBOARD_ARRIVALS' | translate}}">
+                         
+                            <div class="media" style="padding-top: 15px;padding-left: 5px; ">
+                            
+                                <div class="media-body"
+                                     style="display:block; height:280px; overflow-x:hidden; overflow-y:auto;">
+                                <scrollable >
+                                    <div ng-repeat="arrival in arrivals" class="status-info-panel clearfix">
+                                        <h4 class="user-name">{{arrival.customer}}</h4>
+                                        <div class="user-info pull-left">
+                                            <div class="in-out-room">
+                                                <strong translate="DASHBOARD_IN"></strong><strong>:</strong> {{arrival.checkinDate}} / 
+                                                <strong translate="DASHBOARD_OUT">Out</strong><strong>:</strong> {{arrival.checkoutDate}}
+                                                <br>
+                                                <strong translate="DASHBOARD_ROOM">Room</strong><strong>:</strong> {{arrival.room}}
+                                                <span style="margin-left:5px">
+                                                    <i class="fa fa-moon-o"></i>{{arrival.nights}}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="user-status pull-right">
+                                            <div class="status-icons" style="text-align:center">
+                                                <span>
+                                                    <button ng-disabled="rightValue" ng-click="openBooking(arrival.raw.ID)" 
+                                                            title="{{'DASHBOARD_EDIT' | translate}}"
+                                                            class="btn btn-primary btn-sm"
+                                                            style="width:20px;height:20px;padding-right:20px;padding-bottom:20px">
+                                                        <i class="fa fa-edit"></i>
+                                                    </button>
+                                                    <button ng-disabled="rightValue" ng-click="noShow(arrival)" 
+                                                            confirm="{{'DASHBOARD_NOSHOW_CONFIRM' | translate}}"
+                                                            title="{{'DASHBOARD_NO_SHOW' | translate}}"
+                                                            class="btn btn-primary btn-sm from-control"
+                                                            style="width:20px;height:20px;padding-right:20px;padding-bottom:20px">
+                                                        <i class="fa fa-thumbs-down"></i>
+                                                    </button>
+                                                    <button ng-disabled="rightValue" ng-click="checkIn(arrival)" 
+                                                            confirm="{{ 'DASHBOARD_CHECKIN_CONFIM' | translate }}" 
+                                                            class="btn btn-primary"
+                                                            style="height:28px;margin-right:13px;padding-top:3px">
+                                                        <span translate="DASHBOARD_CHECK_IN_ACTION">Check In</span>
+                                                    </button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                 </scrollable>
+                                </div>
+
+                            </div>
+                          
+                        </uib-tab>
+                        <uib-tab heading="{{'DASHBOARD_DEPARTURES' | translate}}" class="some-container" >
+                        
+                            <div class="media" style="padding-top: 15px;padding-left: 5px; padding-right: 5px">
+
+                                <div class="media-body" 
+                                     style="display:block; height:280px; overflow-x:hidden; overflow-y:auto;">
+                                    <scrollable>
+                                    <div ng-repeat="departure in departures" class="status-info-panel clearfix">
+
+                                        <h4 class="user-name">{{departure.customer}}</h4>
+                                        <div class="user-info pull-left">
+                                            <div class="in-out-room">
+                                                <strong translate="DASHBOARD_IN">In</strong><strong>:</strong> {{departure.checkinDate}} / 
+                                                <strong translate="DASHBOARD_OUT">Out</strong><strong>:</strong> {{departure.checkoutDate}}
+                                                <br>
+                                                <strong translate="DASHBOARD_ROOM">Room</strong><strong>:</strong> {{departure.room}}
+                                                <span style="margin-left:5px">
+                                                    <i class="fa fa-moon-o"></i>{{departure.nights}}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="user-status pull-right">
+                                            <div class="status-icons" style="text-align:center">
+                                                <span>
+                                                    <button ng-disabled="rightValue" ng-click="openBooking(departure.raw.ID)" 
+                                                            title="{{'DASHBOARD_EDIT' | translate}}"
+                                                            class="btn btn-primary btn-sm"
+                                                            style="width:20px;height:20px;padding-right:20px;padding-bottom:20px">
+                                                        <i class="fa fa-edit"></i>
+                                                    </button>
+                                                    <button ng-disabled="rightValue" ng-click="checkOut(departure)" 
+                                                            class="btn btn-primary"
+                                                            style="height:28px;margin-right:13px;padding-top:3px">
+                                                        <span translate="DASHBOARD_CHECK_OUT">Check Out</span>
+                                                    </button>
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </scrollable>
+                                </div>
+
+<!--                                <div class="slimScrollBar"></div>-->
+                            </div>
+                            
+                        </uib-tab>
+                        
+                    </uib-tabset>
+                    
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- End: Arrival/Departures -->
+    
+    <div class="col-md-4">
+        
+        <!-- Start: Check-ins -->
+        <div class="main-box clearfix project-box emerald-box">
+            <div class="main-box-body clearfix" >
+                <div class="project-box-header">
+                    <div class="project-box-footer clearfix text-center pull-right" style="padding-top:45px">
+                        <div>
+                            <a href="#" class="text-center" style="width:100%;height:15px">
+				                <span class="value">{{checkinRemaining}}</span>
+				                <span class="label" style="padding: 5" translate="DASHBOARD_REMAINING">Remaining</span>
+				            </a>
+                        </div>
+                        <div>
+                            <a href="#" class="text-center" style="width:100%;height:15px">
+                                <span class="value">{{checkinTotal-checkinRemaining}}</span>
+                                <span class="label" style="padding: 0" translate="DASHBOARD_CHECKED_IN">Checked in</span>
+                            </a>
+                        </div>
+				    </div>
+				    <div class="name">
+				        <a style="color:black" href="" translate="DASHBOARD_CHECK_IN_SECTION">Check In</a>
+				    </div>
+				</div>
+				<div class="project-box-content pull-left text-align:center" style="margin-left:45px;padding-bottom:15px;padding-top:5px">
+                    <span class="chart" easypiechart percent="checkinPercentage" options="options">
+                        <span class="percent"></span> %<br/>
+                        <span class="lbl" translate="DASHBOARD_COMPLETED">completed</span>
+                    </span>
+				</div>	
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <!-- End: Check-ins -->
+        
+        <!-- Start: Check-outs -->
+        <div class="main-box clearfix project-box emerald-box">
+            <div class="main-box-body clearfix" >
+                <div class="project-box-header">
+                    <div class="project-box-footer clearfix text-center pull-right" style="padding-top:45px">
+                        <div>
+                            <a href="#" class="text-center" style="width:100%;height:15px">
+				                <span class="value">{{checkoutRemaining}}</span>
+				                <span class="label" style="padding: 5" translate="DASHBOARD_REMAINING">Remaining</span>
+				            </a>
+                        </div>
+                        <div>
+                            <a href="#" class="text-center" style="width:100%;height:15px">
+                                <span class="value">{{checkoutTotal-checkoutRemaining}}</span>
+                                <span class="label" style="padding: 0" translate="DASHBOARD_CHECKED_OUT">Checked Out</span>
+                            </a>
+                        </div>
+				    </div>
+				    <div class="name">
+				        <a style="color:black" href="" translate="DASHBOARD_CHECK_OUT_SECTION">Check Out</a>
+				    </div>
+				</div>
+				<div class="project-box-content pull-left text-align:center" style="margin-left:45px;padding-bottom:15px;padding-top:5px">
+                    <span class="chart" easypiechart percent="checkoutPercentage" options="options">
+                        <span class="percent"></span> %<br/>
+                        <span class="lbl" translate="DASHBOARD_COMPLETED">completed</span>
+                    </span>
+				</div>	
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <!-- End: Check-outs -->
+            
+    </div>
+    
+    <!-- Start: Pending Check-ins/Check-outs -->
+    <div class="col-md-4">
+        <div class="main-box clearfix">
+            <header class="main-box-header clearfix">
+                <div>
+				    <h2 class="pull-left" translate="DASHBOARD_PENDING_CHECK-INS_CHECK-OUTS">Pending Check-ins/Check-outs</h2>
+                </div>
+			</header>
+            <div class="panel-body" style="height:387px">
+                <div class="widget-container">
+                    <div class="divider"></div>
+                    <uib-tabset justified="true" class="ui-tab">
+                        <uib-tab heading="{{'DASHBOARD_ARRIVALS' | translate}}">
+                            <div class="media" style="padding-top: 15px;padding-left: 5px; padding-right: 5px;">
+                                <div class="media-body" 
+                                     style="display:block; height:280px; overflow-x:hidden; overflow-y:auto;">
+                                    <scrollable>
+                                    <div ng-repeat="arrival in pendingArrivals" 
+                                         class="status-info-panel clearfix" >
+                                        <h4 class="user-name">{{arrival.customer}}</h4>
+                                        <div class="user-info pull-left">
+                                            <div class="in-out-room">
+                                                <strong translate="DASHBOARD_IN">In</strong><strong>:</strong> {{arrival.checkinDate}} / 
+                                                <strong translate="DASHBOARD_OUT">Out</strong>:</strong> {{arrival.checkoutDate}}
+                                                <br>
+                                                <strong translate="DASHBOARD_ROOM">Room</strong>:</strong> {{arrival.room}}
+                                                <span style="margin-left:5px">
+                                                    <i class="fa fa-moon-o"></i>{{arrival.nights}}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="user-status pull-right">
+                                            <div class="status-icons" style="text-align:center">
+                                                <span>
+                                                    <button ng-disabled="rightValue" ng-click="openModal1(arrival.raw.ID)" 
+                                                            title="{{'DASHBOARD_EDIT' | translate}}"
+                                                            class="btn btn-primary btn-sm"
+                                                            style="width:20px;height:20px;padding-right:20px;padding-bottom:20px">
+                                                        <i class="fa fa-edit"></i>
+                                                    </button>
+                                                    <button ng-disabled="rightValue" ng-click="noShow(arrival,'pendingArrivals',$index)" 
+                                                            confirm="{{'DASHBOARD_NO_SHOW_CONFIRMATION' | translate}}"
+                                                            title="{{'DASHBOARD_NO_SHOW' | translate}}"
+                                                            class="btn btn-primary btn-sm from-control"
+                                                            style="width:20px;height:20px;padding-right:20px;padding-bottom:20px">
+                                                        <i class="fa fa-thumbs-down"></i> 
+                                                    </button>  
+                                                     <span ng-if="!pendingarrivalsDate($index)" style="margin-right:13px;"></span>
+                                                    <button ng-show="canCheckIn(arrival)" ng-disabled="rightValue" ng-click="checkIn(arrival)" 
+                                                            confirm="{{'DASHBOARD_CHECK_IN_CONFIRM' | translate}}" 
+                                                            class="btn btn-primary"
+                                                            style="height:28px;margin-right:13px;padding-top:3px">
+                                                        <span translate="DASHBOARD_CHECK_IN">Check In</span>
+                                                    </button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </scrollable>
+                                </div>
+                            </div>
+                        </uib-tab>
+                        <uib-tab heading="{{'DASHBOARD_DEPARTURES' | translate}}">
+                            <div class="media nano" style="padding-top: 15px;padding-left: 5px; padding-right: 5px">
+                                <div class="media-body content"
+                                     style="display:block; height:280px; overflow-x:hidden; overflow-y:auto;">
+                                     <scrollable>
+                                    <div ng-repeat="departure in pendingDepartures" class="status-info-panel clearfix">
+                                        <h4 class="user-name">{{departure.customer}}</h4>
+                                        <div class="user-info pull-left">
+                                            <div class="in-out-room">
+                                                <strong translate="DASHBOARD_IN">In</strong><strong>:</strong> {{departure.checkinDate}} / 
+                                                <strong translate="DASHBOARD_OUT">Out</strong><strong>:</strong> {{departure.checkoutDate}}
+                                                <br>
+                                                <strong translate="DASHBOARD_EDIT">Room</strong><strong>:</strong> {{departure.room}}
+                                                <span style="margin-left:5px">
+                                                    <i class="fa fa-moon-o"></i>{{departure.nights}}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="user-status pull-right">
+                                            <div class="status-icons" style="text-align:center">
+                                                <span>
+                                                    <button ng-disabled="rightValue" ng-click="openModal1(departure.raw.ID)" 
+                                                            title="{{'DASHBOARD_EDIT' | translate}}"
+                                                            class="btn btn-primary btn-sm"
+                                                            style="width:20px;height:20px;padding-right:20px;padding-bottom:20px">
+                                                        <i class="fa fa-edit"></i>
+                                                    </button>
+                                                    <button ng-disabled="rightValue" ng-click="checkOut(departure)" 
+                                                            class="btn btn-primary"
+                                                            style="height:28px;margin-right:13px;padding-top:3px">
+                                                        <span translate="DASHBOARD_CHECK_OUT">Check Out</span>
+                                                    </button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </scrollable>
+                                </div>
+                            </div>
+                        </uib-tab>
+                    </uib-tabset>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End: Pending Check-ins/Check-outs -->
+    
+</div>
+
+
+<div class="row">
+    
+    <!-- Start: Todo List -->
+    <div class="col-lg-5 col-md-6 col-sm-6 col-xs-12">
+        <div class="main-box clearfix">
+			<header class="main-box-header clearfix">
+                <div>
+				    <h2 class="pull-left" translate="DASHBOARD_TO_DO">Todo</h2>
+                    <button   class="btn btn-primary btn-sm from-control pull-right" 
+                            title="{{'DASHBOARD_ADD_NEW' | translate}}"
+                            ng-click="todos.new()" 
+                            style="padding-top:5px">
+                        <i class="fa fa-plus fa-lg"></i>
+                    </button>
+                </div>
+			</header>
+
+			<div class="main-box-body clearfix" style="height:400px">
+            
+				<ul class="widget-todo" style="height:370px;overflow-y:auto;width:100%">
+                    <scrollable>
+					<li ng-repeat="item in todoList" class="clearfix">
+						<div class="name">
+							<div class="checkbox-nice">
+								<input   id="todo-{{$index}}"
+                                       type="checkbox" 
+                                       ng-checked="item.Status == 2" 
+                                       ng-click="todos.update($event, item)"/>
+								<label for="todo-{{$index}}">
+									<span editable-textarea="item.Item" 
+                                          e-name="item" 
+                                          e-form="rowform" 
+                                          e-required="" 
+                                          onaftersave="todos.save(item)"
+                                          class="ng-scope ng-binding editable">
+                                        {{item.Item}} - <span am-time-ago="item.LastModifiedOn"></span>
+                                    </span>
+								</label>
+							</div>
+						</div>
+                        <div class="actions">
+                            <button   ng-click="rowform.$show()" title="{{'DASHBOARD_EDIT' | translate}}" class="btn btn-primary btn-sm from-control table-link">
+                                <i class="fa fa-pencil"></i>
+                            </button>
+                            <button  ng-click="todos.delete($index)" style="margin-right:13px;" title="{{'DASHBOARD_REMOVE' | translate}}" class="btn btn-sm btn-danger from-control table-link">
+                                <i class="fa fa-trash-o"></i>
+                            </button>
+                        </div>
+					</li>
+                    </scrollable>
+				</ul>
+            	
+			</div>
+            
+		</div>
+	</div>
+    <!-- End: Todo List -->
+    
+    <!-- Start: Draft Reservations -->
+    <div class="col-md-7">
+        <div class="main-box clearfix">
+            <header class="main-box-header clearfix">
+                <div>
+				    <h2 class="pull-left" translate="DASHBOARD_DRAFT_RESERVATIONS">Draft Reservations</h2>
+                </div>
+			</header>
+            <div class="main-box-body clearfix" style="height:400px">
+                <div class="panel-body" style="height:300px;overflow-x:hidden;overflow-y:auto;width:100%">
+                <scrollable>
+                    <div class="table-responsive" >
+                    
+                        <table class="table footable toggle-circle-filled">
+                            <thead>
+                                <tr>
+                                    <th translate="DASHBOARD_NAME">Name</th>
+                                    <th translate="DASHBOARD_LAST_MODIFIED">Last Modified</th>
+                                    <th translate="DASHBOARD_FROM">From</th>
+                                    <th translate="DASHBOARD_TO">To</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                           
+                                <tr ng-repeat="r in draftReservations">
+                                 
+                                    <td>{{r.FirstName}} {{r.LastName}}</td>
+                                    <td>{{formatDate(r.LastModifiedOn)}}</td>
+                                    <td>{{formatDate(r.DateFrom)}}</td>
+                                    <td>{{formatDate(r.DateTo)}}</td>
+                                    <td style="text-align:center">
+                                        <button ng-disabled="rightValue" ng-click="openDraft(r)" 
+                                                            title="{{'DASHBOARD_EDIT' | translate}}"
+                                                            class="btn btn-primary btn-sm from-control"
+                                                            >
+                                                        <i class="fa fa-edit"></i>
+                                                    </button>
+                                        <button ng-click="removeDraft(r.ID,$index)" 
+                                                title="{{'DASHBOARD_CANCEL' | translate}}" 
+                                                class="btn btn-danger btn-sm from-control">
+                                            <i class="fa fa-trash-o"></i>
+                                        </button>
+                                    </td>
+                                    
+                                </tr>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                    </scrollable>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End: Draft Reservations -->
+    
+</div>
+
+
+
+<script type="text/ng-template" id="bookingConfirmation.html">
+    <div class="md-content">
+        <div class="modal-header">
+            <button class="md-close close" ng-click="close()">×</button>
+            <h4 class="modal-title" translate="DASHBOARD_BOOKING_CONFIRMATION">Booking confirmation</h4>
+        </div>
+        <div class="modal-body">
+            <div class="panel-body">
+                <span translate="DASHBOARD_BOOKING_ID">Booking Id</span>: <strong>{{ID}}</strong><br/>
+                <span translate="DASHBOARD_BOOKING_CODE">Booking Code</span>: <strong> {{BookingCode}}</strong>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="close()" type="button" translate="DASHBOARD_OK">OK</button>
+        </div>
+    </div>
+</script>

@@ -1,0 +1,298 @@
+<div class="md-content">
+
+							<div class="modal-body full">
+								<button class="md-close close" ng-click="close()">×</button>
+								<form class="form-horizontal booking-form" name="bookingFlowForm" novalidate>
+									<tabset justified="true" class="main">
+										<tab heading="{{'BOOKING_MODAL_BOOKING_INFORMATION' | translate}}">
+											<div class="panel-body">
+												<div class="form-group">
+													<label for="" class="col-sm-2" translate="BOOKING_MODAL_ROOM_TYPE">Room type</label>
+													<div class="col-sm-10">
+														<select ng-disabled="rightValue" style="height: 32px !important" id="roomType" class="form-control input-sm" ng-init="data.pickedRoomType = 0" ng-model="data.pickedRoomType" ng-change="updateBookingFlow()">
+														   <option ng-repeat="item in luisavail" value="{{item.FK_RoomType}}" ng-click="updateBookingFlow()">{{item.RoomTypeShortDescription}}</option>
+														</select>
+													</div>
+												</div>
+												<div class="form-group" >
+													<label for="" class="col-sm-2" translate="BOOKING_MODAL_FROM">From</label>
+													<div  class="col-sm-4">
+														<div class="btn-goup-sm input-group">
+															
+
+														<span class="input-group-addon">
+															<span class="icon fa fa-calendar"></span>
+														</span>
+														<input ng-disabled="rightValue" id="startdate" ng-model="dateFrom" value=""  ng-change="createBookingSearch();updateBookingEditMode()" data-provide="datepicker" type="text" class="form-control input-sm" min="minStartDate" nb-date-picker min-date="today" required >
+														</div>
+														
+														<!---->
+													</div>
+													<label for="" class="col-sm-2" translate="BOOKING_MODAL_TO">To</label>
+													<div class="col-sm-4">
+														<div class=" input-group btn-group-sm">
+															<span class="input-group-addon">
+															<span class="icon fa fa-calendar"></span>
+														</span>
+														<input ng-disabled="rightValue" id="enddate"  min="minEndDate" ng-model="dateTo" value="" ng-change="createBookingSearch();updateBookingEditMode()" data-provide="datepicker" type="text" class="form-control input-sm">
+														</div>
+													</div>
+												</div>
+												<div class="form-group">
+													<label for="" class="col-sm-2" translate="BOOKING_MODAL_ADULTS">Adults</label>
+													<div class="col-sm-4">
+														<select ng-disabled="rightValue" class="form-control input-sm" ng-model="data.adults" ng-change="createBookingSearch(caller);updateBookingFlow()">
+															<option ng-selected="$index == data.adults" ng-repeat="i in getNumber(11) track by $index" value="{{$index}}">{{$index}}</option>
+														</select>
+													</div>
+														<label for="" class="col-sm-2" translate="BOOKING_MODAL_CHILDREN">Children</label>
+														<div class="col-sm-4">
+															<select ng-disabled="rightValue" class="form-control input-sm" ng-model="data.children" ng-change="createBookingSearch(caller);updateBookingFlow()">
+															<option ng-selected="$index == data.children" ng-repeat="i in getNumber(7) track by $index" value="{{$index}}">{{$index}}</option>
+														</select>
+														</div>
+												</div>
+
+												<div class="form-group">
+														<label for="" class="col-sm-2" translate="BOOKING_MODAL_RATE_PLAN">Rate plan</label>
+														<div class="col-sm-4">
+															<select ng-disabled="rightValue" id="ratePlane" class="form-control input-sm" ng-model="data.pickedRatePlanType" ng-change="updateBookingFlow()">
+															<option  ng-repeat="item in luisselectedratepolicylist" value="{{item.FK_RatePolicy}}" ng-click="updateBookingFlow()">{{item.Description}}</option>
+															<!-- | filter: {room: 'Tripple'} roomTypeSelected
+															? 'col-sm-pull-6 ' : ''-->
+															</select>
+														</div>
+														<div class="textAlignCenter pull-left"><label>Price/night:</label> <strong>{{data.dailyRatePerNight}} {{data.currency}}</strong></div>
+														<div class="textAlignRight col-sm-3 pull-right"><label>Total:</label> <strong>{{data.reservationTotalPrice}} {{data.currency}}</strong></div>
+														
+														<div class="col-sm-12">
+															<label class="ui-checkbox">
+															<input ng-disabled="rightValue" name="guestInfo" type="checkbox" value="option3" ng-model="guestInformationCheckbox">
+																	<span translate="BOOKING_MODAL_GUEST_INFORMATION_DIFFERENT_THAN_RESERVATION_HOLDER">Guest information different than Reservation holder</span>
+															</label>
+														</div>
+												</div>
+
+												<tabset type="tabs owner">
+													<tab heading="Reservation holder">
+														<input  type="hidden" ng-model="data.ID">
+														<div class="form-group">
+															<label for="" class="col-sm-2"><span translate="BOOKING_MODAL_SURNAME">Surname</span><sup class="text-danger">*</sup></label>
+															<div class="col-sm-10 autocomplete-box" cs-autocomplete="LastName">
+																<input ng-disabled="rightValue" required autocomplete="off" type="text" class="form-control input-sm" name="LastName" ng-model="data.LastName" />
+															</div>
+														</div>
+														<div class="form-group">
+															<label for="" class="col-sm-2"><span translate="BOOKING_MODAL_FIRST_NAME">First Name</span><sup class="text-danger">*</sup></label>
+															<div class="col-sm-10">
+																<input ng-disabled="rightValue" type="text" required name="FirstName" class="form-control input-sm" ng-model="data.FirstName">
+															</div>
+														</div>
+														<div class="form-group">
+															<label for="" class="col-sm-2" translate="BOOKING_MODAL_ADDRESS">Address</label>
+															<div class="col-sm-10">
+																<textarea ng-disabled="rightValue" class="form-control input-sm" rows="2" name="Address" ng-model="data.Address1"></textarea>
+															 </div>
+														</div>
+														<div class="form-group">
+															<label for="" class="col-sm-2" translate="BOOKING_MODAL_CITY">City</label>
+															<div class="col-sm-4">
+																<input ng-disabled="rightValue" type="text" class="form-control input-sm" ng-model="data.City" name="City">
+															</div>
+															<label for="" class="col-sm-2" translate="BOOKING_MODAL_POSTAL_CODE">Postal Code</label>
+															<div class="col-sm-4">
+																<input ng-disabled="rightValue" type="text" class="form-control input-sm" ng-model="data.PostalCode">
+															</div>
+														</div>
+														<div class="form-group">
+															<label for="" class="col-sm-2" translate="BOOKING_MODAL_PROVINCE/STATE"></label>
+															<div class="col-sm-4">
+																<input ng-disabled="rightValue" type="text" class="form-control input-sm" ng-model="data.ProvinceState" name="ProvinceState">
+															</div>
+															<label for="" class="col-sm-2" translate="BOOKING_MODAL_COUNTRY">Country</label>
+															<div class="col-sm-4">
+															   <select ng-disabled="rightValue" name="Country" class="form-control input-sm" ng-model="data.Country" ng-change="store.edited=true" ng-options="item.ISO2 as item.Name for item in countries"></select>
+
+															</div>
+														</div>
+														<div class="form-group">
+															<label for="" class="col-sm-2"><span translate="BOOKING_MODAL_TELEPHONE">Telephone</span><sup class="text-danger">*</sup></label>
+															<div class="col-sm-2">
+																<select ng-disabled="rightValue" class="form-control input-sm">
+																	<option>+33</option>
+																	<option>+34</option>
+																	<option>+35</option>
+																	<option>...</option> 
+																</select>
+															</div>
+															<div class="secondInput col-sm-8">
+																<input ng-disabled="rightValue" type="text" name="Phone" required class="form-control input-sm" ng-model="data.Phone">
+															</div>
+														</div>
+														<div class="form-group">
+															<label for="" class="col-sm-2"><span translate="BOOKING_MODAL_EMAIL">Email Address</span><sup class="text-danger">*</sup></label>
+															<div class="col-sm-10 autocomplete-box" cs-autocomplete="Email">
+																<input ng-disabled="rightValue" required autocomplete="off" type="text" class="form-control input-sm" name="Email" ng-model="data.Email" />
+															</div>
+														</div>
+													</tab>
+													<tab heading="Reservation customer"  ng-show="guestInformationCheckbox">
+														<input type="hidden" ng-model="data.guest.ID">
+														<div class="form-group">
+															<label for="" class="col-sm-2" translate="BOOKING_MODAL_SURNAME">Surname</label>
+															<div class="col-sm-10 autocomplete-box" cs-autocomplete="LastName" guest="true">
+																<input ng-disabled="rightValue" required autocomplete="off" type="text" class="form-control input-sm" name="guestLastName" ng-model="data.guest.LastName" />
+															</div>
+														</div>
+														<div class="form-group">
+															<label for="" class="col-sm-2" translate="BOOKING_MODAL_FIRST_NAME">First Name</label>
+															<div class="col-sm-10">
+																<input ng-disabled="rightValue" type="text" name= "guestFirstName" class="form-control input-sm" ng-model="data.guest.FirstName">
+															</div>
+														</div>
+														<div class="form-group">
+															<label for="" class="col-sm-2" translate="BOOKING_MODAL_ADDRESS">Address</label>
+															<div class="col-sm-10">
+																<textarea ng-disabled="rightValue" name="" id="" class="form-control input-sm" rows="2" required name="guestAddress" ng-model="data.guest.Address1"></textarea>
+															 </div>
+														</div>
+														<div class="form-group">
+															<label for="" class="col-sm-2" translate="BOOKING_MODAL_CITY">City</label>
+															<div class="col-sm-4">
+																<input ng-disabled="rightValue" type="text" class="form-control input-sm" ng-model="data.City" name="guestCity">
+															</div>
+															<label for="" class="col-sm-2" translate="BOOKING_MODAL_POSTAL_CODE">Postal Code</label>
+															<div class="col-sm-4">
+																<input ng-disabled="rightValue" type="text" required class="form-control input-sm" ng-model="data.guest.PostalCode">
+															</div>
+														</div>
+														<div class="form-group">
+															<label for="" class="col-sm-2" translate="BOOKING_MODAL_PROVINCE/STATE"></label>
+															<div class="col-sm-4">
+																<input ng-disabled="rightValue" required type="text" class="form-control input-sm" ng-model="data.guest.ProvinceState" name="guestProvinceState">
+															</div>
+															<label for="" class="col-sm-2" translate="BOOKING_MODAL_COUNTRY">Country</label>
+															<div class="col-sm-4">
+															   <select ng-disabled="rightValue" required  name="guestCountry" class="form-control input-sm" ng-model="data.guest.Country" ng-change="store.edited=true" ng-options="item.ISO2 as item.Name for item in countries"></select>
+
+															</div>
+														</div>
+														<div class="form-group">
+															<label for="" class="col-sm-2" translate="BOOKING_MODAL_TELEPHONE">Telephone</label>
+															<div class="col-sm-2">
+																<select ng-disabled="rightValue" required class="form-control input-sm">
+																	<option>+33</option>
+																	<option>+34</option>
+																	<option>+35</option>
+																	<option>...</option> 
+																</select>
+															</div>
+															<div class="secondInput col-sm-8">
+																<input ng-disabled="rightValue" required type="text" name="guestPhone" class="form-control input-sm" ng-model="data.guest.Phone">
+															</div>
+														</div>
+														<div class="form-group">
+															<label for="" class="col-sm-2" translate="BOOKING_MODAL_EMAIL">Email Address</label>
+															<div class="col-sm-10 autocomplete-box" cs-autocomplete="Email" guest="true">
+																<input ng-disabled="rightValue" required autocomplete="off" type="text" class="form-control input-sm" required name="guestEmail" ng-model="data.guest.Email" />
+															</div>
+														</div>	
+													</tab>
+												</tabset>
+											</div>
+										</tab>
+										<tab heading="{{'BOOKING_MODAL_PAYMENT_INFORMATION' | translate}}">
+											<div class="panel-body">
+												<div class="form-group modal-body__bear__ammountOfTheTransaction">
+													<label for="" class="col-sm-3" translate="BOOKING_MODAL_AMOUNT">Ammount</label>
+													<div class="col-sm-9 rate-plan"><strong>{{data.reservationTotalPrice}} {{data.currency}}</strong></div>
+												</div>
+
+												<div class="form-group">
+													<label for="" class="col-sm-3" translate="BOOKING_MODAL_TYPE_OF_CARD">Type of card</label>
+													<div class="col-sm-9">
+															<select class="form-control input-sm"  required>
+																<option translate>Visa</option>
+																<option translate>MasterCard</option>
+															</select>
+													</div>
+												</div>
+												<div class="form-group">
+													<label for="" class="col-sm-3" translate="BOOKING_MODAL_CREDIT_CARD_NO">Credit card number</label>
+													<div class="col-sm-9">
+														<input type="text" class="form-control input-sm" required name="userCCNumber" ng-model="data.CC">
+													</div>
+												</div>
+												<div class="form-group">
+													<label for="" class="col-sm-3" translate="BOOKING_MODAL_CARDHOLDER_NAME">Cardholder name</label>
+													<div class="col-sm-9">
+														<input type="text" class="form-control input-sm" required name="userCardholderName" ng-model="data.CCName" />
+													</div>
+												</div>
+												<div class="form-group">
+													<label for="" class="col-sm-3" translate="BOOKING_MODAL_EXPIRATION_DATE">Expiration date</label>
+													<div class="col-sm-3">
+														<select class="form-control input-sm" ng-model="data.CCExp1" required
+														ng-options="item.v as item.name for item in Exp1">
+														</select>
+													</div>
+													<div class="col-sm-6">
+														<select class="form-control input-sm" ng-model="data.CCExp2" required
+														ng-options="item.v as item.name for item in Exp2">
+														</select>	
+													</div>
+												</div>
+												<div class="form-group">
+													<label for="" class="col-sm-3" translate="BOOKING_MODAL_VERIFICATION_CODE">Verification code</label>
+													<div class="col-sm-9">
+														<input type="text" class="form-control input-sm" required name="userVerificationCode" ng-model="data.CCCW" />
+													</div>
+												</div>
+											</div>
+										</tab>
+									</tabset>
+									<div class="modal-footer">
+										<button class="btn btn-primary btn-bearGray" ng-click="cancel()" translate="BOOKING_MODAL_CANCEL">Cancel</button>
+										<button type="submit"
+												ng-disabled="
+													$scope.data.bookingListbookingFlowForm.LastName.$invalid ||  
+													bookingFlowForm.Phone.$invalid ||
+													bookingFlowForm.FirstName.$invalid ||
+													bookingFlowForm.Email.$invalid ||
+													rightValue"
+												class="btn btn-primary" 
+												ng-click="reserve()">
+											<span ng-hide="data.modalMode" translate="BOOKING_MODAL_RESERVE">Reserve</span>
+											<span ng-show="data.modalMode == 'edit'" translate="BOOKING_MODAL_SAVE">Save</span>
+										</button>
+										<button 
+											type="submit"
+											ng-if="!idSaveDraft"
+											ng-disabled="
+												$scope.data.bookingListbookingFlowForm.LastName.$invalid ||  
+												bookingFlowForm.Phone.$invalid ||
+												bookingFlowForm.FirstName.$invalid ||
+												bookingFlowForm.Email.$invalid ||
+												rightValue" class="btn btn-primary btn-bearGray" ng-click="saveAsDraft()" translate="BOOKING_MODAL_SAVE_AS_DRAFT">Save as draft
+										</button>
+                                        
+                                            <span ng-hide="data.modalMode" >
+		                                           <span ng-disabled="rightValue" ng-show="reservedAndCheckedInand" id="checkInR" class="btn btn-primary btn-bearGray pull-left" ng-click="reservedCheckedIn('CKres')" translate="BOOKING_MODAL_RESERVE_&_CHECK_IN">Reserve & Check In</span>
+													<span ng-disabled="rightValue" ng-show="reservedAndCheckedInIn" id="checkOutR" class="btn btn-primary btn-bearGray pull-left" ng-click="reservedCheckedIn('CKche')" translate="BOOKING_MODAL_CHECKED_IN">checked in</span> 
+											</span>
+											 
+												 <span id="btnEdit" ng-show="data.modalMode == 'edit'" >
+			                                           <span ng-disabled="rightValue" ng-show="reservedAndCheckedIn" id="checkInIn" class="btn btn-primary btn-bearGray pull-left" ng-click="reservedCheckedIn('CKin')" translate="BOOKING_MODAL_CHECK_IN">Check In</span>
+														<span ng-disabled="rightValue" ng-show="checkOutRes" id="checkOutOut" class="btn btn-primary btn-bearGray pull-left" ng-click="reservedCheckedIn('CKout')" translate="BOOKING_MODAL_CHECK_OUT">Check Out</span> 
+												</span>
+											 <div ng-if="errorMessageShow" class="pull-left alert alert-danger">  
+											 <i class="fa fa-times-circle fa-fw fa-lg"> </i> 
+											  <span ng-if="errorMessageShow==7001" translate="BOOKING_MODAL_NO_AVAILABILITY_FOR_THE_SELECTED_CRITERIA">No availability for the selected criteria</span>
+											 </div>
+                                        	 
+									</div>
+								</form>
+							</div>
+						</div>
+
+

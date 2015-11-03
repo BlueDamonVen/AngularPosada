@@ -1,0 +1,183 @@
+<div class="row">
+  <div class="col-lg-6" >
+  <form class="form-horizontal" role="form" name="formProperty" novalidate form-step-validity>
+      <div class="form-group">
+        <label for="companyname" class="col-lg-2 control-label"><span translate="PROPERTIES_DETAILS_PROPERTY_NAME"></span></label>
+        <div class="col-lg-10">
+        <input name="propertyName" type="text" class="form-control" id="companyname" placeholder="{{'PROPERTIES_DETAILS_PROPERTY_NAME_PLACEHOLDER' | translate}}" data-toggle="tooltip" data-placement="bottom" ng-model="model.property.Name" title="{{'PROPERTIES_DETAILS_PROPERTY_NAME_TOOLTIP' | translate}}" ng-class="{'form-control-required': !formProperty.propertyName.$valid}" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="address1" class="col-lg-2 control-label"><span translate="PROPERTIES_DETAILS_ADDRESS_1"></span></label>
+        <div class="col-lg-10">
+        <input name="propertyAdd1" ng-model="model.property.Address1" type="text" class="form-control" id="address1" placeholder="{{'PROPERTIES_DETAILS_ADDRESS_1_PLACEHOLDER' | translate}}" data-toggle="tooltip" data-placement="bottom" title="{{'PROPERTIES_DETAILS_ADDRESS_1_TOOLTIP' | translate}}" ng-class="{'form-control-required': !formProperty.propertyAdd1.$valid}" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="address2" class="col-lg-2 control-label"><span translate="PROPERTIES_DETAILS_ADDRESS_2"></span></label>
+        <div class="col-lg-10">
+        <input ng-model="model.property.Address2" type="text" class="form-control" id="address2" placeholder="{{'PROPERTIES_DETAILS_ADDRESS_2_PLACEHOLDER' | translate}}" data-toggle="tooltip" data-placement="bottom" title="{{'PROPERTIES_DETAILS_ADDRESS_2_TOOLTIP' | translate}}">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="city" class="col-lg-2 control-label"><span translate="PROPERTIES_DETAILS_CITY"></span></label>
+        <div class="col-lg-10">
+        <input name="propertyCity" ng-model="model.property.City" type="text" class="form-control" id="city" placeholder="{{'PROPERTIES_DETAILS_CITY_PLACEHOLDER' | translate}}" data-toggle="tooltip" data-placement="bottom" title="{{'PROPERTIES_DETAILS_CITY_TOOLTIP' | translate}}" ng-class="{'form-control-required': !formProperty.propertyCity.$valid}" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="provincestate" class="col-lg-2 control-label"><span translate="PROPERTIES_DETAILS_PROVINCE/STATE"></span></label>
+        <div class="col-lg-10">
+        <input ng-model="model.property.ProvinceState" type="text" class="form-control" id="provincestate" placeholder="{{'PROPERTIES_DETAILS_PROVINCE/STATE_PLACEHOLDER' | translate}}" data-toggle="tooltip" data-placement="bottom" title=="{{'PROPERTIES_DETAILS_PROVINCE/STATE_TOOLTIP' | translate}}">
+        </div>
+      </div>                
+      <div class="form-group">
+        <label for="countrys" class="col-lg-2 control-label"><span translate="PROPERTIES_DETAILS_COUNTRY"></span></label>
+        <div class="col-lg-10">
+         <select name="propertyCountry" id="countrys" class="form-control" ng-model="model.property.Country" ng-change="store.edited=true" ng-options="item.ISO2 as item.Name for item in countries" ng-class="{'form-control-required': !formProperty.propertyCountry.$valid}" required></select>
+         </div>
+      </div>
+      <div class="form-group">
+        <label for="phone1" class="col-lg-2 control-label"><span translate="PROPERTIES_DETAILS_PHONE"></span> 1</label>
+        <div class="col-lg-10">
+        <input name="propertyPhone" ng-model="model.property.Phone"  type="text" class="form-control" id="phone1" placeholder="{{'PROPERTIES_DETAILS_PHONE_PLACEHOLDER' | translate}}" data-toggle="tooltip" data-placement="bottom" title="{{'PROPERTIES_DETAILS_PHONE_TOOLTIP' | translate}}" ng-class="{'form-control-required': !formProperty.propertyPhone.$valid}" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="phone2" class="col-lg-2 control-label"><span translate="PROPERTIES_DETAILS_PHONE"></span> 2</label>
+        <div class="col-lg-10">
+        <input ng-model="model.property.Phone2"  type="text" class="form-control" id="phone2" placeholder="{{'PROPERTIES_DETAILS_PHONE_PLACEHOLDER' | translate}}" data-toggle="tooltip" data-placement="bottom" title="{{'PROPERTIES_DETAILS_PHONE_TOOLTIP' | translate}}">
+        </div>
+      </div>  
+      <div class="form-group">
+        <label for="fax" class="col-lg-2 control-label"><span translate="PROPERTIES_DETAILS_FAX"></span></label>
+        <div class="col-lg-10">
+        <input  ng-model="model.property.Fax"  type="text" class="form-control" id="fax" placeholder="{{'PROPERTIES_DETAILS_FAX_PLACEHOLDER' | translate}}" data-toggle="tooltip" data-placement="bottom" title="{{'PROPERTIES_DETAILS_FAX_TOOLTIP' | translate}}">
+        </div>
+      </div>  
+      <div class="form-group">
+        <label for="website" class="col-lg-2 control-label"><span translate="PROPERTIES_DETAILS_WEBSITE"></span></label>
+        <div class="col-lg-10">
+        <input ng-model="model.property.Website"  type="text" class="form-control" id="website" placeholder="{{'PROPERTIES_DETAILS_WEBSITE_PLACEHOLDER' | translate}}" data-toggle="tooltip" data-placement="bottom" title="{{'PROPERTIES_DETAILS_WEBSITE_TOOLTIP' | translate}}">
+        </div>
+      </div>  
+      <div class="form-group">
+        <label for="propertyemail" class="col-lg-2 control-label"><span translate="PROPERTIES_DETAILS_EMAIL"></span></label>
+        <div class="col-lg-10">
+        <input name="propertyEmail" ng-model="model.property.Email"  type="email" class="form-control" id="propertyemail" placeholder="{{'PROPERTIES_DETAILS_EMAIL_PLACEHOLDER' | translate}}" title="{{'PROPERTIES_DETAILS_EMAIL_TOOLTIP' | translate}}" ng-class="{'form-control-required': !formProperty.propertyEmail.$valid}" required>
+        </div>
+      </div>                
+      <div class="form-group">
+        <label for="vatno" class="col-lg-2 control-label"><span translate="PROPERTIES_DETAILS_VAT_NO"></span></label>
+        <div class="col-lg-10">
+        <input  ng-model="model.property.VAT_TaxNo"  type="text" class="form-control" id="vatno" placeholder="{{'PROPERTIES_DETAILS_VAT_NO_PLACEHOLDER' | translate}}" data-toggle="tooltip" data-placement="bottom" title="{{'PROPERTIES_DETAILS_VAT_NO_TOOLTIP' | translate}}">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="currency" class="col-lg-2 control-label"><span translate="PROPERTIES_DETAILS_CURRENCY">Currency</span></label>
+        <div class="col-lg-10">
+         <select id="currency" class="form-control" ng-model="model.property.FK_Currency" ng-change="store.edited=true" ng-options="item.Code as item.Description for item in Currencies"></select>
+         </div>
+      </div>
+    </form>
+  </div>
+  <div class="col-lg-6">
+    <div class="main-box clearfix" style="min-height: 750px;padding-top: 20px;">
+      <div class="main-box-body clearfix">
+        <div ng-controller="settingsPropertyImagesCtrl">
+          <h2 translate="PROPERTIES_DETAILS_UPLOADED_IMAGES"></h2>
+          <div id="gallery-photos-wrapper" sortgal>
+            <ul id="gallery-photos" class="clearfix gallery-photos gallery-photos-hover">
+              <li ng-disabled="rightValue" id="recordsArray_{{images.ID}}" class="col-md-2 col-sm-3 col-xs-6" ng-repeat="images in PropertyImages | orderBy:'OrderID'">
+                <div class="photo-box" style="background-image: url('{{images.Url}}'); min-width:50px;"></div>
+                <a ng-disabled="rightValue" ng-click="removePropertyImages($index,images)" class="remove-photo-link">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <form id="uploadPropertyImages" dropzone2 class="dropzone dz-clickable" style="min-height: 150px; width:100%;">
+            <div class="dz-default dz-message">
+              <span>Drop Logo here</span>
+            </div>
+          </form>
+        </div>
+        <div class="row">
+          <h2><span translate="PROPERTIES_DETAILS_SELECT_LOCATION"></span><button ng-click="centeronlocation()" title="Center on Location" class="btn btn-primary btn-sm pull-right">Center</button></h2>
+
+          <span translate="PROPERTIES_DETAILS_SELECT_LOCATIONS_IBE"></span>
+        
+        </div>
+        <script type="text/ng-template" id="searchbox.tpl.html">
+              <input type="text" placeholder="Search..." style="margin-top: 10px;">
+        </script>
+        <div class="row">
+          <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true">
+          <ui-gmap-marker coords="marker.coords" options="marker.options" events="marker.events" idkey="marker.id">
+          <ui-gmap-search-box template="searchbox.template" events="searchbox.events" position="'TOP_CENTER'"></ui-gmap-search-box>
+          </ui-gmap-marker>
+          </ui-gmap-google-map>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-lg-12" style="padding-left: 0px;padding-right: 0px;">
+  <div class="main-box clearfix">
+    <div class="main-box-body clearfix" style="padding-top: 20px;">
+      <h2 translate="PROPERTIES_DETAILS_PROPERTY_DESCRIPTION">Property description</h2>
+          <uib-accordion class="col-lg-12"  close-others="false">
+          <div class="row" ng-repeat="d in model.property.desc" style="padding-bottom: 4px;">
+          <div class="col-lg-11" style="padding-right=0px;">
+              <uib-accordion-group>
+                  <uib-accordion-heading>
+                      {{d.LangCode}}
+                  </uib-accordion-heading>
+                  <div class="row">
+                    </div>
+                  <form >
+                  <div class="row">
+                    <label><span translate="PROPERTIES_DETAILS_SHORT_DESCRIPTION">Short description</span></label>
+                    <input type="text" class="form-control" ng-model="d.ShortDescription" />
+                      <label><span translate="PROPERTIES_DETAILS_LONG_DESCRIPTION">Long description</span></label>
+                    <textarea rows="3" class="form-control" ng-model="d.LongDescription" />
+                  </div>
+                  <div class="row" style="padding-top:10px;">
+                  <div class="pull-right">                              
+                        <button ng-disabled="rightValue" type="submit" ng-click="savePropertyDesc(d)" class="btn btn-primary btn-sm" title="{{'PROPERTIES_DETAILS_DESCRIPTIONS_SAVE_TOOLTIP' | translate}}" translate="PROPERTIES_DETAILS_DESCRIPTIONS_SAVE">Save</button>
+                  </div>
+                  </div>
+                  </form>
+              </uib-accordion-group>
+              </div>
+              <div class="col-lg-1" style="padding-left:0px;">
+              <div class="pull-left col-sm-6">
+                <button ng-disabled="rightValue" ng-hide="!$last" type="button" class="btn btn-link btn-lg dropdown-toggle" data-toggle="dropdown">
+                <span class="fa fa-plus"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                <li ng-repeat="storel in lang">
+                <a ng-click="addDesc(storel.Code)" ng-bind="storel.Name"></a></li>
+                </ul>
+              </div>
+                <div class="pull-right col-lg-6">
+
+                <button ng-disabled="rightValue || rightValue2" ng-hide="d.LangCode=='ENG'" type="button" class="btn btn-link btn-lg dropdown-toggle" data-toggle="dropdown">
+                <span class="fa fa-trash-o"></span>
+                </button>
+
+                <ul ng-disabled="rightValue || rightValue2" class="dropdown-menu" role="menu">
+                <li><a href="#" ng-click="deletePropertyDesc(d.ID,$index)">Delete</a></li>
+                </ul>
+              </div>
+              </div>
+              </div>
+          </uib-accordion>
+    </div>
+  </div>
+
+</div>

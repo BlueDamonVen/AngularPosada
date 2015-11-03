@@ -1,0 +1,91 @@
+<div class="col-lg-6">
+<form class="form-horizontal" role="form" name="companyForm" novalidate form-step-validity>
+  <div class="form-group">
+    <label for="companyname" class="col-lg-2 control-label"><span translate="COMPANY_DETAILS_COMPANY_NAME"> Company name </span></label>
+    <div class="col-lg-10">
+    <input name="companyName" type="text" class="form-control" id="companyname" placeholder="{{'COMPANY_DETAILS_COMPANY_NAME_PLACEHOLDER' | translate}}" data-toggle="tooltip" data-placement="bottom" ng-model="model.company.Name" title="{{'COMPANY_DETAILS_COMPANY_NAME_TOOLTIP' | translate}}" ng-class="{'form-control-required': !companyForm.companyName.$valid}" required>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="address1" class="col-lg-2 control-label"><span translate="COMPANY_DETAILS_ADDRESS_1">Address 1</span></label>
+    <div class="col-lg-10">
+    <input ng-model="model.company.Address1" type="text" class="form-control" id="address1" placeholder="{{'COMPANY_DETAILS_ADDRESS_1_PLACEHOLDER'|translate}}" data-toggle="tooltip" data-placement="bottom" title="{{'COMPANY_DETAILS_ADDRESS_1_TOOLTIP' | translate}}">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="address2" class="col-lg-2 control-label"><span translate="COMPANY_DETAILS_ADDRESS_2">Address 2</span></label>
+    <div class="col-lg-10">
+    <input ng-model="model.company.Address2" type="text" class="form-control" id="address2" placeholder="{{'COMPANY_DETAILS_ADDRESS_2_PLACEHOLDER' | translate}}" data-toggle="tooltip" data-placement="bottom" title="{{'COMPANY_DETAILS_ADDRESS_2_TOOLTIP' | translate}}">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="city" class="col-lg-2 control-label"><span translate="COMPANY_DETAILS_CITY">City</span></label>
+    <div class="col-lg-10">
+    <input ng-model="model.company.City" type="text" class="form-control" id="city" placeholder="{{'COMPANY_DETAILS_CITY_PLACEHOLDER' | translate}}" data-toggle="tooltip" data-placement="bottom" title="{{'COMPANY_DETAILS_CITY_TOOLTIP' | translate}}">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="provincestate" class="col-lg-2 control-label"><span translate="COMPANY_DETAILS_PROVINCE/STATE"> Province state </span></label>
+    <div class="col-lg-10">
+    <input ng-model="model.company.ProvinceState" type="text" class="form-control" id="provincestate" placeholder="{{'COMPANY_DETAILS_PROVINCE/STATE_PLACEHOLDER' | translate}}" data-toggle="tooltip" data-placement="bottom" title="{{'COMPANY_DETAILS_PROVINCE/STATE_TOOLTIP' | translate}}">
+    </div>
+  </div>                
+  <div class="form-group form-group-select2">
+    <label class="col-lg-2 control-label"><span translate="COMPANY_DETAILS_COUNTRY"> Country </span></label>
+    <div class="col-lg-10">
+    <select name="companyCountry" class="form-control" ng-model="model.company.Country" ng-options="item.ISO2 as item.Name for item in countries" title="{{'COMPANY_DETAILS_COUNTRY_TOOLTIP' | translate}}" ng-class="{'form-control-required': !companyForm.companyCountry.$valid}" required></select>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="phone1" class="col-lg-2 control-label"><span translate="COMPANY_DETAILS_PHONE_1">Phone 1</span></label>
+    <div class="col-lg-10">
+    <input name="companyPhone" ng-model="model.company.Phone"  type="text" class="form-control" id="phone1" placeholder="{{'COMPANY_DETAILS_PHONE_1_PLACEHOLDER' | translate}}" data-toggle="tooltip" data-placement="bottom" title="{{'COMPANY_DETAILS_PHONE_1_TOOLTIP' | translate}}" ng-class="{'form-control-required': !companyForm.companyPhone.$valid}" required>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="phone1" class="col-lg-2 control-label"><span translate="COMPANY_DETAILS_PHONE_2">Phone</span></label>
+    <div class="col-lg-10">
+    <input ng-model="model.company.Phone2"  type="text" class="form-control" id="phone2" placeholder="{{'COMPANY_DETAILS_PHONE_2_PLACEHOLDER' | translate}}" data-toggle="tooltip" data-placement="bottom" title="{{'COMPANY_DETAILS_PHONE_2_TOOLTIP' | translate}}">
+    </div>
+  </div>  
+  <div class="form-group">
+    <label for="website" class="col-lg-2 control-label"><span translate="COMPANY_DETAILS_FAX"> Fax </span></label>
+    <div class="col-lg-10">
+    <input  ng-model="model.company.Fax"  type="text" class="form-control" id="fax" placeholder="{{'COMPANY_DETAILS_FAX_PLACEHOLDER' | translate}}" data-toggle="tooltip" data-placement="bottom" title="{{'COMPANY_DETAILS_FAX_TOOLTIP' | translate}}">
+    </div>
+  </div>  
+  <div class="form-group">
+    <label for="propertyemail" class="col-lg-2 control-label"><span translate="COMPANY_DETAILS_WEBSITE">Website</span></label>
+    <div class="col-lg-10">
+    <input  ng-model="model.company.Website"  type="text" class="form-control" id="website" placeholder="{{'COMPANY_DETAILS_WEBSITE_PLACEHOLDER' | translate}}" data-toggle="tooltip" data-placement="bottom" title="{{'COMPANY_DETAILS_WEBSITE_TOOLTIP' | translate}}">
+    </div>
+  </div>  
+  <div class="form-group">
+    <label for="companyemail" class="col-lg-2 control-label"><span translate="COMPANY_DETAILS_EMAIL"> Email </span></label>
+    <div class="col-lg-10">
+    <input name="companyEmail" ng-model="model.company.Email"  type="email" class="form-control" id="companyemail" placeholder="{{'COMPANY_DETAILS_EMAIL_PLACEHOLDER' | translate}}" title="{{'COMPANY_DETAILS_EMAIL_TOOLTIP' | translate}}" ng-class="{'form-control-required': !companyForm.companyEmail.$valid}" required>
+    </div>
+  </div>                
+  <div class="form-group">
+    <label for="vatno" class="col-lg-2 control-label"><span translate="COMPANY_DETAILS_VAT_NO"> Vat no </span></label>
+    <div class="col-lg-10">
+    <input  ng-model="model.company.VAT_TaxNo"  type="text" class="form-control" id="vatno" placeholder="{{'COMPANY_DETAILS_VAT_NO_PLACEHOLDER' | translate}}" data-toggle="tooltip" data-placement="bottom" title="{{'COMPANY_DETAILS_VAT_NO_TOOLTIP' | translate}}">
+    </div>
+  </div>
+</form>
+</div>
+<div class="col-lg-6">
+  <div>
+      <label class="clearfix" for="vatno">Logo</label>
+  </div>
+  <div  class="pull-left">
+    <form id="demo-upload" dropzone class="dropzone dz-clickable" style="min-height: 150px;">
+      <div ng-disabled="rightValue" class="dz-default dz-message">
+        <span>Drop Logo here</span>
+      </div>
+    </form>
+  </div>
+  <div class="col-sm-3 logo-img-preview">
+    <img ng-disabled="rightValue" class="img-responsive" src="{{model.company.Logo}}" alt="logo" />
+  </div>
+</div>

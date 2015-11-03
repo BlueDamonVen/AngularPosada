@@ -1,0 +1,62 @@
+	<link rel="stylesheet" type="text/css" href="css/compiled/wizard.css">
+
+							<div class="row" >
+								<div class="col-lg-12">
+									<ol class="breadcrumb">
+										<li><a href="#/">Dashboard</a></li>
+										<li>Settings</li>
+										<li class="active"><span>Wizard</span></li>
+									</ol>
+									
+									<h1 translate="WIZARD_WELCOME"></h1>
+
+									<h2 translate="WIZARD_FOLLOW_STEPS"></h2>
+									
+								</div>
+							</div>
+
+							<div class="row">
+	<div class="col-lg-12" ng-controller="SettingsWizardCtrl">
+		<div class="main-box clearfix" style="min-height: 820px;">
+			<header class="main-box-header clearfix">
+			</header>
+			
+			<div class="main-box-body clearfix">
+			
+			<multi-step-container steps="steps" class="simple-prev-next" >
+			    <header>
+			        
+			    <div class="wizard">
+			        <div class="wizard-inner" style="border: none;background-color: transparent;">
+						<ul class="steps">
+							<li class="{{ ($getActiveIndex()==1? 'active' :'') }}"><a><span class="badge {{ ($getActiveIndex()==1? 'badge-primary' :'') }}">1</span><span translate="WIZARD_YOUR_COMPANY"></span><span class="chevron"></span></a></li>
+							<li class="{{ ($getActiveIndex()==2? 'active' :'') }}"><a><span class="badge {{ ($getActiveIndex()==2? 'badge-primary' :'') }}">2</span><span translate="WIZARD_YOUR_PROPERTY"></span><span class="chevron"></span></a></li>
+							<li class="{{ ($getActiveIndex()==3? 'active' :'') }}"><a><span class="badge {{ ($getActiveIndex()==3? 'badge-primary' :'') }}">3</span><span translate="WIZARD_ROOM_TYPES"></span><span class="chevron"></span></a></li>
+							<li class="{{ ($getActiveIndex()==4? 'active' :'') }}"><a><span class="badge {{ ($getActiveIndex()==4? 'badge-primary' :'') }}">4</span><span translate="WIZARD_YOUR_ROOMS"></span><span class="chevron"></span></a></li>
+							<li class="{{ ($getActiveIndex()==5? 'active' :'') }}"><a><span class="badge {{ ($getActiveIndex()==5? 'badge-primary' :'') }}">5</span><span translate="WIZARD_RATE_PLANS"></span><span class="chevron"></span></a></li>
+						</ul>
+						<div class="pull-right">
+							<button ng-if="!$isFirst()" class="btn btn-primary" ng-click="$previousStep()" style="margin-top: 5px;">
+					            <span class="fa fa-chevron-left"></span>
+					            Previous
+					        </button>
+					        <!-- <strong ng-bind-template="{{$getActiveIndex()}}. {{$getActiveStep().title}}"></strong> -->
+					        <button ng-disabled="($getActiveStep().hasForm && !$getActiveStep().valid)" class="btn btn-primary" ng-click="handleNextStep($getActiveIndex()); $nextStep();" style="margin-top: 5px;">
+	                    {{$isLast() ? 'Complete' : 'Next'}}
+	                    <span class="fa fa-chevron-right"></span>
+	                </button>
+						</div>
+					</div>
+				</div>
+
+
+			    </header>
+
+			    <main step-container style="margin-top:5px;"></main>
+			</multi-step-container>
+				
+			</div>
+			
+		</div>
+	</div>
+</div>

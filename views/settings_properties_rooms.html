@@ -1,0 +1,398 @@
+<style>
+  .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+    .panel-group .panel {
+      overflow: visible;
+    }
+  </style>
+
+
+<style>
+
+.item-wrapper a{
+    display: inline !important;     
+}
+
+.item-wrapper{
+    display: inline;
+    position: relative;
+}
+
+    .item-wrapper form {
+        position: absolute;
+        top: -53px;
+        background: #FFF;
+        border: 1px solid #AAA;
+        border-radius: 5px;
+        padding: 7px;
+        width: 220px;
+        display: inline-block;
+        left: 50%;
+        margin-left: -110px;
+        z-index: 101;
+    }
+
+    .item-wrapper form:before{
+        content:"";
+        width: 0; 
+        height: 0; 
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;	
+        border-top: 10px solid #AAA;
+        position:absolute;
+        bottom:-10px;
+        left:100px;
+    }
+
+    .item-wrapper form:after{
+        content:"";
+        width:0;
+        height:0;
+        border-left: 9px solid transparent;
+        border-right: 9px solid transparent;	
+        border-top: 9px solid #FFF;
+        position:absolute;
+        bottom:-9px;
+        left:101px;
+    }
+
+.editable-input{
+     width:114px !important;   
+}
+
+
+.item-wrapper form.editable-checklist{
+   top: -180px; !important;
+}
+
+.item-wrapper form.editable-range{
+   width: 255px; !important;
+}
+
+.item-wrapper form.editable-date{
+   width: 280px; !important;
+}
+
+form.editable-date > div > input {
+	width: 170px !important;
+}
+
+select.editable-input{
+ width: 114px; 
+}
+
+
+</style>
+
+<div class="row">
+	<div class="col-lg-12">
+		<ol class="breadcrumb">
+			<li><a href="#" translate="PROPERTY_ROOM_DASHBOARD">Dashboard</a></li>
+			<li><a href="" translate="PROPERTY_ROOM_SETTINGS">Settings</a></li>
+			<li class="active"><span translate="PROPERTY_ROOM_PROPERTY">Property</span></li>
+		</ol>
+		
+		<h1 translate="PROPERTY_ROOM_ROOMS">Rooms</h1>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-lg-12" ng-controller="settingsPropertyRoomTypeCtrl">
+		<div class="main-box clearfix" style="min-height: 640px;" >
+			
+			<div class="tabs-wrapper tabs-no-header">
+								<ul class="nav nav-tabs">
+									<li class="active"><a showtab="" href="#tab-roomtypes" data-toggle="tab"  translate="PROPERTY_ROOM_ROOM_TYPES">Room Types</a></li>
+									<li><a showtab="" href="#tab-roomlist" data-toggle="tab"  translate="PROPERTY_ROOM_ROOM_LIST">Room List</a></li>
+								</ul>
+								
+								<div class="tab-content">
+								
+									<div class="tab-pane fade in active" id="tab-roomtypes">
+										
+										
+										<div style="margin-bottom: 10px;">
+										<button type="button" class="btn btn-primary" ng-click="addRoomType()">
+										<span class="fa fa-plus"></span> <span translate="PROPERTY_ROOM_ADD_ROOM_TYPE">Add Room Type</span>
+										</button>
+										</div>
+										
+											<uib-accordion close-others="false">
+							 
+							 				<div class="row" ng-repeat="rt in roomtypes" style="padding-bottom: 4px;">
+											<div class="col-xs-11" style="padding-right=0px;">
+							 
+										    <uib-accordion-group is-open="openroomtypes[$index]" id="anchor{{$index}}">
+										        <uib-accordion-heading class="uib-accordion-toggle">
+										           <span translate="PROPERTY_ROOM_ROOM_TYPE"></span><span> {{rt.ShortDescription}}</span>
+										           <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': openroomtypes[$index], 'glyphicon-chevron-right': !openroomtypes[$index]}"></i>
+										        </uib-accordion-heading>
+										        
+										        <div class="col-lg-7">
+										        
+										        <div class="main-box clearfix" style="min-height: 500px;padding-right: 40px;">
+										        
+										        <header class="main-box-header">
+												<h2 translate="PROPERTY_ROOM_GENERAL_INFORMATION">General Information</h2>
+												</header>
+												
+												<!-- <div class="main-box-body clearfix" style="padding-top: 20px;"> -->
+
+										      
+										        <div class="form-horizontal">
+										        	<div class="form-group">
+														<label class="col-lg-4 control-label" translate="PROPERTY_ROOM_OCCUPANCY_ADULTS"> Occupancy Adults </label>
+														<div class="col-lg-8">
+														<select class="form-control" style="max-width:80px;" ng-change="roomtypechanged=true" ng-model="rt.OccupancyAdults">
+															<option>1</option>
+															<option>2</option>
+															<option>3</option>
+															<option>4</option>
+															<option>5</option>
+														</select>
+														</div>
+													</div>
+													<div class="form-group">
+														<label class="col-lg-4 control-label" translate="PROPERTY_ROOM_OCCUPANCY_CHILDREN"> Occupancy Children </label>
+														<div class="col-lg-8">
+														<select class="form-control" style="max-width:80px;" ng-model="rt.OccupancyChildren" ng-change="roomtypechanged=true">
+															<option>0</option>
+															<option>1</option>
+															<option>2</option>
+															<option>3</option>
+															<option>4</option>
+															<option>5</option>
+														</select>
+														</div>
+													</div>
+													<div class="form-group">
+														<label class="col-lg-4 control-label" translate="PROPERTY_ROOM_SIZE">Size</label>
+														<div class="col-lg-8">
+														<a href="#" ng-model="rt.RoomSize" onaftersave="rtchg()" editable-text="rt.RoomSize">{{ rt.RoomSize || ('GENERAL_NOT_SET' | translate) }}</a>
+														</div>
+													</div>
+													<div class="form-group">
+														<label class="col-lg-4 control-label" translate="PROPERTY_ROOM_BED_TYPE"> Bed Type </label>
+														<div class="col-lg-8">
+														<div class="btn-group" ng-repeat="bt in BedTypes" >
+															<label class="btn btn-primary" ng-change="$parent.roomtypechanged=true;" ng-model="rt.BedType" uib-btn-radio="'{{bt.ID}}'">{{bt.Name}}</label>
+														</div>
+														</div>
+													</div>  
+												
+													<div class="form-group">
+														<label class="col-lg-4 control-label" translate="PROPERTY_ROOM_ROOM_TYPE_AMENITIES">Room Type Amenities</label>
+														<div class="col-lg-8">
+															<ui-select multiple on-select="addRTAmenetiy(rt,$item)" on-remove="deleteRTAmenetiy(rt,$item)" ng-model="rt.RoomTypeAmenityListS" theme="select2" ng-disabled="disabled" style="width: 100%;" >
+												    			<ui-select-match placeholder="{{'PROPERTY_ROOM_ROOM_AMENTITIES_SELECT' | translate }}">{{$item.Description}}</ui-select-match>
+												    			<ui-select-choices repeat="amenity in RoomTypeAmenityType | filter:$select.search">
+													      			<i ng-hide="amenity.Icon==null || amenity.Icon=='null'" ng-class="' fa '+ amenity.Icon"></i>
+													      			<div ng-bind-html="amenity.Description | highlight: $select.search"></div>
+													      			<!-- 
+													      			<small>
+													        		Icon: <i ng-class="' fa '+ amenity.Icon"></i>
+													        		Group: <span ng-bind-html="''+amenity.Group | highlight: $select.search"></span>
+													      			</small>
+													      			 -->
+												  		  		</ui-select-choices>
+												  			</ui-select>
+												  			<!-- <p>Selected: {{rt.RoomTypeAmenityList}}</p>
+												  			 -->
+												  		</div>
+												  </div>
+													
+													<div class="row" style="padding-top:10px;">
+													        <div class="pull-right">									            
+													            	<button type="submit" ng-disabled="!roomtypechanged && rt.ID!=-1" ng-click="saveRoomType(rt,$index)" title="{{'PROPERTY_ROOM_SAVE_TOOLTIP' | translate}}" class="btn btn-primary btn-sm" translate="PROPERTY_ROOM_SAVE"> Save </button>
+													        </div>
+													</div>
+													</div>
+													<!-- </div> -->
+													</div>
+													</div>
+
+										        <div class="col-lg-5">
+										        	<div class="main-box clearfix" style="min-height: 500px;">
+										        		<header class="main-box-header">
+														<h2 translate="PROPERTY_ROOM_UPLOADED_IMAGES_WITH_SORTING">Uploaded images - Drag &amp; Drop images for sorting</h2>
+														</header>
+														<!-- <div class="main-box-body clearfix" style="padding-top: 20px;"> -->
+														<div id="gallery-photos-wrapper" sortgal>
+															<ul id="gallery-photos" class="clearfix gallery-photos gallery-photos-hover">
+																<li id="recordsArray_{{images.ID}}" class="col-md-2 col-sm-3 col-xs-6" ng-repeat="images in rt.RoomTypeImages">
+																	<div class="photo-box" style="background-image: url('{{images.Url}}'); min-width:50px;"></div>
+																	<a ng-click="removeRoomTypeImages($index,images)" class="remove-photo-link">
+																		<span class="fa-stack fa-lg">
+																			<i class="fa fa-circle fa-stack-2x"></i>
+																			<i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+																		</span>
+																	</a>
+																</li>
+															</ul>
+															<span ng-hide="rt.RoomTypeImages.length" translate="PROPERTY_ROOM_NO_IMAGES">No Images</span>
+														</div>
+														<!-- </div> -->
+														
+														
+														<div ng-if="rt.ID!=-1">
+														<form  id="uploadRoomTypeImages{{rt.ID}}" dropzone3="{{$index}}" class="dropzone dz-clickable" style="min-height: 150px; width:100%;" >
+															<div class="dz-default dz-message">
+																<span translate="PROPERTY_ROOM_DROP_IMAGES_HERE">Drop Images here</span>
+															</div>
+														</form>
+														</div>
+														  
+														  
+										        	</div>
+										        </div>
+
+										    <!-- <div class="main-box clearfix">
+											<div class="main-box-body clearfix" > -->
+											<div class="col-lg-12">
+											<h2 translate="PROPERTY_ROOM_ROOM_TYPE_DESCRIPTION"> Room Type Description </h2>
+													<uib-accordion close-others="false">
+													
+							 				<div class="row" ng-repeat="d in rt.RoomTypeDesc" style="padding-bottom: 4px;">
+											<div class="col-xs-11" style="padding-right=0px;">
+													    <uib-accordion-group>
+													        <uib-accordion-heading>
+													            {{d.LangCode}}
+													        </uib-accordion-heading>
+													        
+													        <form>
+													        <div class="row">
+													      		<label><span translate="PROPERTY_ROOM_SHORT_DESCRIPTION">Short description </span></label>
+													        	<input type="text" class="form-control" ng-model="d.ShortDescription" placeholder="{{'PROPERTY_ROOM_SHORT_DESCRIPTION_PLACEHOLDER' | translate}}" title="{{'PROPERTY_ROOM_SHORT_DESCRIPTION_TOOLTIP' | translate}}"/>
+					  								      		<label><span  translate="PROPERTY_ROOM_LONG_DESCRIPTION">Long description  </span></label>
+												        		<input type="text" class="form-control" ng-model="d.LongDescription" placeholder="{{'PROPERTY_ROOM_LONG_DESCRIPTION_PLACEHOLDER' | translate}}" />
+													        </div>
+													        <div class="row" style="padding-top:10px;">
+													        <div class="pull-right">									            
+													            	<button type="submit" ng-click="saveRoomTypeDesc(d, $index, rt.ID)" title="{{'PROPERTY_ROOM_SAVE_TOOLTIP' | translate}}" class="btn btn-primary btn-sm" translate="PROPERTY_ROOM_SAVE">Save</button>
+													        </div>
+													        </div>
+													        </form>
+													    </uib-accordion-group>
+													    </div>
+													    <div class="col-xs-1" style="padding-left: 0px; padding-right: 0px;">
+															<div class="pull-left">
+																<button ng-hide="!$last" type="button" class="btn btn-link btn-lg dropdown-toggle" data-toggle="dropdown" style="padding-right: 4px; padding-left: 0px;">
+																<span class="fa fa-plus"></span>
+																</button>
+																<ul class="dropdown-menu" role="menu">
+																<li ng-repeat="storel in lang">
+																<a ng-click="addDesc(storel.Code,rt.ID,rt)" ng-bind="storel.Name"></a></li>
+																</ul>
+															
+																<button ng-hide="d.LangCode=='ENG'" ng-click="deleteRoomTypeDesc(d.ID,$index,d.FK_RoomType)" type="button" class="btn btn-link btn-lg" style="padding-right: 0px; padding-left: 4px;">
+																<span class="fa fa-trash-o"></span>
+																</button>
+															</div>
+															
+															
+													    </div>
+													    </div>
+
+
+
+
+													  </uib-accordion>
+													 
+										        </div>
+
+
+
+										<!-- 	</div>
+											</div> -->
+
+
+
+
+
+											</uib-accordion-group>
+											</div>
+											<div class="col-xs-1" style="padding-left:0px;">
+											<button ng-click="deleteRoomType(rt,$index)" title="{{'PROPERTY_ROOM_DELETE_ROOM_TYPE_TOOLTIP' | translate}}" class="btn btn-link btn-lg"><i class="fa fa-trash-o"></i></button>
+											</div>
+											</div>
+											</uib-accordion>		
+										
+
+
+										
+										
+									
+									
+									</div> <!-- END ROOMS TYPE TAB -->
+
+									<div class="tab-pane fade" id="tab-roomlist" ng-controller="settingsPropertyRoomListCtrl as showCase">
+									
+
+	
+									<table datatable="ng" id="table-roomlist" class="table table-hover" dt-options="showCase.dtOptions">
+									<div class="pull-left">
+									<button type="button" class="btn btn-primary" ng-click="addRoom()" style="margin-top: 10px;">
+										<span class="fa fa-plus"></span> <span translate="PROPERTY_ROOM_ADD_ROOM">Add Room</span>
+									</button>
+									</div>
+										<thead>
+												<tr> 
+													<th class="text-left" translate="PROPERTY_ROOM_ROOM_NUMBER" > Room Number
+													</th>
+													<th class="text-left" translate="PROPERTY_ROOM_ROOM_TYPE"> Room Type </th>
+													<th class="text-center" translate="PROPERTY_ROOM_FLOOR"> Floor </th>
+													<th class="text-center" translate="PROPERTY_ROOM_ROOM_STATUS">Room Status </th>
+													
+													
+													<th class="text-center" translate="PROPERTY_ROOM_COMMENT">Comment </th>
+													<th class="text-right" translate="PROPERTY_ROOM_OPTIONS">Options</th>
+														
+												</tr>
+										</thead>
+										<tbody>
+											<tr ng-repeat="store in showCase.roomlist" >
+
+												<td class="text-left" >
+													<a href="#" ng-model="store.Number" e-ng-change="store.edited=true" editable-text="store.Number">{{ store.Number || ('GENERAL_NOT_SET' | translate) }}</a>
+												</td>
+
+												<td  class="text-left">
+												  <a href="#" ng-model="store.FK_RoomType" editable-select="store.FK_RoomType" e-ng-change="store.edited=true" onshow="getRoomTypes()" e-ng-options="s.ID as s.ShortDescription for s in roomtypes">
+												    {{ getroomtypedesc(store.FK_RoomType) || ('GENERAL_NOT_SET' | translate) }}
+												  </a>
+												</td>
+
+												<td class="text-center">
+													<a href="#" ng-model="store.Floor" e-ng-change="store.edited=true" editable-text="store.Floor">{{ store.Floor || ('GENERAL_NOT_SET' | translate) }}</a>
+												</td>
+
+												<td class="text-center">
+												<a href="#" ng-model="store.FK_RoomStatusType" editable-select="store.FK_RoomStatusType" e-ng-change="store.edited=true" e-ng-options="rtstatus.value as rtstatus.text for rtstatus in roomtypestatuses">
+												    {{ showRoomTypeStatus(store.FK_RoomStatusType) || ('GENERAL_NOT_SET' | translate) }}
+												  </a>
+												</td>
+												
+												<td class="text-center">
+													<a href="#" ng-model="store.Comment" e-ng-change="store.edited=true" editable-text="store.Comment">{{ store.Comment || ('GENERAL_NOT_SET' | translate) }}</a>
+												</td>
+
+												<td class="text-right">  
+													<button ng-disabled="!store.edited" ng-click="saveRoom(store,$index)" class="btn btn-primary btn-sm" title="{{'PROPERTY_ROOM_SAVE_ROOM_LIST_TOOLTIP' | translate}}"><i class="glyphicon glyphicon-ok"></i></button>
+													<button ng-click="removeRoom(store,$index)" title="{{'PROPERTY_ROOM_DELETE_ROOM_LIST_TOOLTIP' | translate}}" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button> 
+												</td>
+												
+											</tr>
+									</tbody>
+									</table> 
+
+									
+									</div>
+									
+								</div>
+							</div>	
+			
+			
+										
+		
+		</div>
+</div>
+</div>

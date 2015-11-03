@@ -1,0 +1,48 @@
+<div class="main-box clearfix">
+	<header class="main-box-header clearfix">
+		<h2 class="pull-left"  translate="UPDATEUSERROLERIGHTS_ASSIGN_A_ROLE"> Assign a Role </h2>
+	</header>
+	<div class="main-box-body clearfix">
+			<div class="table-responsive">
+				<table class="table table-hover">
+					
+					<thead>
+						<tr>
+							<th><span translate="UPDATEUSERROLERIGHTS_PROPERTY">Property</span></th>
+							<th><span translate="UPDATEUSERROLERIGHTS_ROLE">Role</span></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr data-ng-repeat="store in user.Rights">
+							<td>
+								 <a href="#" ng-model="store.FK_Property" editable-select="store.FK_Property" onaftersave="changedRight($index)" e-ng-options="item.id as item.name for item in properties">
+								 {{ showProperty(store.FK_Property) }}
+								 </a>
+							</td>
+							<td>
+								<a href="#" ng-model="store.FK_Role" editable-select="store.FK_Role" onaftersave="changedRight($index)" e-ng-options="item.ID as item.Description for item in roles">
+								 {{ showRole(store.FK_Role) }}
+								 </a>
+							</td>
+							<td>
+							
+							<button ng-click="removeRole($index,store)" title="Delete Right" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+									
+					<div class="pull-left">
+					<button ng-click="addRole()" title="Add Right" class="btn btn-primary">
+					<i class="fa fa-plus"></i><span translate="UPDATEUSERROLERIGHTS_ADD_PROPERTY_ROLE"> Add Property Role </span>
+					</button>
+					</div>	
+	
+		<div class="pull-right" style="padding-bottom: 10px; padding-right: 10px;">
+			<button type="button" ng-disabled="!edited" ng-click="updateRights()" class="btn btn-primary"  translate="UPDATEUSERROLERIGHTS_SAVE_CHANGES"> Save changes </button>
+		</div>
+		
+	</div>
+</div>

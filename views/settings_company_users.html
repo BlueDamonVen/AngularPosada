@@ -1,0 +1,220 @@
+<div class="row">
+	<div class="col-lg-12">
+		<ol class="breadcrumb">
+			<li><a href="#" translate="COMPANY_USERS_DASHBOARD">Dashboard</a></li>
+			<li><a href="" translate="COMPANY_USERS_SETTINGS">Settings</a></li>
+			<li class="active"><span translate="COMPANY_USERS_COMPANY">Company</span></li>
+		</ol>
+		
+		<h1 translate="COMPANY_USERS_USERS"></h1>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-lg-12">
+		<div class="main-box clearfix" style="min-height: 640px;">
+			<header class="main-box-header clearfix">
+			</header>
+			<div class="main-box-body clearfix">
+							<uib-accordion close-others="true">
+							    <uib-accordion-group is-open="status.openusers" >
+							        <uib-accordion-heading >
+							           <span style="color:#fff;" translate="COMPANY_USERS_USER_DETAILS">User Details</span><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.openusers, 'glyphicon-chevron-right': !status.openusers}"></i>
+							        </uib-accordion-heading>
+							        
+
+									
+							        <div class="col-lg-12">
+									<div class="main-box clearfix">
+										<div class="main-box-body clearfix" data-ng-controller="CompanyUserCtrl as showCase">
+												<div class="table-responsive">
+												<table datatable="ng" class="table user-list table-hover" dt-options="showCase.dtOptions" dt-column-defs="showCase.dtColumnDefs">
+												<!-- 
+												<div class="pull-right">
+													<div class="checkbox-nice">
+													<input type="checkbox" ng-model="viewdeletedusers" id="viewdeletedusers">
+													<label for="viewdeletedusers">
+														View only active roles
+													</label>
+													</div>
+												</div>
+												 -->
+												<div class="pull-left">
+												<button ng-disabled="rightValue" type="button" class="btn btn-primary" style="margin-top: 10px;" ng-click="adduser()">
+												<span class="fa fa-plus"></span><span translate="COMPANY_USERS_ADD_USER">Add User</span>
+												</button>
+												</div>
+												<thead>
+													<tr>
+														<th translate="COMPANY_USERS_AVATAR">Avatar </th>
+														<th translate="COMPANY_USERS_NAME">Name</th>
+														<th translate="COMPANY_USERS_PHONE"> Phone </th>
+														<th translate="COMPANY_USERS_EMAIL"> Email </th>
+														<th translate="COMPANY_USERS_ROLES">Roles</th>
+														<th></th>
+														<th></th>
+													</tr>
+												</thead>
+													<tbody>
+														<tr ng-repeat="store in showCase.users">
+															<td>
+																<span ng-hide="true">{{store.Avatar}}</span>
+																<img ng-src="{{store.Avatar}}" style="cursor:pointer" alt="" ngf-select ngf-change="uploadAvatar($files,store.ID)" onerror="this.src='http://storage.googleapis.com/bearcrs/nuevah-logo-bear-black-c-50x50.png'" />
+															</td>
+															<td>
+																<a href="#" ng-model="store.Name" e-ng-change="store.edited=true" editable-text="store.Name" onaftersave="updatedata(store.ID, store, $index)">{{ store.Name || ('GENERAL_NOT_SET' | translate) }}</a>
+															</td>
+															<td>
+																<a href="#" ng-model="store.Phone" e-ng-change="store.edited=true" editable-text="store.Phone" onaftersave="updatedata(store.ID, store, $index)">{{ store.Phone || ('GENERAL_NOT_SET' | translate) }}</a>
+															</td>
+															<td>
+															
+																<a href="#" ng-model="store.Email" e-ng-change="store.edited=true" editable-text="store.Email" onaftersave="updatedata(store.ID, store, $index)">{{ store.Email || ('GENERAL_NOT_SET' | translate) }}</a>
+															</td>
+													
+															<td>
+																<a ng-if="!store.NewUser && store.Rights.length==0" ng-click="openmodalupdateuserrolerights(store.ID, store)" translate="COMPANY_USERS_ROLES"></a>
+																<ul class="fa-ul">
+																<li data-ng-repeat="rights in store.Rights">
+																	<a ng-click="openmodalupdateuserrolerights(store.ID, store)"><i class="fa-li fa fa-lock"></i>{{rights.Description}} - {{rights.propertyName.substring(0,20)}}</a>
+																</li>
+																</ul>
+																 
+															</td>
+															<td>
+																<button uib-popover-template="UserAccessTemplateURL" popover-title="User Access" type="button" class="btn btn-primary"><i class="fa fa-info"></i></button>
+
+																 <button ng-disabled="rightValue || store.NewUser || !store.EmailVerified" ng-click="openmodalupdatepw(store.ID)" title="{{'COMPANY_USERS_RESET_PASSWORD_TOOLTIP' | translate}}" class="btn btn-danger btn-sm"><i class="fa fa-key"></i></button>
+																 <button ng-disabled="rightValue || rightValue2" ng-show="store.NewUser" ng-click="getuserlist()" title="{{'COMPANY_USERS_CANCEL_TOOLTIP' | translate}}" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>
+																 
+																 
+																 
+															</td>
+															<td> 
+								                            	 <div class="pull-right">
+																<div class="onoffswitch">
+																	<input ng-disabled="rightValue" ng-click="remove($index)" ng-checked="store.Active" type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch{{store.ID}}" checked="">
+																	<label class="onoffswitch-label" for="myonoffswitch{{store.ID}}" title="{{'COMPANY_USERS_ON_OFF_TOOLTIP' | translate}}">
+																		<div ng-disabled="rightValue" class="onoffswitch-inner"></div>
+																		<div ng-disabled="rightValue" class="onoffswitch-switch"></div>
+																	</label>
+																</div>
+																</div>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+							      
+							          
+							        
+							    </uib-accordion-group>
+							    <uib-accordion-group is-open="status.openroles" >
+							        <uib-accordion-heading >
+							           <span style="color:#fff;" translate="COMPANY_USERS_USER_ROLES_RIGHTS">User Roles & Rights</span><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.openroles, 'glyphicon-chevron-right': !status.openroles}"></i>
+							        </uib-accordion-heading>
+							        
+							        <div data-ng-controller="companyrolesCtrl">
+										<div class="row">
+											<div class="col-lg-12">
+												<div class="pull-left">
+												<button ng-disabled="rightValue" type="button" class="btn btn-primary" style="margin-bottom: 10px;" ng-click="addrole()">
+												<span class="fa fa-plus"></span><span translate="COMPANY_USERS_ADD_ROLE">Add Role</span>
+												</button>
+												</div>
+												<div class="pull-right">
+													<div class="checkbox-nice">
+													<input ng-disabled="rightValue" type="checkbox" ng-model="viewdeleted" id="viewdeleted">
+													<label for="viewdeleted" translate="COMPANY_USERS_VIEW_ONLY_ACTIVE_ROLES">View only active roles</label>
+													</div>
+												</div>
+											</div>
+										</div>
+									<uib-accordion close-others="oneAtATime">
+							        <uib-accordion-group  is-open="openroles[$index]" data-ng-repeat="store in roles | filter: onlyActive | orderBy: 'ID'">
+							        <uib-accordion-heading>
+							           <span style="color:#fff;">{{store.Description || ('COMPANY_USERS_NEW_ROLE' | translate)}} <span class="pull-right"><b>{{ store.DeletedOn!='null' ? ('COMPANY_USERS_DEACTIVATED' | translate) : '' }} </b><i class="glyphicon" ng-class="{'glyphicon-chevron-down': openroles[$index], 'glyphicon-chevron-right': !openroles[$index]}"></i></span>
+							        </uib-accordion-heading>
+							        <div class="row">
+										<div class="col-lg-12">
+
+											<!--  <input type="text" popover="I appeared on mouse enter!" popover-trigger="mouseenter" ng-hide="store.ID!=-1" class="form-control" id="description" ng-model="store.Description">
+											-->
+											<a ng-hide="store.FK_Company===null" editable-text="store.Description"  onaftersave="updateroles(store.ID, 'Description', store.Description, store)" ng-click="clickNewValue(store.Description,$index)">{{store.Description || ('COMPANY_USERS_NEW_ROLE' | translate)}}</a>
+
+									        <div class="pull-right">
+									        		<!-- 
+									        		<button type="button" ng-hide="store.FK_Company===null" class="btn btn-primary" style="margin-top: 10px;" ng-click="deleteroles(store.ID,$index)">
+													<span class="fa fa-trash-o">
+													</button>
+													 -->
+													<div class="onoffswitch" ng-disabled="store.ID==-1" ng-hide="store.FK_Company===null">
+														<input ng-disabled="rightValue || store.ID==-1" ng-click="deleteroles(store.ID,$index, store)" ng-checked="store.DeletedOn=='null'" type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch{{store.ID}}" checked="">
+														<label ng-disabled="store.ID==-1" class="onoffswitch-label" for="myonoffswitch{{store.ID}}">
+															<div ng-disabled="store.ID==-1" class="onoffswitch-inner"></div>
+															<div ng-disabled="store.ID==-1" class="onoffswitch-switch"></div>
+														</label>
+													</div>
+											</div>
+										</div>
+									</div>
+							        <div class="table-responsive">
+										<table class="table table-hover">
+											<thead>
+												<tr>
+													<th><span translate="COMPANY_USERS_ACCESS">Access</span></th>
+													<th class="text-center"><span translate="COMPANY_USERS_NONE">NONE&nbsp;&nbsp;&nbsp;&nbsp;</span></th>
+													<th class="text-center"><span translate="COMPANY_USERS_READ">READ&nbsp;&nbsp;&nbsp;&nbsp;</span></th>
+													<th class="text-center"><span translate="COMPANY_USERS_WRITE">WRITE&nbsp;&nbsp;&nbsp;&nbsp;</span></th>
+													<th class="text-center"><span translate="COMPANY_USERS_ADMIN">ADMIN&nbsp;&nbsp;&nbsp;&nbsp;</span></th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr ng-repeat="a in areas">
+													<td style="padding: 0px;">
+														{{a.Name}}
+													</td>
+													<td class="text-center" style="padding: 0px;">
+														<div class="radio">
+														<input ng-disabled="rightValue" type="radio" ng-change="updateroles(store.ID, a.ID, 0, store)" ng-model="store[a.ID]" name="{{ a.ID + $parent.$index }}" id="{{ a.ID + '0-' + $parent.$index }}" value="0">
+														<label for="{{ a.ID + '0-' + $parent.$index }}"/>
+														</div>
+													</td>
+													<td class="text-center" style="padding: 0px;">
+														<div class="radio">
+														<input ng-disabled="rightValue" type="radio" ng-change="updateroles(store.ID, a.ID, 1, store)" ng-model="store[a.ID]" name="{{ a.ID + $parent.$index }}" id="{{ a.ID + '1-' + $parent.$index }}" value="1">
+														<label for="{{ a.ID + '1-' + $parent.$index }}"/>
+														</div>
+													</td>
+													<td class="text-center" style="padding: 0px;">
+													<div class="radio">
+														<input ng-disabled="rightValue" type="radio" ng-change="updateroles(store.ID, a.ID, 2, store)" ng-model="store[a.ID]" name="{{ a.ID + $parent.$index }}" id="{{ a.ID + '2-' + $parent.$index }}" value="2">
+														<label for="{{ a.ID + '2-' + $parent.$index }}"></label>
+														</div>
+													</td>
+													<td class="text-center" style="padding: 0px;">
+													<div class="radio">
+														<input  ng-disabled="rightValue" type="radio" ng-change="updateroles(store.ID, a.ID, 3, store)" ng-model="store[a.ID]" name="{{ a.ID + $parent.$index }}" id="{{ a.ID + '3-' + $parent.$index }}" value="3">
+														<label for="{{ a.ID + '3-' +$parent.$index }}"></label>
+														</div>
+													</td>
+												</tr>
+										</table>
+									</div>
+							    	</uib-accordion-group>
+							        </uib-accordion>
+							        </div>
+							    </uib-accordion-group>
+							  </uib-accordion>
+			</div>
+		</div>
+</div>
+</div>
+
+	<script type="text/ng-template" id="UserAccessPopoverTemplate.html">
+        <div>Last Access: {{store.LastTransaction || 'Never' }}</div>
+        <div>IP: {{store.LastIPAccess || 'None'}}</div>
+    </script>

@@ -1,0 +1,16 @@
+		<div class="main-box clearfix">
+		<header class="main-box-header clearfix">
+		<h2 class="pull-left" translate="UPDATEPW_PASSWORD_RESET"> Password Reset </h2>
+		</header>
+			
+			<div class="main-box-body clearfix">
+			
+			<div class="form-group">
+			<input type="password" ng-change="edited=true" ng-model="pw" class="form-control" id="inputPassword1" placeholder="{{'UPDATEPW_PASSWORD_PLACEHOLDER' | translate}}">
+			</div>
+	
+		</div>
+		<div class="pull-right" style="padding-bottom: 10px; padding-right: 10px;">
+			<button type="button" ng-disabled="!edited" ng-click="updatepw(id,pw)" class="btn btn-primary"  translate="UPDATEPW_SAVE_CHANGES"> Save changes </button>
+		</div>
+	</div>

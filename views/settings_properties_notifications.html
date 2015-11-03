@@ -1,0 +1,280 @@
+<style>
+    
+    .editor1 .nw-editor {
+      min-height: 450px;
+    }
+    .editor2 .nw-editor {
+      height: 200px;
+    }
+    .nw-editor__res.ng-invalid.ng-touched,
+    .nw-editor__src.ng-invalid{
+        border: 2px solid #FF0000;
+    }
+  </style>
+
+<div class="row">
+	<div class="col-lg-12">
+		<ol class="breadcrumb">
+			<li><a href="#" translate="PROPERTY_NOTIFICATIONS_DASHBOARD">Dashboard</a></li>
+			<li><a href="" translate="PROPERTY_NOTIFICATIONS_SETTINGS">Settings</a></li>
+			<li class="active"><span translate="PROPERTY_NOTIFICATIONS_PROPERTY">Property</span></li>
+		</ol>
+		<h1 translate="PROPERTY_NOTIFICATIONS_NOTIFICATIONS">Notifications</h1>
+	</div>
+</div>
+<div class="row" ng-controller="propertyNotificationCtrl">
+	<div class="col-lg-12">
+		<div class="main-box clearfix" style="min-height: 640px;">
+			<header class="main-box-header clearfix">
+				<h2 class="pull-left" translate="PROPERTY_NOTIFICATIONS_SUBTITLE"></h2>
+			</header>
+			<div class="main-box-body clearfix">
+				<uib-accordion close-others="false">
+					<div class="row" style="padding-bottom: 4px;">
+						<div class="col-xs-12" style="padding-right=0px;">
+							<uib-accordion-group>
+								<uib-accordion-heading class="accordion-toggle">
+									<span translate="PROPERTY_NOTIFICATIONS_CUSTOMER"></span>
+									<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': openrateplans[$index], 'glyphicon-chevron-right': !openrateplans[$index]}"></i>
+								</uib-accordion-heading>
+								<div class="col-lg-12">
+									<div class="row" style="padding-bottom: 5px;">
+										<div class="col-xs-3">
+											<i class="fa fa-mobile fa-2x"></i>
+											<span translate="PROPERTY_NOTIFICATIONS_SMS">SMS</span>
+										</div>
+										<div class="col-xs-3">
+											<div class="onoffswitch">
+												<input ng-disabled="rightValue" type="checkbox" ng-checked="property.AutoSMSBookingClientNotif" ng-model="property.AutoSMSBookingClientNotif" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch1" checked="">
+												<label class="onoffswitch-label" for="myonoffswitch1">
+													<div class="onoffswitch-inner"></div>
+													<div class="onoffswitch-switch"></div>
+												</label>
+											</div>
+										</div>
+										<div class="col-xs-6">
+
+										</div>
+									</div>
+									<div class="row" style="padding-bottom: 10px;">
+										<div class="col-lg-12">
+											<div ng-wig="PropertyConfig.SMSClientMessage" class="editor2"></div>
+										</div>
+									</div>
+									<div class="row" style="padding-bottom: 5px;">
+										<div class="col-xs-3">
+											<i class="fa fa-envelope-o fa-2x"></i>
+											<span translate="PROPERTY_NOTIFICATIONS_EMAIL">EMAIL</span>
+										</div>
+										<div class="col-xs-3">
+											<div class="onoffswitch">
+												<input ng-disabled="rightValue" type="checkbox" ng-checked="property.AutoEmailBookingClientNotif" ng-model="property.AutoEmailBookingClientNotif" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch3" checked="">
+												<label class="onoffswitch-label" for="myonoffswitch3">
+													<div class="onoffswitch-inner"></div>
+													<div class="onoffswitch-switch"></div>
+												</label>
+											</div>
+										</div>
+										<div class="col-xs-6">
+
+										</div>
+									</div>
+									<div class="row" style="padding-bottom: 5px;">
+										<div class="col-lg-12">
+											<textarea placeholder="Describe yourself here..." ng-wig="PropertyConfig.EmailClientMessage" class="editor2"></textarea>
+										</div>										
+									</div>
+								</div>
+							</uib-accordion-group>
+							<uib-accordion-group>
+								<uib-accordion-heading class="accordion-toggle">
+									<span translate="PROPERTY_NOTIFICATIONS_PROPERTY"></span>
+									<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': openrateplans[$index], 'glyphicon-chevron-right': !openrateplans[$index]}"></i>
+								</uib-accordion-heading>
+								<div class="col-lg-12">
+									<div class="row" style="padding-bottom: 5px;">
+										<div class="col-xs-3">
+											<i class="fa fa-mobile fa-2x"></i>
+											<span translate="PROPERTY_NOTIFICATIONS_SMS">SMS</span>
+										</div>
+										<div class="col-xs-3">
+											<div class="onoffswitch">
+												<input ng-disabled="rightValue" type="checkbox" ng-model="property.AutoSMSBookingPropertyNotif" ng-checked="property.AutoSMSBookingPropertyNotif" ngTrueValue="true" ngFalseValue="false" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch2" checked="">
+												<label class="onoffswitch-label" for="myonoffswitch2">
+													<div class="onoffswitch-inner"></div>
+													<div class="onoffswitch-switch"></div>
+												</label>
+											</div>
+										</div>
+										<div class="col-xs-6">
+											<div class="pull-left">
+												<input ng-model="property.PropertyNotificationMobile" ng-disabled="rightValue || !property.AutoSMSBookingPropertyNotif" type="text" class="form-control" placeholder="{{'PROPERTY_NOTIFICATIONS_SMS_NOTIFICATION_NUMBER_PLACEHOLDER' | translate}}">
+											</div>	
+										</div>
+									</div>
+									<div class="row" style="padding-bottom: 10px;">
+										<div class="col-lg-12">
+											<textarea ng-wig="PropertyConfig.SMSPropertyMessage" class="editor2"></textarea>
+										</div>
+									</div>
+									<div class="row" style="padding-bottom: 5px;">
+										<div class="col-xs-3">
+											<i class="fa fa-envelope-o fa-2x"></i>
+											<span translate="PROPERTY_NOTIFICATIONS_EMAIL">EMAIL</span>
+										</div>
+										<div class="col-xs-3">
+											<div class="onoffswitch">
+												<input ng-disabled="rightValue" type="checkbox" ng-checked="property.AutoEmailBookingPropertyNotif" ng-model="property.AutoEmailBookingPropertyNotif" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch4" checked="">
+												<label class="onoffswitch-label" for="myonoffswitch4">
+													<div class="onoffswitch-inner"></div>
+													<div class="onoffswitch-switch"></div>
+												</label>
+											</div>
+										</div>
+										<div class="col-xs-6">
+											<div class="pull-left">
+												<input ng-model="property.PropertyNotificationEmail"  ng-disabled="rightValue || !property.AutoEmailBookingPropertyNotif" type="email" class="form-control " placeholder="{{'PROPERTY_NOTIFICATIONS_EMAIL_NOTIFICATION_EMAIL_PLACEHOLDER' | translate}}" />
+											</div>
+										</div>
+									</div>
+									<div class="row" style="padding-bottom: 5px;">
+										<div class="col-lg-12">
+											<textarea ng-wig="PropertyConfig.EmailPropertyMessage" class="editor2"></textarea>	
+										</div>										
+									</div>
+								</div>
+							</uib-accordion-group>								
+						</div>
+					</div>
+				</uib-accordion>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- <div class="row">
+	<div class="col-lg-12">
+		<div class="main-box clearfix" style="min-height: 640px;">
+			<div class="main-box" ng-controller="propertyDetailsCtrl">
+				<header class="main-box-header clearfix">
+					<h2 translate="PROPERTY_NOTIFICATIONS_AUTOMATIC_NOTIFICATIONS"></h2>
+				</header>
+				<div class="main-box-body clearfix">
+					<div class="table-responsive">
+						<table class="table table-hover">
+							<thead>
+								<tr>
+									<th></th>
+									<th><i class="fa fa-mobile fa-2x"></i> <span translate="PROPERTY_NOTIFICATIONS_SMS">SMS</span></th>
+									<th><i class="fa fa-envelope-o fa-2x"></i> <span translate="PROPERTY_NOTIFICATIONS_EMAIL">Email</span></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td><span translate="PROPERTY_NOTIFICATIONS_GUEST">Guest</span></td>
+									<td>
+
+										<div class="onoffswitch">
+											<input ng-disabled="rightValue" type="checkbox" ng-checked="property.AutoSMSBookingClientNotif" ng-model="property.AutoSMSBookingClientNotif" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch1" checked="">
+											<label class="onoffswitch-label" for="myonoffswitch1">
+												<div class="onoffswitch-inner"></div>
+												<div class="onoffswitch-switch"></div>
+											</label>
+										</div>
+									</td>
+									<td>
+										<div class="onoffswitch">
+											<input ng-disabled="rightValue" type="checkbox" ng-checked="property.AutoEmailBookingClientNotif" ng-model="property.AutoEmailBookingClientNotif" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch3" checked="">
+											<label class="onoffswitch-label" for="myonoffswitch3">
+												<div class="onoffswitch-inner"></div>
+												<div class="onoffswitch-switch"></div>
+											</label>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td><span translate="PROPERTY_NOTIFICATIONS_PROPERTY"></span></td>
+									<td>
+										<div class="pull-left">
+										<div class="onoffswitch">
+	z											<input ng-disabled="rightValue" type="checkbox" ng-model="property.AutoSMSBookingPropertyNotif" ng-checked="property.AutoSMSBookingPropertyNotif" ngTrueValue="true" ngFalseValue="false" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch2" checked="">
+												<label class="onoffswitch-label" for="myonoffswitch2">
+													<div class="onoffswitch-inner"></div>
+													<div class="onoffswitch-switch"></div>
+												</label>
+											</div>
+											</div>
+											<div class="pull-left">
+											<input ng-model="property.PropertyNotificationMobile" ng-disabled="rightValue || !property.AutoSMSBookingPropertyNotif" type="text" class="form-control" placeholder="{{'PROPERTY_NOTIFICATIONS_SMS_NOTIFICATION_NUMBER_PLACEHOLDER' | translate}}">
+											</div>										
+										</td>
+										<td>
+											<div class="pull-left">
+											<div class="onoffswitch">
+												<input ng-disabled="rightValue" type="checkbox" ng-checked="property.AutoEmailBookingPropertyNotif" ng-model="property.AutoEmailBookingPropertyNotif" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch4" checked="">
+												<label class="onoffswitch-label" for="myonoffswitch4">
+													<div class="onoffswitch-inner"></div>
+													<div class="onoffswitch-switch"></div>
+												</label>
+											</div>
+											</div>
+											<div class="pull-left">
+												<input ng-model="property.PropertyNotificationEmail"  ng-disabled="rightValue || !property.AutoEmailBookingPropertyNotif" type="email" class="form-control " placeholder="{{'PROPERTY_NOTIFICATIONS_EMAIL_NOTIFICATION_EMAIL_PLACEHOLDER' | translate}}" />
+											</div>
+									</td>
+								</tr>
+									</tbody>
+									</table>
+									<div class="pull-right">
+									<div class="form-group">
+										<button ng-disabled="rightValue" type="submit" ng-click="save()" class="btn btn-success" translate="PROPERTY_NOTIFICATIONS_SAVE">Save</button>
+									</div>
+									</div>
+									</div>
+									
+									
+									<div class="table-responsive">
+									<table class="table table-hover">
+									<thead>
+										<tr>
+										<th></th>
+										<th><span><i class="fa fa-mobile fa-2x"></i> <span translate="PROPERTY_NOTIFICATIONS_SMS_MESSAGE">SMS Messages</span></span></th>
+										<th><span><i class="fa fa-envelope-o fa-2x"></i> <span translate="PROPERTY_NOTIFICATIONS_EMAIL_MESSAGE">Email Messages</span></span></th>
+										</tr>
+									</thead>
+									<tbody>
+									<tr>
+										<td><span translate="PROPERTY_NOTIFICATIONS_GUEST">Guest</span></td>
+										<td>
+											<textarea class="form-control" rows="3" ng-model="PropertyConfig.SMSClientMessage"></textarea>
+										</td>
+										<td>
+											<textarea class="form-control" rows="3"ng-model="PropertyConfig.EmailClientMessage"></textarea>
+										</td>
+									</tr>
+									<tr>
+										<td><span translate="PROPERTY_NOTIFICATIONS_PROPERTY">Property</span></td>
+										<td>
+											<textarea class="form-control" rows="3" ng-model="PropertyConfig.SMSPropertyMessage"></textarea>
+										</td>
+										<td>
+											<textarea class="form-control" rows="3" ng-model="PropertyConfig.EmailPropertyMessage"></textarea>										
+										</td>
+									</tr>
+									</tbody>
+									</table>
+									<div class="pull-right">
+									<div class="form-group">
+										<button ng-disabled="rightValue" type="submit" ng-click="savePropertyConfig()" class="btn btn-success" translate="PROPERTY_NOTIFICATIONS_SAVE">Save</button>
+									</div>
+									</div>
+									
+									</div>
+									
+									
+							</div>
+						</div>
+		
+		</div>
+</div>
+</div>
+ -->

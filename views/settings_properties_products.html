@@ -1,0 +1,229 @@
+<style>
+  .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+    .panel-group .panel {
+      overflow: visible;
+    }
+  </style>
+
+
+<style>
+
+.item-wrapper a{
+    display: inline !important;     
+}
+
+.item-wrapper{
+    display: inline;
+    position: relative;
+}
+
+    .item-wrapper form {
+        position: absolute;
+        top: -53px;
+        background: #FFF;
+        border: 1px solid #AAA;
+        border-radius: 5px;
+        padding: 7px;
+        width: 220px;
+        display: inline-block;
+        left: 50%;
+        margin-left: -110px;
+        z-index: 101;
+    }
+
+    .item-wrapper form:before{
+        content:"";
+        width: 0; 
+        height: 0; 
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;	
+        border-top: 10px solid #AAA;
+        position:absolute;
+        bottom:-10px;
+        left:100px;
+    }
+
+    .item-wrapper form:after{
+        content:"";
+        width:0;
+        height:0;
+        border-left: 9px solid transparent;
+        border-right: 9px solid transparent;	
+        border-top: 9px solid #FFF;
+        position:absolute;
+        bottom:-9px;
+        left:101px;
+    }
+
+.editable-input{
+     width:114px !important;   
+}
+
+
+.item-wrapper form.editable-checklist{
+   top: -180px; !important;
+}
+
+.item-wrapper form.editable-range{
+   width: 255px; !important;
+}
+
+.item-wrapper form.editable-date{
+   width: 280px; !important;
+}
+
+form.editable-date > div > input {
+	width: 170px !important;
+}
+
+select.editable-input{
+ width: 114px; 
+}
+
+
+</style>
+
+<div class="row">
+	<div class="col-lg-12">
+		<ol class="breadcrumb">
+			<li><a href="#" translate="PROPERTY_PRODUCTS_DASHBOARD">Dashboard</a></li>
+			<li><a href="" translate="PROPERTY_PRODUCTS_SETTINGS">Settings</a></li>
+			<li class="active"><span translate="PROPERTY_PRODUCTS_PROPERTY">Property</span></li>
+		</ol>
+		
+		<h1 translate="PROPERTY_PRODUCTS_EXTRA_PRODUCTS_AND_SERVICES"></h1>
+	</div>
+</div>
+
+
+
+
+
+<div class="row">
+<div class="col-lg-12">
+<div class="main-box clearfix" style="min-height: 640px;" ng-controller="SettingpropertyproductCtrl as showCase">
+
+<div class="main-box-body clearfix">
+
+    <div class="main-box-body clearfix">
+    <div class="table-responsive">
+        
+        <table datatable="ng" id="table-Product" dt-options="showCase.dtOptions" class="table table-products table-hover" width="100%">
+        <div class="pull-left">
+        <button ng-disabled="rightValue" type="button" class="btn btn-primary" ng-click="addProduct()" style="margin-top: 10px;">
+        <span class="fa fa-plus"></span> <span translate="PROPERTY_PRODUCTS_ADD_AN_EXTRA"></span>
+        </button>
+        </div>
+
+        <thead>
+            <tr>
+                <th class="text-left" translate="PROPERTY_PRODUCTS_PRODUCT_SERVICE"></th>
+                <th class="text-center" translate="PROPERTY_PRODUCTS_UNIT_PRICE">Unit Price</th> 
+                <th class="text-center" translate="PROPERTY_PRODUCTS_TAX_PERCENTAGE">Tax Percentage</th>
+                <th class="text-center" translate="PROPERTY_PRODUCTS_TAX_AMOUNT">Tax Amount</th>
+                <th class="text-center" translate="PROPERTY_PRODUCTS_TOTAL">Total</th>
+                <th class="text-center" translate="PROPERTY_PRODUCTS_PUBLISH_IN_IBE">Publish in IBE</th>
+                <th class="text-right" translate="PROPERTY_PRODUCTS_OPTIONS">Options</th>
+            </tr>
+        </thead>
+            <tbody>
+                <tr ng-repeat="rp in RatePolicy">
+                    <td>
+                       <!-- <span><label class="control-label"  >{{rp.Description}}</label></span>
+                        -->
+                        <div class="item-wrapper">
+                        <a ng-if="!rightValue" href="#" editable-text="rp.Description" onaftersave="saveProduct(rp,$index)" >{{ rp.Description || ('GENERAL_NOT_SET' | translate) }}
+                        </a>
+                        <a ng-if="rightValue" >{{ rp.Description || ('GENERAL_NOT_SET' | translate) }}
+                        </a>
+                        </div>
+                    </td>
+
+                     <td class="text-center">
+                    
+                      <!-- <span >{{rp.UnitPrice}}</span> -->
+                         <div class="item-wrapper">
+                            <a ng-if="!rightValue" href="#" editable-text="rp.UnitPrice" onaftersave="saveProduct(rp,$index)" >{{ rp.UnitPrice | number:2 || ('GENERAL_NOT_SET' | translate) }}
+                            </a>
+                            <a ng-if="rightValue" >{{ rp.UnitPrice | number:2 || ('GENERAL_NOT_SET' | translate) }}
+                            </a>
+                        </div>
+                    </td>
+                    <td class="text-center" >
+                        <span ng-if="!rightValue">
+                           
+                                <a href="#" 
+                                   editable-number="rp.TaxPercentage"
+                                   e-step="any"
+                                   onaftersave="saveProduct(rp,$index)">
+                                    
+                                 <!--   <span ng-if="rp.TaxPercentage === 1">{{rp.TaxPercentage}}</span>
+                                    
+                                    <span ng-if="rp.TaxPercentage === 0">{{rp.TaxPercentage}}</span>-->
+                                </a>
+                                <a href="#" 
+                                    editable-select="rp.TaxPercentage"  
+                                    e-ng-options="t.value as t.label for t in percentageTypes"
+                                    onaftersave="saveProduct(rp,$index)">
+                                    {{getPercentageTypeLabel(rp.TaxPercentage)}}
+                                </a>
+                            
+                        </span>
+                        <!--fsadfas -->
+                         <a ng-if="rightValue" >{{ rp.TaxPercentage || ('GENERAL_NOT_SET' | translate) }}
+                        <!-- -->
+                    </td>
+                    <!-- ddddddddddddddddd-->
+                   
+
+
+                    <td class="text-center">
+                    
+                      
+                         <div class="item-wrapper">
+                            <a ng-if="!rightValue" href="#" editable-text="rp.TaxAmount" onaftersave="saveProduct(rp,$index)" >{{ rp.TaxAmount || ('GENERAL_NOT_SET' | translate) }}
+                            </a>
+                            <a ng-if="rightValue" >{{ rp.TaxAmount || ('GENERAL_NOT_SET' | translate) }}
+                            </a>
+                        </div>
+                    
+                    
+                    </td>
+                    
+                
+                    <td class="text-center"> 
+                         <div class="item-wrapper">  
+                             <span > 
+                             {{lineItemTotal(rp) | number:2}}</span>
+                             
+                        </div> 
+                    </td>
+                    
+                    <td class="text-center" style="padding-left: 35px;">
+                        <div class="checkbox-nice" >
+                            <input ng-disabled="rightValue" type="checkbox" id="checkbox-{{$index}}" ng-checked="rp.PublishIBE==1" ng-model="rp.PublishIBE"  ng-true-value="1" ng-false-value="0" ng-change="saveProduct(rp,$index)">
+                            <label for="checkbox-{{$index}}"></label>
+                        </div>
+                    </td>
+                    
+
+                    <td class="text-right">
+                        <button ng-disabled="rightValue || rightValue2" ng-click="deleteProduct(rp,$index)" title="Delete" class="btn btn-link btn-lg"><i class="fa fa-trash-o"></i></button>
+                     </td>
+                </tr>
+              
+
+
+
+
+            </tbody>
+        </table>
+        <ul class="pagination pull-right hide-if-no-paging"></ul>
+    </div>
+</div>
+
+</div>
+ 
+</div>
+</div>
+</div>

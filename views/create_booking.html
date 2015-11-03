@@ -1,0 +1,231 @@
+<style>
+	b.bTotalPrice {
+		font-size: 24px;
+	}
+</style>
+
+<div class="row">
+	<div class="col-lg-12">
+		<ol class="breadcrumb">
+			<li><a href="#" translate="CREATE_BOOKING_DASHBOARD">Dashboard</a></li>
+			<li class="active"><span translate="CREATE_BOOKING_BOOKING">Booking</span></li>
+		</ol>
+		<h1 translate="CREATE_BOOKING_CREATE_BOOKING">Create booking</h1>
+	</div>
+</div>
+
+<div class="row" data-ng-controller="createBookingCtrl" id="create_Booking_Body">
+	<div class="col-lg-12">
+		<div class="main-box clearfix">
+			<header class="main-box-header clearfix">
+				<div class="table-filters createBooking__filters">
+					<div class="row">
+						<table class="table booking_create_search">
+							<tr>
+								<td>
+									<!-- <div id="reportrangeBlist" class="pull-left daterange-filter" where="right" cs-reportrange  style="margin-top: 10px;">
+										<i class="icon-calendar"></i>
+										<span></span><b class="caret"></b>
+									</div> -->
+									<span style="margin-top: -10px;" class="datepicker_wrapper">
+										<div id="reportrange" class="daterange-filter" where="right" cs-reportrange noranges="true" style="display: inline-block;">
+										<i class="icon-calendar"></i>
+										<span></span><b class="caret"></b>
+										</div>
+									</span>									
+								</td> 
+								<td class="td_nights">
+									<span class="fa fa-moon-o"></span>
+										{{howLong}}
+								</td>
+								<td class="select">
+<!-- 									<span editable-select="guestsNumber" e-ng-options="s.value as s.text for s in guestsNumberType">
+										{{showNumber(guestsNumber)}}
+        							</span> -->
+									<select class="form-control ng-pristine ng-valid ng-touched" ng-model="guestsNumber" ng-change="createBookingSearch()">
+									<option value="1" translate="CREATE_BOOKING_ANY" selected>any</option>
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
+									<option value="5">5</option>
+									</select>        							
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</header>
+<!-- 			<div class="main-box-body clearfix row" >
+				<div ng-show="!data.bookingList.length">
+					<h2 translate="CREATE_BOOKING_NO_AVAILABLE_ROOMS">No available rooms</h2>
+			</div> -->
+			<div class="col-md-12">
+				<table datatable="ng" id="table-bookinglist" class="table table-hover" dt-options="dtOptions" dt-column-defs="dtColumnDefs">
+					<thead>
+						<tr>
+							<th id="luis" class="text-left" translate="CREATE_BOOKING_ROOM">Room</th>
+							<th class="text-left" translate="CREATE_BOOKING_RATE_PLAN">Rate plan</th>
+							<th class="text-center" translate="CREATE_BOOKING_MAX_OCCUPANCY">Max occupancy</th>
+							<th class="text-center" translate="CREATE_BOOKING_PRICE/NIGHT">Price/night</th>
+							<th data-type="numeric"class="text-center" translate="CREATE_BOOKING_TOTAL_PRICE">Total price</th>							
+							<th class="text-center" translate="CREATE_BOOKING_QUANTITY">Quantity</th>
+
+						</tr>
+					</thead>
+					<tbody>
+						<tr data-ng-repeat="store in data.bookingList">
+							<td   style="cursor: pointer;" class="text-left"> 
+								 <span id="test" popover 
+									    type="button" 
+									    data-toggle="popover"
+									    data-placement="bottom"
+									    data-html="true"
+									    title="{{'CREATE_BOOKING_ROOM_DESCRIPTION' | translate }}"
+									    data-content=
+									    '<table class="table table-condensed">
+									       <tbody>
+									        <ol>
+										         <tr ng-if="store.roomType===1" ng-repeat="d in pRvalues1" >
+										           <td > 
+													    <li ng-bind="d.Description"> 
+													    </li> 
+										           </td>
+										         </tr>
+										         <tr ng-if="store.roomType===2" ng-repeat="d in pRvalues2" >
+										           <td > 
+													    <li ng-bind="d.Description"> 
+													    </li> 
+										           </td>
+										         </tr>
+										          <tr ng-if="store.roomType===3" ng-repeat="d in pRvalues3" >
+										           <td > 
+													    <li ng-bind="d.Description"> 
+													    </li> 
+										           </td>
+										         </tr>
+										          <tr ng-if="store.roomType===4" ng-repeat="d in pRvalues4" >
+										           <td > 
+													    <li ng-bind="d.Description"> 
+													    </li> 
+										           </td>
+										         </tr>
+
+										          
+									         </ol>
+									       </tbody>
+									     </table>'> 
+									      {{store.room}} 
+								  </span>  
+								</td> 
+								<td   style="cursor: pointer;" class="text-left"> 
+								 <span id="testrate" popover 
+									    type="button" 
+									    data-toggle="popover"
+									    data-placement="bottom"
+									    data-html="true"
+									    title="{{'CREATE_BOOKING_RATE_DESCRIPTION' | translate}}"
+									    data-content=
+									    '<table class="table table-condensed">
+									       <tbody>
+									        <ol>
+										         <tr ng-if="store.ratePolicy===1" ng-repeat="d in pRatevalues1" >
+										           <td > 
+													    <li ng-bind="d.Description"> 
+													    </li> 
+										           </td>
+										         </tr>
+										         <tr ng-if="store.ratePolicy===2" ng-repeat="d in pRatevalues2" >
+										           <td > 
+													    <li ng-bind="d.Description"> 
+													    </li> 
+										           </td>
+										         </tr>
+										         <tr ng-if="store.ratePolicy===3" ng-repeat="d in pRatevalues3" >
+										           <td > 
+													    <li ng-bind="d.Description"> 
+													    </li> 
+										           </td>
+										         </tr>
+										         <tr ng-if="store.ratePolicy===4" ng-repeat="d in pRatevalues4" >
+										           <td > 
+													    <li ng-bind="d.Description"> 
+													    </li> 
+										           </td>
+										         </tr>
+										         <tr ng-if="store.ratePolicy===5" ng-repeat="d in pRatevalues5" >
+										           <td > 
+													    <li ng-bind="d.Description"> 
+													    </li> 
+										           </td>
+										         </tr>
+										          
+									         </ol>
+									       </tbody>
+									     </table>'> 
+									      {{store.ratePlan}}
+								  </span>  
+								</td> 
+								<td class="text-center">
+									{{store.maxOccupancy}}
+								</td>
+								<td class="text-center">
+									{{store.priceNight | number:2}}
+								</td>
+								<td data-value="{{store.checkInDate.unix()}}" data-sort-initial="true" class="text-center">
+									<b class="bTotalPrice">{{store.rate * howLong | number:2}}</b>
+								</td>
+								<td class="text-center" ng-switch on="store.status">
+									<button class="btn btn-primary" translate="CREATE_BOOKING_RESERVE" ng-click="open()">Reserve</button>
+									<!--<div class="input-group input-group-sm short">
+										<span class="input-group-addon" ng-click="updateQuantity(store.quantity, $index, 'decrement')">-</span>
+										<input type="text" ng-model="store.quantity" class="form-control" >
+										<span class="input-group-addon" ng-click="updateQuantity(store.quantity, $index, 'increment')">+</span>
+									</div>-->
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<!--<div class="col-md-2 reservation-summary" >
+					<div class="panel-heading"><strong translate="CREATE_BOOKING_RESERVATION">Reservation</strong></div>
+					<div class="panel-body first">
+						<div class="detail">{{data.reservationTotalRooms}} <ng-pluralize count="data.reservationTotalRooms" when="{ '1': 'Room', 'other': 'Rooms'}"></ng-pluralize> for</div>
+						<div class="price">{{data.reservationTotalPrice}} {{data.currency}}</div>
+					</div>
+					<div class="panel-body">
+						<div class="detail" translate="CREATE_BOOKING_RATE_PER_NIGHT"></div><div class="detail">:</div>
+						<div class="price">{{data.dailyRatePerNight}} {{data.currency}}</div>
+						<button class="btn-primary btn btn-xs" ng-click="open()" translate="CREATE_BOOKING_RESERVE">Reserve</button>
+					</div>
+				</div>-->
+				
+				<ul class="pagination pull-right hide-if-no-paging"></ul>
+
+			</div>
+			
+		</div>
+	</div>
+
+
+<!-- this page specific inline scripts -->
+</div>
+
+
+<script type="text/ng-template" id="bookingConfirmation.html">
+    <div class="md-content">
+        <div class="modal-header">
+            <button class="md-close close" ng-click="close()">×</button>
+            <h4 class="modal-title" translate="CREATE_BOOKING_BOOKING_CONFIRMATION">Booking confirmation</h4>
+        </div>
+        <div class="modal-body">
+            <div class="panel-body">
+                Booking Id: <strong>{{ID}}</strong><br/>
+                Booking Code: <strong> {{BookingCode}}</strong>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="close()" type="button" translate="CREATE_BOOKING_OK">OK</button>
+        </div>
+    </div>
+</script>

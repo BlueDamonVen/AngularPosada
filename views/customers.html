@@ -1,0 +1,116 @@
+<div class="row">
+	<div class="col-lg-12">
+		<ol class="breadcrumb">
+			<li><a href="#" translate="CUSTOMERS_DASHBOARD">Dashboard</a></li>
+			<li class="active"><span translate="CUSTOMERS_CUSTOMERS">Customers</span></li>
+		</ol>
+		
+		<h1 translate="CUSTOMERS_CUSTOMER_DATABASE">Customer Database</h1>
+	</div>
+</div>
+
+<div class="row" ng-controller="customersCtrl">
+	<div class="col-lg-12">
+		<div class="main-box clearfix">
+			<header class="main-box-header clearfix">
+				<h2 class="pull-left" translate="CUSTOMERS_CUSTOMER_LIST">Customer List</h2>
+
+				<div class="filter-block pull-right">
+				<div class="form-inline">
+					<div class="checkbox checkbox-nice">
+						<input type="checkbox" id="deleted" ng-model="deletedOn" ng-true-value="1" ng-false-value="0" ng-change="getcustomerlist()">
+						<label for="deleted" translate="CUSTOMERS_VIEW_DETELED" style="margin-right:25px">View Deleted</label>
+					</div>
+					<div class="form-group">
+						<input type="text" id="filter" ng-model="searchKeyword" class="form-control" placeholder="{{'TABLE_SEARCH_PLACEHOLDER' | translate}}">
+						<i class="fa fa-search search-icon"></i>
+					</div>
+					
+				</div>
+				</div>
+			</header>
+			
+			<div class="main-box-body clearfix" >
+			<div class="table-responsive clearfix">
+
+				<table class="table footable toggle-circle-filled">
+
+					<thead>
+						<tr>
+							<th class="footable-visible footable-sortable footable-first-column"><span translate="CUSTOMERS_LAST_NAME" >Last Name</span></th> 
+							  
+							<th ><span translate="CUSTOMERS_FIRST_NAME">First Name</span></th>
+
+							<th ><span translate="CUSTOMERS_EMAIL">Email</span></th>
+
+							<th data-hide="table, phone" class="text-left footable-sortable footable-visible footable-last-column"><span translate="CUSTOMERS_PHONE">Phone</span></th>
+
+							<th data-hide="tablet, phone" data-type="numeric" class="text-center"><span translate="CUSTOMERS_NO._OF_STAYS">No. stays</span></th>
+							<th data-hide="all" class="text-right"><span translate="CUSTOMERS_ADDRESS_1">Address 1</span></th>
+							<th data-hide="all" class="text-right"><span translate="CUSTOMERS_ADDRESS_2">Address 2</span></th>
+							<th data-hide="all" class="text-right"><span  translate="CUSTOMERS_CITY">City</span></th>
+							<th data-hide="all" class="text-right"><span translate="CUSTOMERS_PROVINCE/STATE">Province/State</span></th>
+							<th data-hide="all" class="text-right"><span translate="CUSTOMERS_COUNTRY">Country</span></th>
+							<th data-hide="all" class="text-right"><span translate="CUSTOMERS_POSTAL_CODE">Postal code</span></th>
+							<th data-hide="all" class="text-right"><span translate="CUSTOMERS_MOBILE">Mobile</span></th>		
+							<th data-hide="tablet, phone" data-sort-ignore="true" class="text-right"><span translate="CUSTOMERS_SAVE">Save</span></th>						
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="store in customers | filter: searchKeyword" footableload>
+							<td>
+							<span ng-hide="true">{{store.LastName}}</span>
+								<input ng-disabled="rightValue" class="text-like custom-editable editable-click" ng-change="store.edited=true" editable-custom ng-model="store.LastName"/>
+							</td>
+							<td>
+							<span ng-hide="true">{{store.FirstName}}</span>
+								<input ng-disabled="rightValue" class="text-like custom-editable editable-click" ng-change="store.edited=true" editable-custom ng-model="store.FirstName"/>
+							</td>
+							<td>
+							<span ng-hide="true">{{store.Email}}</span>
+								<input ng-disabled="rightValue" class="text-like custom-editable editable-click" ng-change="store.edited=true" editable-custom ng-model="store.Email"/>
+							</td>
+							<td class="text-left">
+							<span ng-hide="true">{{store.Phone}}</span>
+								<input ng-disabled="rightValue" class="text-like custom-editable editable-click" ng-change="store.edited=true" editable-custom ng-model="store.Phone"/>
+							</td>
+							<td class="text-center"  data-title="'Email'" sortable="'Email'">
+								{{store.BookingCount}}
+							</td>
+							<td>
+								<input ng-disabled="rightValue" class="address text-like custom-editable editable-click" ng-change="store.edited=true" editable-custom ng-model="store.Address1" maxlength="255"/>
+							</td>
+							<td>
+								<input ng-disabled="rightValue" class="address text-like custom-editable editable-click" ng-change="store.edited=true" editable-custom ng-model="store.Address2" maxlength="255"/>
+							</td>
+							<td>
+								<input ng-disabled="rightValue" class="text-like custom-editable editable-click" ng-change="store.edited=true" editable-custom ng-model="store.City"/>
+							</td>
+							<td >
+								<input ng-disabled="rightValue" class="text-like custom-editable editable-click" ng-change="store.edited=true" editable-custom ng-model="store.ProvinceState"/>
+							</td>
+							<td>
+							   <select ng-disabled="rightValue" ng-model="store.Country" ng-change="store.edited=true" ng-options="item.ISO2 as item.ISO2 for item in countries"></select>
+							</td>
+							<td>
+								<input ng-disabled="rightValue" class="text-like custom-editable editable-click" ng-change="store.edited=true" editable-custom ng-model="store.PostalCode"/>
+							</td>
+							<td >
+								<input ng-disabled="rightValue" class="text-like custom-editable editable-click" ng-change="store.edited=true" editable-custom ng-model="store.Mobile"/>
+							</td>
+							<td class="text-right">
+							<button ng-disabled="!store.edited || rightValue" ng-click="updatedata(store.ID, store)" class="btn btn-primary btn-sm from-control"><i class="glyphicon glyphicon-ok"></i></button>
+							<button  ng-click="deletecustomer(store.ID, $index)" style="margin-right:13px;" class="btn btn-sm btn-danger from-control table-link">
+                                <i class="fa fa-trash-o"></i></button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				</div>
+				<ul class="pagination pull-right hide-if-no-paging"></ul>
+			</div>
+		</div>
+	</div>
+</div>
+
+

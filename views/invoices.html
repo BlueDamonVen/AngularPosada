@@ -1,0 +1,437 @@
+<div class="row">
+	<div class="col-lg-12">
+		<ol class="breadcrumb">
+			<li><a href="#" translate="INVOICES_DASHBOARD">Dashboard</a></li>
+			<li class="active"><span translate="INVOICES_INVOICES">Invoices</span></li>
+		</ol>
+		
+		<h1 translate="INVOICES_INVOICE_DATABASE">Invoice Database</h1>
+	</div>
+</div>
+
+
+
+ 
+
+<div class="row">
+	<div class="col-lg-12">
+		<div class="main-box clearfix">
+		
+			
+			<div class="main-box-body clearfix">
+			
+			
+				<table datatable="ng" id="table-invoicelist" class="table table-hover" dt-options="dtOptions">
+					<div class="pull-left">
+					<div class="pull-right">
+					&nbsp
+					<button type="button" class="btn btn-primary fa fa-refresh" ng-click="refresh()" style="margin-top: 10px;">
+					</button>
+					</div>
+					<div id="reportrangeBlist" class="pull-left daterange-filter" where="right" cs-reportrange style="margin-top: 10px;">
+					<i class="icon-calendar"></i>
+					<span></span><b class="caret"></b>
+					</div>
+					</div>
+					
+					
+					
+
+					<thead>
+						<tr>
+							<th translate="INVOICES_INVOICE">Invoice</th>
+							<th class="text-center" translate="INVOICES_ROOM">Room</th>
+							<th data-hide="phone" translate="INVOICES_GUEST">Guest</th>
+							<th data-hide="phone" translate="INVOICES_COMPANY_NAME">Company name</th>
+							<th data-hide="phone" class="text-center" translate="INVOICES_FROM">From</th>
+							<th data-hide="phone" class="text-center" translate="INVOICES_TO">To</th>
+                            <th data-hide="phone" class="text-center" translate="INVOICES_STATUS">Status</th>
+							<th data-hide="phone" class="text-right" translate="INVOICES_TOTAL">Total</th>	
+							<th data-sort-ignore="true" class="text-center" translate="INVOICES_OPTIONS">Options</th>			 
+						</tr>
+					</thead>
+					<tbody>
+						<tr data-ng-repeat="store in selectedInvoices">
+							<td>
+								{{store.invoiceNo}}
+							</td>
+							<td class="text-center">
+								{{store.roomNo}}
+							</td>
+							<td>
+								{{store.guest}}
+							</td>
+							<td>
+								{{store.companyName}}
+							</td>
+							<td class="text-center">
+								{{store.checkInDate}}
+							</td>
+							<td class="text-center">
+								{{store.checkOutDate}}
+							</td>
+                            <td class="text-center">
+                                <span class="label label-large"
+                                      ng-class="{'label-primary': store.IsInvoice, 'label-warning': !store.IsInvoice}">
+                                    {{store.IsInvoice ? ('INVOICES_STATUS_INVOICE' | translate) : ('INVOICES_STATUS_FOLIO' | translate) }}
+                                </span>      
+                            </td>
+							<td class="text-right">
+								{{store.total | number:2}}
+							</td>
+							</td>
+							<td class="text-center">
+                                
+	                            <a ng-if="!store.IsInvoice" ng-disabled="rightValue" ng-click="open(store)" 
+                                        ng-disabled="store.IsInvoice"
+                                        class="btn btn-primary btn-sm from-control">
+                                    <i class="fa"
+                                       ng-class="{'fa-pencil-square-o': !selectedInvoice, 'fa-check': selectedInvoice}"></i>
+                                </a>
+                               <a class="btn btn-primary btn-sm from-control"  ng-click="pdfLinkPrintIndex($index)">
+
+	                                    <i class="fa fa-print"></i>
+	                            </a>
+
+								<a ng-disabled="rightValue" class="btn btn-primary btn-sm from-control" download ng-click="pdfLink($index)">
+                                    <i class="fa fa-file-pdf-o"></i>
+                                </a> 
+
+                           
+                            </td>
+ 
+
+
+						</tr>
+					</tbody>
+				</table>
+				
+				<ul class="pagination pull-right hide-if-no-paging"></ul>
+
+			</div>
+			
+		</div>
+	</div>
+</div>
+  
+<di class="row" ng-if="selectedInvoice">
+	<div class="col-lg-12">
+		<div class="main-box clearfix">
+			<header class="main-box-header clearfix">
+				<div class="filter-block pull-right" ng-click="pdfLinkPrint($index)">
+                    <a href="" class="btn btn-primary pull-right">
+                        <i class="fa fa-print fa-lg"></i> <span translate="INVOICES_PRINT"></span>
+					</a>
+				</div>
+			</header>
+			
+			<div class="main-box-body clearfix">
+				<div id="invoice-companies" class="row">
+					<div class="col-sm-4 invoice-box">
+						<div class="invoice-icon hidden-sm">
+							<i class="fa fa-home"></i> <span translate="INVOICES_FROM"></span>
+						</div>
+						<div class="invoice-company">
+							<h4>{{company.Name}}</h4>
+							<p>
+								{{company.Address1}}<br/>
+								{{company.City}}, {{company.PostalCode}}<br/>
+                                {{getCountryFromCode(company.Country)}}
+							</p>
+						</div>
+					</div>
+					<div class="col-sm-4 invoice-box">
+						<div class="invoice-icon hidden-sm">
+							<i class="fa fa-credit-card"></i> <span translate="INVOICES_TO"></span>
+						</div>
+						<div class="invoice-company">
+						<!--company name starts -->
+							<h4>
+                                <a href="#" editable-text="selectedInvoice.companyName" onaftersave="changeAddress(selectedInvoice)">
+                                    {{selectedInvoice.companyName || ('INVOICES_CLICKTOEDIT_COMPANY' | translate)}}
+                                </a>
+                            </h4>
+						<!--company name ends-->
+
+							<h4>
+                                <a href="#" editable-text="selectedInvoice.guest" onaftersave="changeAddress(selectedInvoice)">
+                                    {{selectedInvoice.guest || ('INVOICES_CLICKTOEDIT_NAME' | translate)}}
+                                </a>
+                            </h4>
+							<p>
+								<a href="#" editable-text="selectedInvoice.address1" onaftersave="changeAddress(selectedInvoice)">
+                                    {{selectedInvoice.address1 || ('INVOICES_CLICKTOEDIT_ADDRESS' | translate)}}
+                                </a>
+                                <br/>
+                                <a href="#" editable-text="selectedInvoice.city" onaftersave="changeAddress(selectedInvoice)">
+                                    {{selectedInvoice.city || ('INVOICES_CLICKTOEDIT_CITY' | translate)}}
+                                </a>, 
+                                <a href="#" editable-text="selectedInvoice.postalCode" onaftersave="changeAddress(selectedInvoice)">
+                                    {{selectedInvoice.postalCode || ('INVOICES_CLICKTOEDIT_POSTALCODE' | translate)}}
+                                </a>
+								<br/>
+                                <a href="#" editable-select="selectedInvoice.country"  
+                                   e-ng-options="c.id as c.value for c in countries"
+                                   onaftersave="changeAddress(selectedInvoice)">
+                                    {{getCountryFromCode(selectedInvoice.country) || ('INVOICES_CLICKTOEDIT_COUNTRY' | translate)}}
+                                </a>
+								<br/>
+                                <a href="#" editable-text="selectedInvoice.vatTaxNo" onaftersave="changeAddress(selectedInvoice)">
+                                    VAT: {{selectedInvoice.vatTaxNo || ('INVOICES_CLICKTOEDIT_VAT' | translate)}}
+                                </a>
+							</p>
+						</div>
+					</div>
+					<div class="col-sm-4 invoice-box invoice-box-dates">
+						<div class="invoice-dates">
+							<div class="invoice-number clearfix">
+								<strong translate="INVOICES_INVOICE_NO"></strong>
+								<span class="pull-right">{{selectedInvoice.invoiceNo}}</span>
+							</div>
+							<div class="invoice-date clearfix">
+								<strong translate="INVOICES_CREATED_ON"></strong><strong>:</strong>
+								<span class="pull-right">{{selectedInvoice.createdOn}}</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="table-responsive">
+					<table class="table">
+						<thead>
+							<tr>
+								<th class="text-center"><span>#</span></th>
+                                <th><span translate="INVOICES_DATE"></span></th>
+								<th><span translate="INVOICES_ITEM"></span></th>
+								<th class="text-center"><span translate="INVOICES_QUANTITY"></span></th>
+								<th class="text-right"><span translate="INVOICES_UNIT_PRICE"></span></th>
+								<th class="text-right"><span translate="INVOICES_SUBTOTAL"></span></th>
+                                <th class="text-right"><span translate="INVOICES_TAX"></span></th>
+                                <th class="text-right"><span translate="INVOICES_TOTAL"></span></th>
+                              <!--  <th class="text-right"><span>Trash</span></th> -->
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="item in selectedInvoice.items">
+								<td class="text-center">
+									{{$index+1}}
+								</td>
+                                <td>
+                                    <a href="#" 
+                                       editable-date="item.TransactionDate"
+                                       e-uib-datepicker-popup="dd/mm/yyyy"
+                                       onaftersave="saveLineItem(item)">
+                                        {{formatDate2(item.TransactionDate)}}
+                                    </a>
+                                </td>
+								<td>
+                                    <a href="#" 
+                                       editable-text="item.Description" 
+                                       onaftersave="saveLineItem(item)">
+                                        {{item.Description || ('INVOICES_CLICKTOEDIT_DESCRIPTION' | translate)}}
+                                    </a>
+								</td>
+								<td class="text-center" >
+									<span ng-if="item.FK_TransactionType === 1">
+                                        <a href="#" 
+                                           editable-number="item.Quantity"
+                                           e-min="1"
+                                           e-required=""
+                                           onaftersave="saveLineItem(item)">
+                                            {{item.Quantity}}
+                                        </a>
+                                    </span>
+                                    <span ng-if="item.FK_TransactionType === 99">
+                                        <a href="#" 
+                                           editable-number="item.Quantity"
+                                           e-min="1"
+                                           e-required=""
+                                           onaftersave="saveLineItem(item)">
+                                            {{item.Quantity}}
+                                        </a>
+                                    </span>
+								</td>
+								<td class="text-right" >
+                                    <span ng-if="item.FK_TransactionType === 1">
+                                        <a href="#" 
+                                           editable-number="item.UnitPrice"
+                                           e-step="any"
+                                           e-min="0"
+                                           onaftersave="saveLineItem(item)">
+                                            {{item.UnitPrice | currency:item.FK_Currency+" ":2}}
+                                        </a>
+                                    </span>
+                                     <span ng-if="item.FK_TransactionType === 99">
+                                        <a href="#" 
+                                           editable-number="item.UnitPrice"
+                                           e-step="0.10"
+                                           e-min="0"
+                                           onaftersave="saveLineItem(item)">
+                                            {{item.UnitPrice | currency:item.FK_Currency+" ":2}}
+                                        </a>
+                                    </span>
+								</td>
+								<td class="text-right" >
+                                    <span ng-if="item.FK_TransactionType === 1">
+                                       {{item.Quantity * item.UnitPrice | currency:item.FK_Currency+" ":2}}
+                                    </span>
+                                    <span ng-if="item.FK_TransactionType === 99">
+                                       {{(item.Quantity * item.UnitPrice) +item.TaxAmount | currency:item.FK_Currency+" ":2}}
+                                    </span>
+								</td>
+                                <!-- Start: Tax -->
+                                <!-- Tax value will not be displayed if it's a payment -->
+                                <!-- Editable only when it's a new item -->
+                                <!-- Uneditable otherwise -->
+                                <td class="text-right" >
+									<span ng-if="item.FK_TransactionType === 1">
+                                        <span ng-if="item.TaxEditable">
+                                            <a href="#" 
+                                               editable-number="item.TaxAmount"
+                                               e-step="any"
+                                               e-min="0"
+                                               onaftersave="saveLineItem(item)">
+                                                <span ng-if="item.TaxPercentage === 1">{{item.TaxAmount}} %</span>
+                                                <span ng-if="item.TaxPercentage === 0">{{item.TaxAmount | currency:item.FK_Currency+" ":2}}</span>
+                                            </a>
+                                            (<a href="#" 
+                                                editable-select="item.TaxPercentage"  
+                                                e-ng-options="t.value as t.label for t in percentageTypes"
+                                                onaftersave="saveLineItem(item)">
+                                                {{getPercentageTypeLabel(item.TaxPercentage)}}
+                                            </a>)
+                                        </span>
+                                        <span ng-if="!item.TaxEditable">
+                                            <span ng-if="item.TaxPercentage === 1">
+                                                {{item.TaxAmount}} %
+                                            </span>
+                                            <span ng-if="item.TaxPercentage === 0">
+                                                {{item.TaxAmount | currency:item.FK_Currency+" ":2}}    
+                                            </span>
+                                        </span>
+                                    </span>
+                                    <!--fsadfas -->
+                                     <span ng-if="item.FK_TransactionType === 98">
+                                        <a href="#" 
+                                           editable-number="item.UnitPrice"
+                                           e-step="any"
+                                           e-min="0"
+                                           onaftersave="saveLineItem(item)">
+                                            {{item.UnitPrice | currency:item.FK_Currency+" ":2}}
+                                        </a>
+                                    </span>
+                                    <!-- -->
+								</td>
+                                <!-- End: Tax -->
+                                <td class="text-right" >
+									<span ng-if="item.FK_TransactionType === 1">
+                                        {{lineItemTotal(item) | currency:item.FK_Currency+" ":2}}
+                                    </span>
+                                    <span ng-if="item.FK_TransactionType === 98">
+                                        {{lineItemTotal(item) | currency:item.FK_Currency+" ":2}}
+                                    </span>
+                                    <span ng-if="item.FK_TransactionType === 99">
+                                        {{lineItemTotal(item) | currency:item.FK_Currency+" ":2}}
+                                    </span>
+                                    <span ng-if="item.FK_TransactionType === 2">
+                                        <a href="#" 
+                                           editable-number="item.UnitPrice" 
+                                           e-step="any"
+                                           onaftersave="makePaymentNegative(item)">
+                                            {{item.UnitPrice | currency:item.FK_Currency+" ":2}}
+                                        </a>
+                                    </span>
+								</td>
+								 <!-- End: total -->
+                                <td  class="pull-right" >
+									<button ng-click="deleteInvoiceRecord($index,item)" class="btn btn-primary btn-bearGray pull-left">
+                                       <span  class="fa fa-trash-o"></span> 
+									</button>
+								</td>
+								<!-- End: trash -->
+							</tr>
+						</tbody>
+					</table>
+				</div>
+                
+                <div class="invoice-box-total clearfix">
+                    <div class="row" style="margin-top:-5px;margin-left:0px">
+                        <div class="btn-group" uib-dropdown>
+                            <button type="button" class="btn btn-primary uib-dropdown-toggle" uib-dropdown-toggle ng-disabled="disabled">
+                                <span translate="INVOICES_ADD_ITEM"></span> <span class="caret"></span>
+                            </button>
+                            <ul class="uib-dropdown-menu" role="menu">
+                                <li>
+                                    <a ng-click="addItemLine()" translate="INVOICES_NEW_ITEM">New Item</a>
+                                </li>
+                                <li class="divider"></li>
+                                <li ng-repeat="p in products">
+                                    <a ng-click="addItemLine(p)">{{p.Description}}</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="btn-group" uib-dropdown>
+                           <button type="button" class="btn btn-primary uib-dropdown-toggle" uib-dropdown-toggle ng-disabled="disabled">
+                                <span translate="INVOICES_ADD_PAYMENT">Add Payment</span> <span class="caret"></span>
+                            </button>
+                            <ul class="uib-dropdown-menu" role="menu">
+                                <li ng-repeat="t in transactionTypes">
+                                    <a ng-click="addPaymentLine(t)">{{t.Description}}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+					<div class="row">
+						<div class="col-sm-9 col-md-10 col-xs-6 text-right invoice-box-total-label" translate="INVOICES_SUBTOTAL">Subtotal</div>
+						<div class="col-sm-3 col-md-2 col-xs-6 text-right invoice-box-total-value">
+							{{totals.sub_total | currency:totals.currency+" ":2}}
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-9 col-md-10 col-xs-6 text-right invoice-box-total-label" translate="INVOICES_TAXES">Taxes</div>
+						<div class="col-sm-3 col-md-2 col-xs-6 text-right invoice-box-total-value">
+							{{totals.tax | currency:totals.currency+" ":2}}
+						</div>
+					</div>
+					<div class="row grand-total">
+						<div class="col-sm-9 col-md-10 col-xs-6 text-right invoice-box-total-label" translate="INVOICES_GRAND_TOTAL">Grand total</div>
+						<div class="col-sm-3 col-md-2 col-xs-6 text-right invoice-box-total-value">
+							{{totals.total | currency:totals.currency+" ":2}}
+						</div>
+					</div>
+                    <div class="row">
+						<div class="col-sm-9 col-md-10 col-xs-6 text-right invoice-box-total-label" translate="INVOICES_PAYMENTS">Payments</div>
+						<div class="col-sm-3 col-md-2 col-xs-6 text-right invoice-box-total-value">
+							{{totals.payments | currency:totals.currency+" ":2}}
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-9 col-md-10 col-xs-6 text-right invoice-box-total-label" translate="INVOICES_BALANCE">Balance</div>
+						<div class="col-sm-3 col-md-2 col-xs-6 text-right invoice-box-total-value">
+							{{totals.balance | currency:totals.currency+" ":2}}
+						</div>
+					</div>
+				</div>	
+                
+                    
+                    <a ng-if="selectedBooking.FK_BookingStatus==2" ng-click="checkOutPopUp(selectedBooking.ID,totals.balance,selectedInvoice.ID)"
+                       class="btn btn-primary pull-right"><i class="fa fa-hand-o-left fa-lg"></i> <span translate="INVOICES_CHECK_OUT">Check Out</span>
+				    </a>
+
+				    <!-- <div ng-if="checkoutPopup" class="alert alert-block alert-danger fade in pull-right">
+				    	<button type="button" ng-click="checkOutPopUpCancel()" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+				    	<p translate="INVOICES_BALANCE_NOT_0_CONFIRMATION_MESSAGE">Balance is not 0. Would you like to check out this guest anyway?</p>
+				    	<p>
+				    	<a class="btn btn-success" ng-click="checkOut(selectedBooking.ID)" type="button" aria-hidden="true" translate="INVOICES_YES">YES</a>
+				    	<a type="button" ng-click="checkOutPopUpCancel()" class="close btn btn-default" data-dismiss="alert" aria-hidden="true" trasnlate="INVOICES_NO">NO</a></p>
+				    </div>
+					 -->
+
+                
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
